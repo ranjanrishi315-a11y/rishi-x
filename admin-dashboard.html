@@ -1,1 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
+<title>RISHI X Admin Dashboard</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  min-height:100vh;
+  font-family:Arial,sans-serif;
+  color:white;
+  background:
+    radial-gradient(circle at top,#401500,transparent 45%),
+    #050505;
+}
+
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 5%;
+  background:#090909;
+  border-bottom:1px solid #252525;
+}
+
+.logo{
+  color:#ff6a00;
+  font-size:24px;
+  font-weight:900;
+  text-shadow:0 0 15px #ff6a00;
+}
+
+.logout{
+  padding:9px 15px;
+  border:1px solid #ff6a00;
+  border-radius:8px;
+  color:white;
+  background:transparent;
+}
+
+main{
+  width:92%;
+  max-width:1100px;
+  margin:30px auto;
+}
+
+h1{
+  margin-bottom:8px;
+}
+
+.subtitle{
+  color:#888;
+  margin-bottom:25px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+
+.card{
+  padding:25px;
+  background:#111;
+  border:1px solid #222;
+  border-radius:15px;
+}
+
+.card h3{
+  color:#aaa;
+  font-size:14px;
+  margin-bottom:12px;
+}
+
+.number{
+  font-size:30px;
+  font-weight:bold;
+  color:#ff6a00;
+}
+
+.section{
+  margin-top:25px;
+  padding:25px;
+  background:#111;
+  border:1px solid #222;
+  border-radius:15px;
+}
+
+.empty{
+  margin-top:15px;
+  padding:25px;
+  text-align:center;
+  color:#777;
+  background:#080808;
+  border-radius:10px;
+}
+
+@media(max-width:600px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="logo">👑 RISHI X</div>
+
+  <button
+    class="logout"
+    onclick="logout()">
+    Logout
+  </button>
+
+</header>
+
+<main>
+
+  <h1>Admin Dashboard</h1>
+
+  <p class="subtitle">
+    Manage your RISHI X platform
+  </p>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>Total Users</h3>
+      <div class="number" id="users">0</div>
+    </div>
+
+    <div class="card">
+      <h3>Total Files</h3>
+      <div class="number" id="files">0</div>
+    </div>
+
+  </div>
+
+  <div class="section">
+
+    <h2>👥 Users</h2>
+
+    <div class="empty">
+      Backend/database not connected yet.
+    </div>
+
+  </div>
+
+  <div class="section">
+
+    <h2>📁 Files</h2>
+
+    <div class="empty">
+      Backend/database not connected yet.
+    </div>
+
+  </div>
+
+</main>
+
+<script>
+
+function logout(){
+
+  window.location.href =
+    "index.html";
+
+}
