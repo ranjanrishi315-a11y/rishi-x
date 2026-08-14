@@ -196,20 +196,21 @@ main{
 }
 
 .actions{
-  display:flex;
+  display:grid;
+  grid-template-columns:1fr 1fr;
   gap:8px;
   margin-top:12px;
 }
 
 .actions button{
-  flex:1;
-  padding:9px;
+  padding:9px 6px;
   border:1px solid #ff6a00;
   border-radius:7px;
   background:transparent;
   color:#fff;
   cursor:pointer;
   font-weight:bold;
+  font-size:12px;
 }
 
 .actions button:hover{
@@ -218,6 +219,32 @@ main{
 
 .actions .delete{
   border-color:#ff3d00;
+}
+
+.actions .delete:hover{
+  background:#ff3d00;
+}
+
+.share-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:8px;
+}
+
+.share-row button{
+  padding:9px 6px;
+  border:1px solid #ff8500;
+  border-radius:7px;
+  background:#17100b;
+  color:#fff;
+  cursor:pointer;
+  font-weight:bold;
+  font-size:12px;
+}
+
+.share-row button:hover{
+  background:#ff8500;
 }
 
 .empty{
@@ -230,12 +257,18 @@ main{
 }
 
 @media(max-width:600px){
+
   .file-grid{
     grid-template-columns:1fr;
   }
 
   .welcome h1{
     font-size:25px;
+  }
+
+  .actions button,
+  .share-row button{
+    font-size:11px;
   }
 }
 </style>
@@ -244,23 +277,37 @@ main{
 <body>
 
 <header>
-  <div class="logo">⚡ RISHI X</div>
+
+  <div class="logo">
+    ⚡ RISHI X
+  </div>
 
   <button class="logout" onclick="logout()">
     Logout
   </button>
+
 </header>
 
 <main>
 
 <section class="welcome">
-  <h1>My Private Vault</h1>
-  <p id="userEmail">Loading account...</p>
+
+  <h1>
+    My Private Vault
+  </h1>
+
+  <p id="userEmail">
+    Loading account...
+  </p>
+
 </section>
+
 
 <section class="upload">
 
-  <h2>📤 Upload File</h2>
+  <h2>
+    📤 Upload File
+  </h2>
 
   <p>
     Upload your private files securely.
@@ -275,7 +322,8 @@ main{
   <button
     class="upload-btn"
     id="uploadButton"
-    onclick="uploadFile()">
+    onclick="uploadFile()"
+  >
     UPLOAD FILE
   </button>
 
@@ -283,9 +331,12 @@ main{
 
 </section>
 
+
 <section class="files">
 
-  <h2>🗂️ My Files</h2>
+  <h2>
+    🗂️ My Files
+  </h2>
 
   <input
     class="search"
@@ -295,7 +346,10 @@ main{
     oninput="filterFiles()"
   >
 
-  <div id="fileList" class="file-grid">
+  <div
+    id="fileList"
+    class="file-grid"
+  >
     <div class="empty">
       Loading files...
     </div>
@@ -305,7 +359,12 @@ main{
 
 </main>
 
+
 <script>
+
+/* ================================
+   SUPABASE CONFIGURATION
+================================ */
 
 const SUPABASE_URL =
   "https://asdbxlnttlsuhhnqeywa.supabase.co";
@@ -316,20 +375,34 @@ const SUPABASE_PUBLISHABLE_KEY =
 const BUCKET_NAME =
   "user-files";
 
+
 const supabaseClient =
   window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
   );
 
+
 let currentUser = null;
 let allFiles = [];
 
 
+/* ================================
+   MESSAGE
+================================ */
+
 function showMessage(text){
-  document.getElementById("message").textContent = text;
+
+  document.getElementById(
+    "message"
+  ).textContent = text;
+
 }
 
+
+/* ================================
+   CHECK LOGIN
+================================ */
 
 async function checkLogin(){
 
@@ -337,46 +410,77 @@ async function checkLogin(){
     await supabaseClient.auth.getSession();
 
   if(error || !data.session){
-    window.location.href = "index.html";
+
+    window.location.href =
+      "index.html";
+
     return;
   }
 
-  currentUser = data.session.user;
+  currentUser =
+    data.session.user;
 
-  document.getElementById("userEmail")
-    .textContent = currentUser.email;
+  document.getElementById(
+    "userEmail"
+  ).textContent =
+    currentUser.email;
 
   await loadFiles();
+
 }
 
+
+/* ================================
+   UPLOAD FILE
+================================ */
 
 async function uploadFile(){
 
   const input =
     document.getElementById("file");
 
-  const file = input.files[0];
+  const file =
+    input.files[0];
 
   if(!file){
-    showMessage("Please select a file first.");
+
+    showMessage(
+      "Please select a file first."
+    );
+
     return;
   }
 
   if(!currentUser){
-    showMessage("You are not logged in.");
+
+    showMessage(
+      "You are not logged in."
+    );
+
     return;
   }
 
+
   const button =
-    document.getElementById("uploadButton");
+    document.getElementById(
+      "uploadButton"
+    );
 
   button.disabled = true;
-  button.textContent = "UPLOADING...";
+  button.textContent =
+    "UPLOADING...";
 
-  showMessage("Uploading file...");
+  showMessage(
+    "Uploading file..."
+  );
+
 
   const safeName =
-    file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
+    file.name.replace(
+      /[^a-zA-Z0-9._-]/g,
+      "_"
+    );
+
 
   const filePath =
     currentUser.id +
@@ -384,6 +488,7 @@ async function uploadFile(){
     Date.now() +
     "_" +
     safeName;
+
 
   const {error} =
     await supabaseClient.storage
@@ -397,15 +502,22 @@ async function uploadFile(){
         }
       );
 
+
   button.disabled = false;
-  button.textContent = "UPLOAD FILE";
+  button.textContent =
+    "UPLOAD FILE";
+
 
   if(error){
+
     showMessage(
-      "Upload failed: " + error.message
+      "Upload failed: " +
+      error.message
     );
+
     return;
   }
+
 
   input.value = "";
 
@@ -413,17 +525,26 @@ async function uploadFile(){
     "✅ File uploaded successfully!"
   );
 
+
   await loadFiles();
+
 }
 
+
+/* ================================
+   LOAD FILES
+================================ */
 
 async function loadFiles(){
 
   const fileList =
-    document.getElementById("fileList");
+    document.getElementById(
+      "fileList"
+    );
 
   fileList.innerHTML =
     '<div class="empty">Loading files...</div>';
+
 
   const {data,error} =
     await supabaseClient.storage
@@ -440,136 +561,310 @@ async function loadFiles(){
         }
       );
 
+
   if(error){
+
     fileList.innerHTML =
       '<div class="empty">Unable to load files.</div>';
+
     return;
   }
 
-  allFiles = data || [];
+
+  allFiles =
+    data || [];
+
 
   renderFiles(allFiles);
+
 }
 
+
+/* ================================
+   RENDER FILES
+================================ */
 
 function renderFiles(files){
 
   const fileList =
-    document.getElementById("fileList");
+    document.getElementById(
+      "fileList"
+    );
+
 
   if(!files.length){
+
     fileList.innerHTML =
       '<div class="empty">No files found.</div>';
+
     return;
   }
 
+
   fileList.innerHTML = "";
+
 
   files.forEach(file => {
 
     const card =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
-    card.className = "file-card";
+    card.className =
+      "file-card";
+
 
     const preview =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
-    preview.className = "preview";
+    preview.className =
+      "preview";
+
 
     const extension =
-      file.name.split(".").pop().toLowerCase();
+      file.name
+        .split(".")
+        .pop()
+        .toLowerCase();
+
 
     const imageTypes =
-      ["jpg","jpeg","png","gif","webp"];
+      [
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+        "webp"
+      ];
 
-    if(imageTypes.includes(extension)){
+
+    if(
+      imageTypes.includes(
+        extension
+      )
+    ){
 
       const img =
-        document.createElement("img");
+        document.createElement(
+          "img"
+        );
 
-      createPreviewUrl(file.name)
-        .then(url => {
-          if(url){
-            img.src = url;
-          }else{
-            preview.textContent = "🖼️";
-          }
-        });
+
+      createPreviewUrl(
+        file.name
+      ).then(url => {
+
+        if(url){
+
+          img.src = url;
+
+        }else{
+
+          preview.textContent =
+            "🖼️";
+
+        }
+
+      });
+
 
       preview.appendChild(img);
 
+
     }else{
 
-      preview.textContent = "📄";
+      preview.textContent =
+        "📄";
 
     }
 
-    const info =
-      document.createElement("div");
 
-    info.className = "file-info";
+    const info =
+      document.createElement(
+        "div"
+      );
+
+    info.className =
+      "file-info";
+
 
     const name =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
-    name.className = "file-name";
+    name.className =
+      "file-name";
 
-    name.textContent = file.name;
+    name.textContent =
+      file.name;
+
 
     const meta =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
-    meta.className = "file-meta";
+    meta.className =
+      "file-meta";
 
     meta.textContent =
       "Uploaded: " +
-      formatDate(file.created_at);
+      formatDate(
+        file.created_at
+      );
+
+
+    /* ACTION BUTTONS */
 
     const actions =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
 
-    actions.className = "actions";
+    actions.className =
+      "actions";
+
 
     const openBtn =
-      document.createElement("button");
+      document.createElement(
+        "button"
+      );
 
-    openBtn.textContent = "OPEN";
+    openBtn.textContent =
+      "OPEN";
 
     openBtn.onclick =
-      () => openFile(file.name);
+      () => openFile(
+        file.name
+      );
+
 
     const deleteBtn =
-      document.createElement("button");
+      document.createElement(
+        "button"
+      );
 
-    deleteBtn.textContent = "DELETE";
-    deleteBtn.className = "delete";
+    deleteBtn.textContent =
+      "DELETE";
+
+    deleteBtn.className =
+      "delete";
 
     deleteBtn.onclick =
-      () => deleteFile(file.name);
+      () => deleteFile(
+        file.name
+      );
 
-    actions.appendChild(openBtn);
-    actions.appendChild(deleteBtn);
 
-    info.appendChild(name);
-    info.appendChild(meta);
-    info.appendChild(actions);
+    actions.appendChild(
+      openBtn
+    );
 
-    card.appendChild(preview);
-    card.appendChild(info);
+    actions.appendChild(
+      deleteBtn
+    );
 
-    fileList.appendChild(card);
+
+    /* SHARE BUTTONS */
+
+    const shareRow =
+      document.createElement(
+        "div"
+      );
+
+    shareRow.className =
+      "share-row";
+
+
+    const shareBtn =
+      document.createElement(
+        "button"
+      );
+
+    shareBtn.textContent =
+      "🔗 SHARE";
+
+    shareBtn.onclick =
+      () => shareFile(
+        file.name
+      );
+
+
+    const copyBtn =
+      document.createElement(
+        "button"
+      );
+
+    copyBtn.textContent =
+      "📋 COPY LINK";
+
+    copyBtn.onclick =
+      () => copyShareLink(
+        file.name
+      );
+
+
+    shareRow.appendChild(
+      shareBtn
+    );
+
+    shareRow.appendChild(
+      copyBtn
+    );
+
+
+    info.appendChild(
+      name
+    );
+
+    info.appendChild(
+      meta
+    );
+
+    info.appendChild(
+      actions
+    );
+
+    info.appendChild(
+      shareRow
+    );
+
+
+    card.appendChild(
+      preview
+    );
+
+    card.appendChild(
+      info
+    );
+
+
+    fileList.appendChild(
+      card
+    );
 
   });
+
 }
 
 
-async function createPreviewUrl(fileName){
+/* ================================
+   PREVIEW URL
+================================ */
+
+async function createPreviewUrl(
+  fileName
+){
 
   const path =
     currentUser.id +
     "/" +
     fileName;
+
 
   const {data,error} =
     await supabaseClient.storage
@@ -579,20 +874,32 @@ async function createPreviewUrl(fileName){
         600
       );
 
+
   if(error){
+
     return null;
+
   }
 
+
   return data.signedUrl;
+
 }
 
 
-async function openFile(fileName){
+/* ================================
+   OPEN FILE
+================================ */
+
+async function openFile(
+  fileName
+){
 
   const path =
     currentUser.id +
     "/" +
     fileName;
+
 
   const {data,error} =
     await supabaseClient.storage
@@ -602,91 +909,353 @@ async function openFile(fileName){
         600
       );
 
+
   if(error){
+
     showMessage(
       "Unable to open file: " +
       error.message
     );
+
     return;
   }
+
 
   window.open(
     data.signedUrl,
     "_blank"
   );
+
 }
 
 
-async function deleteFile(fileName){
+/* ================================
+   CREATE SHARE LINK
+   VALID FOR 10 MINUTES
+================================ */
+
+async function getShareLink(
+  fileName
+){
+
+  const path =
+    currentUser.id +
+    "/" +
+    fileName;
+
+
+  const {data,error} =
+    await supabaseClient.storage
+      .from(BUCKET_NAME)
+      .createSignedUrl(
+        path,
+        600
+      );
+
+
+  if(error){
+
+    showMessage(
+      "Unable to create share link: " +
+      error.message
+    );
+
+    return null;
+  }
+
+
+  return data.signedUrl;
+
+}
+
+
+/* ================================
+   SHARE FILE
+================================ */
+
+async function shareFile(
+  fileName
+){
+
+  showMessage(
+    "Creating secure share link..."
+  );
+
+
+  const shareUrl =
+    await getShareLink(
+      fileName
+    );
+
+
+  if(!shareUrl){
+
+    return;
+  }
+
+
+  /* Android / browser share */
+
+  if(
+    navigator.share
+  ){
+
+    try{
+
+      await navigator.share({
+
+        title:
+          "RISHI X - Shared File",
+
+        text:
+          "Here is a file shared from RISHI X.",
+
+        url:
+          shareUrl
+
+      });
+
+
+      showMessage(
+        "✅ Share menu opened."
+      );
+
+      return;
+
+    }catch(error){
+
+      /* User closed share menu */
+
+      if(
+        error.name ===
+        "AbortError"
+      ){
+
+        showMessage(
+          "Share cancelled."
+        );
+
+        return;
+      }
+
+    }
+
+  }
+
+
+  /* Fallback: Copy */
+
+  try{
+
+    await navigator.clipboard.writeText(
+      shareUrl
+    );
+
+    showMessage(
+      "✅ Share link copied!"
+    );
+
+  }catch(error){
+
+    showMessage(
+      "Copy failed. Please use COPY LINK."
+    );
+
+  }
+
+}
+
+
+/* ================================
+   COPY SHARE LINK
+================================ */
+
+async function copyShareLink(
+  fileName
+){
+
+  showMessage(
+    "Creating secure link..."
+  );
+
+
+  const shareUrl =
+    await getShareLink(
+      fileName
+    );
+
+
+  if(!shareUrl){
+
+    return;
+  }
+
+
+  try{
+
+    await navigator.clipboard.writeText(
+      shareUrl
+    );
+
+
+    showMessage(
+      "✅ Secure share link copied!"
+    );
+
+
+  }catch(error){
+
+    /* Fallback for browsers */
+
+    const textArea =
+      document.createElement(
+        "textarea"
+      );
+
+    textArea.value =
+      shareUrl;
+
+    document.body.appendChild(
+      textArea
+    );
+
+    textArea.select();
+
+    document.execCommand(
+      "copy"
+    );
+
+    document.body.removeChild(
+      textArea
+    );
+
+
+    showMessage(
+      "✅ Share link copied!"
+    );
+
+  }
+
+}
+
+
+/* ================================
+   DELETE FILE
+================================ */
+
+async function deleteFile(
+  fileName
+){
 
   const confirmed =
     confirm(
       "Are you sure you want to delete this file?"
     );
 
+
   if(!confirmed){
+
     return;
+
   }
+
 
   const path =
     currentUser.id +
     "/" +
     fileName;
 
+
   const {error} =
     await supabaseClient.storage
       .from(BUCKET_NAME)
-      .remove([path]);
+      .remove([
+        path
+      ]);
+
 
   if(error){
+
     showMessage(
       "Delete failed: " +
       error.message
     );
+
     return;
   }
+
 
   showMessage(
     "✅ File deleted."
   );
 
+
   await loadFiles();
+
 }
 
+
+/* ================================
+   SEARCH
+================================ */
 
 function filterFiles(){
 
   const query =
-    document.getElementById("search")
-      .value
-      .toLowerCase()
-      .trim();
+    document.getElementById(
+      "search"
+    )
+    .value
+    .toLowerCase()
+    .trim();
+
 
   const filtered =
     allFiles.filter(file =>
-      file.name.toLowerCase()
+      file.name
+        .toLowerCase()
         .includes(query)
     );
 
-  renderFiles(filtered);
+
+  renderFiles(
+    filtered
+  );
+
 }
 
 
-function formatDate(date){
+/* ================================
+   DATE
+================================ */
+
+function formatDate(
+  date
+){
 
   if(!date){
+
     return "Unknown date";
+
   }
 
-  return new Date(date)
-    .toLocaleString();
+
+  return new Date(
+    date
+  ).toLocaleString();
+
 }
 
+
+/* ================================
+   LOGOUT
+================================ */
 
 async function logout(){
 
   const {error} =
     await supabaseClient.auth.signOut();
+
 
   if(error){
 
@@ -698,10 +1267,16 @@ async function logout(){
     return;
   }
 
+
   window.location.href =
     "index.html";
+
 }
 
+
+/* ================================
+   START
+================================ */
 
 checkLogin();
 
