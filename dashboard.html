@@ -1,132 +1,216 @@
+RISHI X Dashboard
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>RISHI X Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+  <title>RISHI X Dashboard</title>
 
-body{
-  min-height:100vh;
-  font-family:Arial,sans-serif;
-  color:white;
-  background:
-    radial-gradient(circle at top,#401500,transparent 45%),
-    #050505;
-}
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:18px 5%;
-  border-bottom:1px solid #252525;
-  background:#090909;
-}
+  <style>
 
-.logo{
-  color:#ff6a00;
-  font-size:25px;
-  font-weight:900;
-  text-shadow:0 0 15px #ff6a00;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-.logout{
-  padding:9px 16px;
-  border:1px solid #ff6a00;
-  border-radius:8px;
-  background:transparent;
-  color:white;
-  cursor:pointer;
-}
+    body {
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      color: white;
 
-main{
-  width:92%;
-  max-width:1000px;
-  margin:35px auto;
-}
+      background:
+        radial-gradient(
+          circle at top,
+          #401500,
+          transparent 45%
+        ),
+        #050505;
+    }
 
-.welcome{
-  margin-bottom:25px;
-}
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-.welcome h1{
-  font-size:30px;
-}
+      padding: 18px 5%;
 
-.welcome p{
-  color:#888;
-  margin-top:7px;
-}
+      border-bottom: 1px solid #252525;
 
-.upload{
-  border:1px solid #ff6a00;
-  border-radius:18px;
-  padding:25px;
-  background:#111;
-  text-align:center;
-  box-shadow:0 0 25px #ff6a0025;
-}
+      background: #090909;
+    }
 
-.upload h2{
-  margin-bottom:10px;
-}
+    .logo {
+      color: #ff6a00;
 
-.upload p{
-  color:#888;
-  font-size:14px;
-}
+      font-size: 25px;
 
-.file{
-  margin-top:20px;
-  width:100%;
-  padding:15px;
-  border:1px dashed #ff6a00;
-  border-radius:10px;
-  background:#070707;
-  color:#aaa;
-}
+      font-weight: 900;
 
-.upload button{
-  width:100%;
-  margin-top:15px;
-  padding:14px;
-  border:0;
-  border-radius:10px;
-  background:linear-gradient(90deg,#ff3d00,#ff8500);
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-}
+      text-shadow:
+        0 0 15px #ff6a00;
+    }
 
-.files{
-  margin-top:30px;
-}
+    .logout {
+      padding: 9px 16px;
 
-.files h2{
-  margin-bottom:15px;
-}
+      border: 1px solid #ff6a00;
 
-.empty{
-  padding:30px;
-  text-align:center;
-  color:#777;
-  border:1px solid #222;
-  border-radius:15px;
-  background:#0d0d0d;
-}
-</style>
+      border-radius: 8px;
+
+      background: transparent;
+
+      color: white;
+
+      cursor: pointer;
+
+      font-weight: bold;
+    }
+
+    .logout:hover {
+      background: #ff6a00;
+    }
+
+    main {
+      width: 92%;
+
+      max-width: 1000px;
+
+      margin: 35px auto;
+    }
+
+    .welcome {
+      margin-bottom: 25px;
+    }
+
+    .welcome h1 {
+      font-size: 30px;
+    }
+
+    .welcome p {
+      color: #888;
+
+      margin-top: 7px;
+    }
+
+    .upload {
+      border: 1px solid #ff6a00;
+
+      border-radius: 18px;
+
+      padding: 25px;
+
+      background: #111;
+
+      text-align: center;
+
+      box-shadow:
+        0 0 25px #ff6a0025;
+    }
+
+    .upload h2 {
+      margin-bottom: 10px;
+    }
+
+    .upload p {
+      color: #888;
+
+      font-size: 14px;
+    }
+
+    .file {
+      margin-top: 20px;
+
+      width: 100%;
+
+      padding: 15px;
+
+      border: 1px dashed #ff6a00;
+
+      border-radius: 10px;
+
+      background: #070707;
+
+      color: #aaa;
+    }
+
+    .upload button {
+      width: 100%;
+
+      margin-top: 15px;
+
+      padding: 14px;
+
+      border: 0;
+
+      border-radius: 10px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #ff3d00,
+          #ff8500
+        );
+
+      color: white;
+
+      font-weight: bold;
+
+      cursor: pointer;
+    }
+
+    .upload button:hover {
+      opacity: 0.9;
+    }
+
+    .files {
+      margin-top: 30px;
+    }
+
+    .files h2 {
+      margin-bottom: 15px;
+    }
+
+    .empty {
+      padding: 30px;
+
+      text-align: center;
+
+      color: #777;
+
+      border: 1px solid #222;
+
+      border-radius: 15px;
+
+      background: #0d0d0d;
+    }
+
+    #message {
+      min-height: 20px;
+
+      margin-top: 15px;
+
+      color: #ff9b63;
+
+      text-align: center;
+
+      font-size: 13px;
+    }
+
+  </style>
+
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -134,8 +218,12 @@ main{
     ⚡ RISHI X
   </div>
 
-  <button class="logout" onclick="logout()">
+  <button
+    class="logout"
+    onclick="logout()">
+
     Logout
+
   </button>
 
 </header>
@@ -143,9 +231,12 @@ main{
 
 <main>
 
+
   <section class="welcome">
 
-    <h1>My Dashboard</h1>
+    <h1>
+      My Dashboard
+    </h1>
 
     <p>
       Manage your private files securely.
@@ -156,11 +247,14 @@ main{
 
   <section class="upload">
 
-    <h2>📤 Upload File</h2>
+    <h2>
+      📤 Upload File
+    </h2>
 
     <p>
-      Your files will appear in your private dashboard.
+      Select an image to upload to your private vault.
     </p>
+
 
     <input
       class="file"
@@ -169,9 +263,14 @@ main{
       accept="image/*"
     >
 
-    <button onclick="uploadFile()">
+
+    <button
+      onclick="uploadFile()">
+
       UPLOAD FILE
+
     </button>
+
 
     <p id="message"></p>
 
@@ -180,9 +279,14 @@ main{
 
   <section class="files">
 
-    <h2>🗂️ My Files</h2>
+    <h2>
+      🗂️ My Files
+    </h2>
 
-    <div class="empty" id="fileList">
+
+    <div
+      class="empty"
+      id="fileList">
 
       No files uploaded yet.
 
@@ -190,20 +294,103 @@ main{
 
   </section>
 
+
 </main>
 
 
 <script>
 
-function uploadFile(){
 
-  const file =
-    document.getElementById("file").files[0];
+/* =========================
+   SUPABASE CONFIG
+   ========================= */
+
+
+const SUPABASE_URL =
+  "https://asdbxlnttlsuhhnqeywa.supabase.co";
+
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_GIzm11dFWDJmu9cQGAJy_w_432UbSU5";
+
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+
+/* =========================
+   CHECK LOGIN
+   ========================= */
+
+
+async function checkLogin() {
+
+  const { data } =
+    await supabaseClient.auth.getSession();
+
+
+  if (!data.session) {
+
+    window.location.href =
+      "index.html";
+
+    return;
+  }
+
+}
+
+
+/* =========================
+   LOGOUT
+   ========================= */
+
+
+async function logout() {
 
   const message =
     document.getElementById("message");
 
-  if(!file){
+
+  const { error } =
+    await supabaseClient.auth.signOut();
+
+
+  if (error) {
+
+    message.textContent =
+      "Logout failed: " +
+      error.message;
+
+    return;
+  }
+
+
+  window.location.href =
+    "index.html";
+
+}
+
+
+/* =========================
+   UPLOAD
+   ========================= */
+
+
+function uploadFile() {
+
+  const file =
+    document.getElementById("file")
+      .files[0];
+
+
+  const message =
+    document.getElementById("message");
+
+
+  if (!file) {
 
     message.textContent =
       "Please select an image.";
@@ -211,20 +398,24 @@ function uploadFile(){
     return;
   }
 
+
   message.textContent =
-    "Backend upload system will be connected next.";
+    "Upload system will be connected next.";
 
 }
 
 
-function logout(){
+/* =========================
+   START
+   ========================= */
 
-  window.location.href =
-    "index.html";
 
-}
+checkLogin();
+
 
 </script>
 
+
 </body>
+
 </html>
