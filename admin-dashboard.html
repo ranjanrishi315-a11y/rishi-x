@@ -2,11 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>RISHI X • Admin Dashboard</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{
@@ -18,7 +16,7 @@
 body{
   min-height:100vh;
   font-family:Arial,sans-serif;
-  color:white;
+  color:#fff;
   background:
     radial-gradient(circle at top,#401500,transparent 45%),
     #050505;
@@ -49,8 +47,8 @@ header{
   padding:9px 14px;
   border:1px solid #ff6a00;
   border-radius:8px;
-  color:white;
   background:transparent;
+  color:#fff;
   cursor:pointer;
   font-weight:bold;
 }
@@ -62,16 +60,20 @@ header{
 main{
   width:92%;
   max-width:1100px;
-  margin:30px auto;
+  margin:35px auto;
 }
 
-h1{
-  margin-bottom:8px;
-}
-
-.subtitle{
-  color:#888;
+.welcome{
   margin-bottom:25px;
+}
+
+.welcome h1{
+  font-size:32px;
+}
+
+.welcome p{
+  margin-top:8px;
+  color:#888;
 }
 
 .grid{
@@ -83,33 +85,34 @@ h1{
 .card{
   padding:25px;
   background:#111;
-  border:1px solid #222;
+  border:1px solid #252525;
   border-radius:15px;
+  box-shadow:0 0 20px #ff6a0012;
 }
 
 .card h3{
-  color:#aaa;
-  font-size:14px;
+  color:#888;
+  font-size:13px;
   margin-bottom:12px;
 }
 
 .number{
-  font-size:30px;
-  font-weight:bold;
   color:#ff6a00;
+  font-size:28px;
+  font-weight:bold;
 }
 
 .section{
   margin-top:25px;
   padding:25px;
   background:#111;
-  border:1px solid #222;
+  border:1px solid #252525;
   border-radius:15px;
 }
 
 .info{
-  padding:15px;
   margin-top:12px;
+  padding:15px;
   background:#080808;
   border:1px solid #292929;
   border-radius:10px;
@@ -126,40 +129,13 @@ h1{
 }
 
 .status{
-  margin-top:15px;
-  padding:12px;
+  margin-top:18px;
+  padding:13px;
   text-align:center;
   border-radius:10px;
   background:#092014;
   border:1px solid #1d7138;
   color:#63e69a;
-}
-
-.loading{
-  padding:80px 20px;
-  text-align:center;
-  color:#888;
-}
-
-.denied{
-  display:none;
-  width:92%;
-  max-width:500px;
-  margin:100px auto;
-  padding:30px;
-  text-align:center;
-  background:#111;
-  border:1px solid #ff3d00;
-  border-radius:18px;
-}
-
-.denied h1{
-  color:#ff5b28;
-  margin-bottom:12px;
-}
-
-.denied p{
-  color:#999;
 }
 
 @media(max-width:600px){
@@ -168,17 +144,13 @@ h1{
     grid-template-columns:1fr;
   }
 
-  .logo{
-    font-size:20px;
+  .welcome h1{
+    font-size:26px;
   }
 
   .header-buttons button{
     padding:8px 10px;
     font-size:11px;
-  }
-
-  main{
-    margin-top:25px;
   }
 }
 </style>
@@ -194,11 +166,11 @@ h1{
 
   <div class="header-buttons">
 
-    <button onclick="goDashboard()">
-      🏠 Dashboard
+    <button onclick="goUserDashboard()">
+      🏠 User Dashboard
     </button>
 
-    <button onclick="logout()">
+    <button onclick="logoutAdmin()">
       Logout
     </button>
 
@@ -207,26 +179,19 @@ h1{
 </header>
 
 
-<div
-  id="loading"
-  class="loading"
->
-  🔐 Checking administrator access...
-</div>
+<main>
 
+  <section class="welcome">
 
-<main
-  id="adminContent"
-  style="display:none;"
->
+    <h1>
+      👑 Admin Dashboard
+    </h1>
 
-  <h1>
-    Admin Dashboard
-  </h1>
+    <p>
+      Welcome to the RISHI X administration panel.
+    </p>
 
-  <p class="subtitle">
-    Welcome to the RISHI X administration area.
-  </p>
+  </section>
 
 
   <section class="grid">
@@ -247,7 +212,7 @@ h1{
     <div class="card">
 
       <h3>
-        ACCOUNT STATUS
+        STATUS
       </h3>
 
       <div class="number">
@@ -262,57 +227,38 @@ h1{
   <section class="section">
 
     <h2>
-      👑 Administrator Information
+      🔐 Admin Information
     </h2>
 
 
     <div class="info">
 
       <div class="label">
-        ADMIN EMAIL
-      </div>
-
-      <div
-        class="value"
-        id="adminEmail"
-      >
-        Loading...
-      </div>
-
-    </div>
-
-
-    <div class="info">
-
-      <div class="label">
-        ADMIN UID
-      </div>
-
-      <div
-        class="value"
-        id="adminUid"
-      >
-        Loading...
-      </div>
-
-    </div>
-
-
-    <div class="info">
-
-      <div class="label">
-        AUTHENTICATION
+        ADMIN ID
       </div>
 
       <div class="value">
-        Supabase authenticated session
+        f3ffeb51-70a6-4a44-99fb-f4ff1fa2aedf
+      </div>
+
+    </div>
+
+
+    <div class="info">
+
+      <div class="label">
+        ACCESS
+      </div>
+
+      <div class="value">
+        Administrator
       </div>
 
     </div>
 
 
     <div class="status">
-      🔒 Administrator access verified.
+      ✅ Admin access verified successfully.
     </div>
 
   </section>
@@ -325,7 +271,7 @@ h1{
     </h2>
 
     <div class="info">
-      User management and advanced storage controls can be added here later.
+      Admin tools can be added here later.
     </div>
 
   </section>
@@ -333,204 +279,72 @@ h1{
 </main>
 
 
-<section
-  id="denied"
-  class="denied"
->
-
-  <h1>
-    🚫 Access Denied
-  </h1>
-
-  <p>
-    This Supabase account is not authorized to access the administrator dashboard.
-  </p>
-
-</section>
-
-
 <script>
 
 /* =================================
-   SUPABASE CONFIG
+   ADMIN SESSION
 ================================= */
 
-const SUPABASE_URL =
-  "https://asdbxlnttlsuhhnqeywa.supabase.co";
-
-const SUPABASE_PUBLISHABLE_KEY =
-  "sb_publishable_GIzm11dFWDJmu9cQGAJy_w_432UbSU5";
-
-
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
+const ADMIN_SESSION_KEY =
+  "rishi_x_admin_logged_in";
 
 
 /* =================================
-   ADMIN UID
+   CHECK ADMIN LOGIN
 ================================= */
 
-const ADMIN_UID =
-  "f3ffeb51-70a6-4a44-99fb-f4ff1fa2aedf";
+function checkAdminLogin(){
 
-
-/* =================================
-   CHECK ADMIN ACCESS
-================================= */
-
-async function checkAdmin(){
-
-  const loading =
-    document.getElementById("loading");
-
-  try{
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient.auth.getSession();
-
-
-    if(error){
-
-      console.error(error);
-
-      window.location.href =
-        "index.html";
-
-      return;
-
-    }
-
-
-    if(
-      !data ||
-      !data.session ||
-      !data.session.user
-    ){
-
-      window.location.href =
-        "index.html";
-
-      return;
-
-    }
-
-
-    const user =
-      data.session.user;
-
-
-    /*
-      IMPORTANT:
-      Only the specified Supabase
-      user can access this page.
-    */
-
-    if(user.id !== ADMIN_UID){
-
-      loading.style.display =
-        "none";
-
-      document.getElementById(
-        "denied"
-      ).style.display =
-        "block";
-
-      return;
-
-    }
-
-
-    /* =============================
-       ADMIN VERIFIED
-    ============================= */
-
-    document.getElementById(
-      "adminEmail"
-    ).textContent =
-      user.email || "Not available";
-
-
-    document.getElementById(
-      "adminUid"
-    ).textContent =
-      user.id;
-
-
-    loading.style.display =
-      "none";
-
-
-    document.getElementById(
-      "adminContent"
-    ).style.display =
-      "block";
-
-
-  }catch(error){
-
-    console.error(error);
-
-    loading.textContent =
-      "Unable to verify administrator access.";
-
-  }
-
-}
-
-
-/* =================================
-   DASHBOARD
-================================= */
-
-function goDashboard(){
-
-  window.location.href =
-    "dashboard-new.html";
-
-}
-
-
-/* =================================
-   LOGOUT
-================================= */
-
-async function logout(){
-
-  const {
-    error
-  } =
-    await supabaseClient.auth.signOut();
-
-
-  if(error){
-
-    alert(
-      "Logout failed: " +
-      error.message
+  const loggedIn =
+    sessionStorage.getItem(
+      ADMIN_SESSION_KEY
     );
 
-    return;
+  if(loggedIn !== "true"){
 
+    window.location.href =
+      "admin.html";
+
+    return false;
   }
 
+  return true;
+}
+
+
+/* =================================
+   USER DASHBOARD
+================================= */
+
+function goUserDashboard(){
 
   window.location.href =
-    "index.html";
+    "dashboard.html";
+
+}
+
+
+/* =================================
+   ADMIN LOGOUT
+================================ */
+
+function logoutAdmin(){
+
+  sessionStorage.removeItem(
+    ADMIN_SESSION_KEY
+  );
+
+  window.location.href =
+    "admin.html";
 
 }
 
 
 /* =================================
    START
-================================= */
+================================ */
 
-checkAdmin();
+checkAdminLogin();
 
 </script>
 
