@@ -155,17 +155,25 @@ button:disabled{
 
 <script>
 
-/* ================================
+/* =================================
    ADMIN ID
-================================ */
+================================= */
 
 const ADMIN_ID =
   "f3ffeb51-70a6-4a44-99fb-f4ff1fa2aedf";
 
 
-/* ================================
+/* =================================
+   SESSION KEY
+================================= */
+
+const ADMIN_SESSION_KEY =
+  "rishi_x_admin_logged_in";
+
+
+/* =================================
    LOGIN
-================================ */
+================================= */
 
 function login(){
 
@@ -182,6 +190,8 @@ function login(){
     document.getElementById("loginButton");
 
 
+  /* Empty ID */
+
   if(!input){
 
     message.textContent =
@@ -191,6 +201,8 @@ function login(){
 
   }
 
+
+  /* Wrong ID */
 
   if(input !== ADMIN_ID){
 
@@ -202,12 +214,26 @@ function login(){
   }
 
 
+  /* Correct ID */
+
   button.disabled = true;
-  button.textContent = "VERIFYING...";
+
+  button.textContent =
+    "VERIFYING...";
 
   message.textContent =
     "✅ Admin ID verified.";
 
+
+  /* Save admin login */
+
+  sessionStorage.setItem(
+    ADMIN_SESSION_KEY,
+    "true"
+  );
+
+
+  /* Open Admin Dashboard */
 
   setTimeout(function(){
 
@@ -219,9 +245,9 @@ function login(){
 }
 
 
-/* ================================
-   BACK
-================================ */
+/* =================================
+   BACK TO WEBSITE
+================================= */
 
 function goBack(){
 
@@ -231,9 +257,9 @@ function goBack(){
 }
 
 
-/* ================================
-   ENTER KEY
-================================ */
+/* =================================
+   ENTER KEY LOGIN
+================================= */
 
 document
   .getElementById("adminId")
@@ -242,7 +268,9 @@ document
     function(event){
 
       if(event.key === "Enter"){
+
         login();
+
       }
 
     }
