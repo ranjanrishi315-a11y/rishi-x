@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<title>RISHI X Admin Dashboard</title>
+<title>RISHI X • Admin Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{
@@ -38,12 +40,23 @@ header{
   text-shadow:0 0 15px #ff6a00;
 }
 
-.logout{
-  padding:9px 15px;
+.header-buttons{
+  display:flex;
+  gap:10px;
+}
+
+.header-buttons button{
+  padding:9px 14px;
   border:1px solid #ff6a00;
   border-radius:8px;
   color:white;
   background:transparent;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.header-buttons button:hover{
+  background:#ff6a00;
 }
 
 main{
@@ -94,18 +107,78 @@ h1{
   border-radius:15px;
 }
 
-.empty{
-  margin-top:15px;
-  padding:25px;
-  text-align:center;
-  color:#777;
+.info{
+  padding:15px;
+  margin-top:12px;
   background:#080808;
+  border:1px solid #292929;
   border-radius:10px;
 }
 
+.label{
+  color:#777;
+  font-size:11px;
+  margin-bottom:6px;
+}
+
+.value{
+  word-break:break-all;
+}
+
+.status{
+  margin-top:15px;
+  padding:12px;
+  text-align:center;
+  border-radius:10px;
+  background:#092014;
+  border:1px solid #1d7138;
+  color:#63e69a;
+}
+
+.loading{
+  padding:80px 20px;
+  text-align:center;
+  color:#888;
+}
+
+.denied{
+  display:none;
+  width:92%;
+  max-width:500px;
+  margin:100px auto;
+  padding:30px;
+  text-align:center;
+  background:#111;
+  border:1px solid #ff3d00;
+  border-radius:18px;
+}
+
+.denied h1{
+  color:#ff5b28;
+  margin-bottom:12px;
+}
+
+.denied p{
+  color:#999;
+}
+
 @media(max-width:600px){
+
   .grid{
     grid-template-columns:1fr;
+  }
+
+  .logo{
+    font-size:20px;
+  }
+
+  .header-buttons button{
+    padding:8px 10px;
+    font-size:11px;
+  }
+
+  main{
+    margin-top:25px;
   }
 }
 </style>
@@ -115,65 +188,351 @@ h1{
 
 <header>
 
-  <div class="logo">👑 RISHI X</div>
+  <div class="logo">
+    👑 RISHI X
+  </div>
 
-  <button
-    class="logout"
-    onclick="logout()">
-    Logout
-  </button>
+  <div class="header-buttons">
+
+    <button onclick="goDashboard()">
+      🏠 Dashboard
+    </button>
+
+    <button onclick="logout()">
+      Logout
+    </button>
+
+  </div>
 
 </header>
 
-<main>
 
-  <h1>Admin Dashboard</h1>
+<div
+  id="loading"
+  class="loading"
+>
+  🔐 Checking administrator access...
+</div>
+
+
+<main
+  id="adminContent"
+  style="display:none;"
+>
+
+  <h1>
+    Admin Dashboard
+  </h1>
 
   <p class="subtitle">
-    Manage your RISHI X platform
+    Welcome to the RISHI X administration area.
   </p>
 
-  <div class="grid">
+
+  <section class="grid">
 
     <div class="card">
-      <h3>Total Users</h3>
-      <div class="number" id="users">0</div>
+
+      <h3>
+        ACCESS LEVEL
+      </h3>
+
+      <div class="number">
+        ADMIN
+      </div>
+
     </div>
+
 
     <div class="card">
-      <h3>Total Files</h3>
-      <div class="number" id="files">0</div>
+
+      <h3>
+        ACCOUNT STATUS
+      </h3>
+
+      <div class="number">
+        ACTIVE
+      </div>
+
     </div>
 
-  </div>
+  </section>
 
-  <div class="section">
 
-    <h2>👥 Users</h2>
+  <section class="section">
 
-    <div class="empty">
-      Backend/database not connected yet.
+    <h2>
+      👑 Administrator Information
+    </h2>
+
+
+    <div class="info">
+
+      <div class="label">
+        ADMIN EMAIL
+      </div>
+
+      <div
+        class="value"
+        id="adminEmail"
+      >
+        Loading...
+      </div>
+
     </div>
 
-  </div>
 
-  <div class="section">
+    <div class="info">
 
-    <h2>📁 Files</h2>
+      <div class="label">
+        ADMIN UID
+      </div>
 
-    <div class="empty">
-      Backend/database not connected yet.
+      <div
+        class="value"
+        id="adminUid"
+      >
+        Loading...
+      </div>
+
     </div>
 
-  </div>
+
+    <div class="info">
+
+      <div class="label">
+        AUTHENTICATION
+      </div>
+
+      <div class="value">
+        Supabase authenticated session
+      </div>
+
+    </div>
+
+
+    <div class="status">
+      🔒 Administrator access verified.
+    </div>
+
+  </section>
+
+
+  <section class="section">
+
+    <h2>
+      🛠️ Admin Tools
+    </h2>
+
+    <div class="info">
+      User management and advanced storage controls can be added here later.
+    </div>
+
+  </section>
 
 </main>
 
+
+<section
+  id="denied"
+  class="denied"
+>
+
+  <h1>
+    🚫 Access Denied
+  </h1>
+
+  <p>
+    This Supabase account is not authorized to access the administrator dashboard.
+  </p>
+
+</section>
+
+
 <script>
 
-function logout(){
+/* =================================
+   SUPABASE CONFIG
+================================= */
+
+const SUPABASE_URL =
+  "https://asdbxlnttlsuhhnqeywa.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_GIzm11dFWDJmu9cQGAJy_w_432UbSU5";
+
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+
+/* =================================
+   ADMIN UID
+================================= */
+
+const ADMIN_UID =
+  "f3ffeb51-70a6-4a44-99fb-f4ff1fa2aedf";
+
+
+/* =================================
+   CHECK ADMIN ACCESS
+================================= */
+
+async function checkAdmin(){
+
+  const loading =
+    document.getElementById("loading");
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient.auth.getSession();
+
+
+    if(error){
+
+      console.error(error);
+
+      window.location.href =
+        "index.html";
+
+      return;
+
+    }
+
+
+    if(
+      !data ||
+      !data.session ||
+      !data.session.user
+    ){
+
+      window.location.href =
+        "index.html";
+
+      return;
+
+    }
+
+
+    const user =
+      data.session.user;
+
+
+    /*
+      IMPORTANT:
+      Only the specified Supabase
+      user can access this page.
+    */
+
+    if(user.id !== ADMIN_UID){
+
+      loading.style.display =
+        "none";
+
+      document.getElementById(
+        "denied"
+      ).style.display =
+        "block";
+
+      return;
+
+    }
+
+
+    /* =============================
+       ADMIN VERIFIED
+    ============================= */
+
+    document.getElementById(
+      "adminEmail"
+    ).textContent =
+      user.email || "Not available";
+
+
+    document.getElementById(
+      "adminUid"
+    ).textContent =
+      user.id;
+
+
+    loading.style.display =
+      "none";
+
+
+    document.getElementById(
+      "adminContent"
+    ).style.display =
+      "block";
+
+
+  }catch(error){
+
+    console.error(error);
+
+    loading.textContent =
+      "Unable to verify administrator access.";
+
+  }
+
+}
+
+
+/* =================================
+   DASHBOARD
+================================= */
+
+function goDashboard(){
+
+  window.location.href =
+    "dashboard-new.html";
+
+}
+
+
+/* =================================
+   LOGOUT
+================================= */
+
+async function logout(){
+
+  const {
+    error
+  } =
+    await supabaseClient.auth.signOut();
+
+
+  if(error){
+
+    alert(
+      "Logout failed: " +
+      error.message
+    );
+
+    return;
+
+  }
+
 
   window.location.href =
     "index.html";
 
 }
+
+
+/* =================================
+   START
+================================= */
+
+checkAdmin();
+
+</script>
+
+</body>
+</html>
