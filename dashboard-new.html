@@ -20,34 +20,38 @@ body{
   font-family:Arial,sans-serif;
   color:#fff;
   background:
-    radial-gradient(circle at top,#401500,transparent 45%),
+    radial-gradient(circle at top,#4a1900,transparent 42%),
     #050505;
 }
 
 header{
+  position:sticky;
+  top:0;
+  z-index:10;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:18px 5%;
-  background:#090909;
+  padding:16px 5%;
+  background:rgba(8,8,8,.94);
   border-bottom:1px solid #252525;
+  backdrop-filter:blur(12px);
 }
 
 .logo{
   color:#ff6a00;
-  font-size:25px;
+  font-size:23px;
   font-weight:900;
-  text-shadow:0 0 15px #ff6a00;
+  text-shadow:0 0 15px rgba(255,106,0,.6);
 }
 
 .logout{
-  padding:9px 16px;
+  padding:9px 15px;
   border:1px solid #ff6a00;
-  border-radius:8px;
+  border-radius:9px;
   background:transparent;
   color:#fff;
-  cursor:pointer;
   font-weight:bold;
+  cursor:pointer;
 }
 
 .logout:hover{
@@ -56,12 +60,12 @@ header{
 
 main{
   width:92%;
-  max-width:1000px;
-  margin:35px auto;
+  max-width:1050px;
+  margin:30px auto 50px;
 }
 
 .welcome{
-  margin-bottom:25px;
+  margin-bottom:24px;
 }
 
 .welcome h1{
@@ -69,47 +73,48 @@ main{
 }
 
 .welcome p{
-  color:#888;
   margin-top:7px;
+  color:#777;
+  font-size:13px;
+  word-break:break-all;
 }
 
 .upload{
   padding:25px;
-  background:#111;
-  border:1px solid #ff6a00;
-  border-radius:18px;
-  text-align:center;
-  box-shadow:0 0 25px #ff6a0025;
+  background:#101010;
+  border:1px solid rgba(255,106,0,.4);
+  border-radius:20px;
+  box-shadow:0 0 30px rgba(255,106,0,.08);
 }
 
 .upload h2{
-  margin-bottom:10px;
+  margin-bottom:8px;
 }
 
 .upload p{
-  color:#888;
-  font-size:14px;
+  color:#777;
+  font-size:13px;
 }
 
 .file-input{
   width:100%;
-  margin-top:20px;
-  padding:15px;
+  margin-top:18px;
+  padding:14px;
   border:1px dashed #ff6a00;
-  border-radius:10px;
+  border-radius:11px;
   background:#070707;
   color:#aaa;
 }
 
 .upload-btn{
   width:100%;
-  margin-top:15px;
+  margin-top:12px;
   padding:14px;
   border:0;
-  border-radius:10px;
+  border-radius:11px;
   background:linear-gradient(90deg,#ff3d00,#ff8500);
-  color:white;
-  font-weight:bold;
+  color:#fff;
+  font-weight:800;
   cursor:pointer;
 }
 
@@ -120,25 +125,33 @@ main{
 
 #message{
   min-height:20px;
-  margin-top:15px;
+  margin-top:13px;
   color:#ff9b63;
-  font-size:13px;
+  font-size:12px;
 }
 
 .files{
-  margin-top:30px;
+  margin-top:28px;
 }
 
-.files h2{
-  margin-bottom:15px;
+.files-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:14px;
+}
+
+.files-title h2{
+  font-size:21px;
 }
 
 .search{
   width:100%;
   padding:13px;
-  margin-bottom:15px;
-  border:1px solid #333;
-  border-radius:10px;
+  margin-bottom:16px;
+  border:1px solid #303030;
+  border-radius:11px;
   background:#090909;
   color:#fff;
   outline:none;
@@ -150,26 +163,33 @@ main{
 
 .file-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
   gap:15px;
 }
 
 .file-card{
   overflow:hidden;
   background:#0d0d0d;
-  border:1px solid #252525;
-  border-radius:14px;
+  border:1px solid #242424;
+  border-radius:15px;
+  transition:.2s;
+}
+
+.file-card:hover{
+  border-color:#ff6a00;
+  transform:translateY(-2px);
 }
 
 .preview{
   width:100%;
-  height:180px;
+  height:175px;
   display:flex;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
   background:#070707;
   color:#777;
   overflow:hidden;
+  font-size:45px;
 }
 
 .preview img{
@@ -184,6 +204,7 @@ main{
 
 .file-name{
   font-weight:bold;
+  font-size:14px;
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;
@@ -191,26 +212,25 @@ main{
 
 .file-meta{
   margin-top:7px;
-  color:#777;
-  font-size:12px;
+  color:#666;
+  font-size:11px;
 }
 
 .actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
+  display:flex;
   gap:8px;
   margin-top:12px;
 }
 
 .actions button{
-  padding:9px 6px;
+  flex:1;
+  padding:9px;
   border:1px solid #ff6a00;
-  border-radius:7px;
+  border-radius:8px;
   background:transparent;
   color:#fff;
-  cursor:pointer;
   font-weight:bold;
-  font-size:12px;
+  cursor:pointer;
 }
 
 .actions button:hover{
@@ -225,32 +245,11 @@ main{
   background:#ff3d00;
 }
 
-.share-row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-top:8px;
-}
-
-.share-row button{
-  padding:9px 6px;
-  border:1px solid #ff8500;
-  border-radius:7px;
-  background:#17100b;
-  color:#fff;
-  cursor:pointer;
-  font-weight:bold;
-  font-size:12px;
-}
-
-.share-row button:hover{
-  background:#ff8500;
-}
-
 .empty{
-  padding:30px;
+  grid-column:1/-1;
+  padding:35px 20px;
   text-align:center;
-  color:#777;
+  color:#666;
   border:1px solid #222;
   border-radius:15px;
   background:#0d0d0d;
@@ -258,17 +257,34 @@ main{
 
 @media(max-width:600px){
 
-  .file-grid{
-    grid-template-columns:1fr;
+  header{
+    padding:14px 4%;
+  }
+
+  .logo{
+    font-size:19px;
+  }
+
+  .logout{
+    padding:8px 12px;
+    font-size:12px;
+  }
+
+  main{
+    width:94%;
+    margin-top:24px;
   }
 
   .welcome h1{
     font-size:25px;
   }
 
-  .actions button,
-  .share-row button{
-    font-size:11px;
+  .upload{
+    padding:20px;
+  }
+
+  .file-grid{
+    grid-template-columns:1fr;
   }
 }
 </style>
@@ -282,23 +298,14 @@ main{
     ⚡ RISHI X
   </div>
 
-  <div style="display:flex;gap:10px;align-items:center;">
-
-    <button
-      class="logout"
-      onclick="goProfile()">
-      👤 Profile
-    </button>
-
-    <button
-      class="logout"
-      onclick="logout()">
-      Logout
-    </button>
-
-  </div>
+  <button
+    class="logout"
+    onclick="logout()">
+    LOGOUT
+  </button>
 
 </header>
+
 
 <main>
 
@@ -322,7 +329,7 @@ main{
   </h2>
 
   <p>
-    Upload your private files securely.
+    Store your private files securely.
   </p>
 
   <input
@@ -334,9 +341,10 @@ main{
   <button
     class="upload-btn"
     id="uploadButton"
-    onclick="uploadFile()"
-  >
+    onclick="uploadFile()">
+
     UPLOAD FILE
+
   </button>
 
   <p id="message"></p>
@@ -346,9 +354,9 @@ main{
 
 <section class="files">
 
-  <h2>
-    🗂️ My Files
-  </h2>
+  <div class="files-title">
+    <h2>🗂️ My Files</h2>
+  </div>
 
   <input
     class="search"
@@ -360,11 +368,12 @@ main{
 
   <div
     id="fileList"
-    class="file-grid"
-  >
+    class="file-grid">
+
     <div class="empty">
       Loading files...
     </div>
+
   </div>
 
 </section>
@@ -374,9 +383,9 @@ main{
 
 <script>
 
-/* ================================
-   SUPABASE CONFIGURATION
-================================ */
+/* =================================
+   SUPABASE
+================================= */
 
 const SUPABASE_URL =
   "https://asdbxlnttlsuhhnqeywa.supabase.co";
@@ -399,9 +408,9 @@ let currentUser = null;
 let allFiles = [];
 
 
-/* ================================
+/* =================================
    MESSAGE
-================================ */
+================================= */
 
 function showMessage(text){
 
@@ -412,14 +421,16 @@ function showMessage(text){
 }
 
 
-/* ================================
+/* =================================
    CHECK LOGIN
-================================ */
+================================= */
 
 async function checkLogin(){
 
   const {data,error} =
-    await supabaseClient.auth.getSession();
+    await supabaseClient.auth
+      .getSession();
+
 
   if(error || !data.session){
 
@@ -427,24 +438,28 @@ async function checkLogin(){
       "index.html";
 
     return;
+
   }
+
 
   currentUser =
     data.session.user;
+
 
   document.getElementById(
     "userEmail"
   ).textContent =
     currentUser.email;
 
+
   await loadFiles();
 
 }
 
 
-/* ================================
-   UPLOAD FILE
-================================ */
+/* =================================
+   UPLOAD
+================================= */
 
 async function uploadFile(){
 
@@ -454,6 +469,7 @@ async function uploadFile(){
   const file =
     input.files[0];
 
+
   if(!file){
 
     showMessage(
@@ -461,7 +477,9 @@ async function uploadFile(){
     );
 
     return;
+
   }
+
 
   if(!currentUser){
 
@@ -470,6 +488,7 @@ async function uploadFile(){
     );
 
     return;
+
   }
 
 
@@ -478,9 +497,12 @@ async function uploadFile(){
       "uploadButton"
     );
 
+
   button.disabled = true;
+
   button.textContent =
     "UPLOADING...";
+
 
   showMessage(
     "Uploading file..."
@@ -516,6 +538,7 @@ async function uploadFile(){
 
 
   button.disabled = false;
+
   button.textContent =
     "UPLOAD FILE";
 
@@ -528,10 +551,12 @@ async function uploadFile(){
     );
 
     return;
+
   }
 
 
   input.value = "";
+
 
   showMessage(
     "✅ File uploaded successfully!"
@@ -543,9 +568,9 @@ async function uploadFile(){
 }
 
 
-/* ================================
+/* =================================
    LOAD FILES
-================================ */
+================================= */
 
 async function loadFiles(){
 
@@ -553,6 +578,7 @@ async function loadFiles(){
     document.getElementById(
       "fileList"
     );
+
 
   fileList.innerHTML =
     '<div class="empty">Loading files...</div>';
@@ -580,6 +606,7 @@ async function loadFiles(){
       '<div class="empty">Unable to load files.</div>';
 
     return;
+
   }
 
 
@@ -592,9 +619,9 @@ async function loadFiles(){
 }
 
 
-/* ================================
-   RENDER FILES
-================================ */
+/* =================================
+   RENDER
+================================= */
 
 function renderFiles(files){
 
@@ -610,6 +637,7 @@ function renderFiles(files){
       '<div class="empty">No files found.</div>';
 
     return;
+
   }
 
 
@@ -643,21 +671,17 @@ function renderFiles(files){
         .toLowerCase();
 
 
-    const imageTypes =
-      [
-        "jpg",
-        "jpeg",
-        "png",
-        "gif",
-        "webp"
-      ];
+    const imageTypes = [
+      "jpg",
+      "jpeg",
+      "png",
+      "gif",
+      "webp",
+      "bmp"
+    ];
 
 
-    if(
-      imageTypes.includes(
-        extension
-      )
-    ){
+    if(imageTypes.includes(extension)){
 
       const img =
         document.createElement(
@@ -665,26 +689,24 @@ function renderFiles(files){
         );
 
 
-      createPreviewUrl(
-        file.name
-      ).then(url => {
+      createPreviewUrl(file.name)
+        .then(url => {
 
-        if(url){
+          if(url){
 
-          img.src = url;
+            img.src = url;
 
-        }else{
+          }else{
 
-          preview.textContent =
-            "🖼️";
+            preview.textContent =
+              "🖼️";
 
-        }
+          }
 
-      });
+        });
 
 
       preview.appendChild(img);
-
 
     }else{
 
@@ -725,12 +747,8 @@ function renderFiles(files){
 
     meta.textContent =
       "Uploaded: " +
-      formatDate(
-        file.created_at
-      );
+      formatDate(file.created_at);
 
-
-    /* ACTION BUTTONS */
 
     const actions =
       document.createElement(
@@ -750,9 +768,7 @@ function renderFiles(files){
       "OPEN";
 
     openBtn.onclick =
-      () => openFile(
-        file.name
-      );
+      () => openFile(file.name);
 
 
     const deleteBtn =
@@ -767,9 +783,7 @@ function renderFiles(files){
       "delete";
 
     deleteBtn.onclick =
-      () => deleteFile(
-        file.name
-      );
+      () => deleteFile(file.name);
 
 
     actions.appendChild(
@@ -781,92 +795,25 @@ function renderFiles(files){
     );
 
 
-    /* SHARE BUTTONS */
-
-    const shareRow =
-      document.createElement(
-        "div"
-      );
-
-    shareRow.className =
-      "share-row";
+    info.appendChild(name);
+    info.appendChild(meta);
+    info.appendChild(actions);
 
 
-    const shareBtn =
-      document.createElement(
-        "button"
-      );
-
-    shareBtn.textContent =
-      "🔗 SHARE";
-
-    shareBtn.onclick =
-      () => shareFile(
-        file.name
-      );
+    card.appendChild(preview);
+    card.appendChild(info);
 
 
-    const copyBtn =
-      document.createElement(
-        "button"
-      );
-
-    copyBtn.textContent =
-      "📋 COPY LINK";
-
-    copyBtn.onclick =
-      () => copyShareLink(
-        file.name
-      );
-
-
-    shareRow.appendChild(
-      shareBtn
-    );
-
-    shareRow.appendChild(
-      copyBtn
-    );
-
-
-    info.appendChild(
-      name
-    );
-
-    info.appendChild(
-      meta
-    );
-
-    info.appendChild(
-      actions
-    );
-
-    info.appendChild(
-      shareRow
-    );
-
-
-    card.appendChild(
-      preview
-    );
-
-    card.appendChild(
-      info
-    );
-
-
-    fileList.appendChild(
-      card
-    );
+    fileList.appendChild(card);
 
   });
 
 }
 
 
-/* ================================
+/* =================================
    PREVIEW URL
-================================ */
+================================= */
 
 async function createPreviewUrl(
   fileName
@@ -899,9 +846,9 @@ async function createPreviewUrl(
 }
 
 
-/* ================================
+/* =================================
    OPEN FILE
-================================ */
+================================= */
 
 async function openFile(
   fileName
@@ -930,6 +877,7 @@ async function openFile(
     );
 
     return;
+
   }
 
 
@@ -941,219 +889,9 @@ async function openFile(
 }
 
 
-/* ================================
-   CREATE SHARE LINK
-   VALID FOR 10 MINUTES
-================================ */
-
-async function getShareLink(
-  fileName
-){
-
-  const path =
-    currentUser.id +
-    "/" +
-    fileName;
-
-
-  const {data,error} =
-    await supabaseClient.storage
-      .from(BUCKET_NAME)
-      .createSignedUrl(
-        path,
-        600
-      );
-
-
-  if(error){
-
-    showMessage(
-      "Unable to create share link: " +
-      error.message
-    );
-
-    return null;
-  }
-
-
-  return data.signedUrl;
-
-}
-
-
-/* ================================
-   SHARE FILE
-================================ */
-
-async function shareFile(
-  fileName
-){
-
-  showMessage(
-    "Creating secure share link..."
-  );
-
-
-  const shareUrl =
-    await getShareLink(
-      fileName
-    );
-
-
-  if(!shareUrl){
-
-    return;
-  }
-
-
-  /* Android / browser share */
-
-  if(
-    navigator.share
-  ){
-
-    try{
-
-      await navigator.share({
-
-        title:
-          "RISHI X - Shared File",
-
-        text:
-          "Here is a file shared from RISHI X.",
-
-        url:
-          shareUrl
-
-      });
-
-
-      showMessage(
-        "✅ Share menu opened."
-      );
-
-      return;
-
-    }catch(error){
-
-      /* User closed share menu */
-
-      if(
-        error.name ===
-        "AbortError"
-      ){
-
-        showMessage(
-          "Share cancelled."
-        );
-
-        return;
-      }
-
-    }
-
-  }
-
-
-  /* Fallback: Copy */
-
-  try{
-
-    await navigator.clipboard.writeText(
-      shareUrl
-    );
-
-    showMessage(
-      "✅ Share link copied!"
-    );
-
-  }catch(error){
-
-    showMessage(
-      "Copy failed. Please use COPY LINK."
-    );
-
-  }
-
-}
-
-
-/* ================================
-   COPY SHARE LINK
-================================ */
-
-async function copyShareLink(
-  fileName
-){
-
-  showMessage(
-    "Creating secure link..."
-  );
-
-
-  const shareUrl =
-    await getShareLink(
-      fileName
-    );
-
-
-  if(!shareUrl){
-
-    return;
-  }
-
-
-  try{
-
-    await navigator.clipboard.writeText(
-      shareUrl
-    );
-
-
-    showMessage(
-      "✅ Secure share link copied!"
-    );
-
-
-  }catch(error){
-
-    /* Fallback for browsers */
-
-    const textArea =
-      document.createElement(
-        "textarea"
-      );
-
-    textArea.value =
-      shareUrl;
-
-    document.body.appendChild(
-      textArea
-    );
-
-    textArea.select();
-
-    document.execCommand(
-      "copy"
-    );
-
-    document.body.removeChild(
-      textArea
-    );
-
-
-    showMessage(
-      "✅ Share link copied!"
-    );
-
-  }
-
-}
-
-
-/* ================================
-   DELETE FILE
-================================ */
+/* =================================
+   DELETE
+================================= */
 
 async function deleteFile(
   fileName
@@ -1181,9 +919,7 @@ async function deleteFile(
   const {error} =
     await supabaseClient.storage
       .from(BUCKET_NAME)
-      .remove([
-        path
-      ]);
+      .remove([path]);
 
 
   if(error){
@@ -1194,6 +930,7 @@ async function deleteFile(
     );
 
     return;
+
   }
 
 
@@ -1207,19 +944,18 @@ async function deleteFile(
 }
 
 
-/* ================================
+/* =================================
    SEARCH
-================================ */
+================================= */
 
 function filterFiles(){
 
   const query =
-    document.getElementById(
-      "search"
-    )
-    .value
-    .toLowerCase()
-    .trim();
+    document
+      .getElementById("search")
+      .value
+      .toLowerCase()
+      .trim();
 
 
   const filtered =
@@ -1230,20 +966,16 @@ function filterFiles(){
     );
 
 
-  renderFiles(
-    filtered
-  );
+  renderFiles(filtered);
 
 }
 
 
-/* ================================
+/* =================================
    DATE
-================================ */
+================================= */
 
-function formatDate(
-  date
-){
+function formatDate(date){
 
   if(!date){
 
@@ -1252,21 +984,21 @@ function formatDate(
   }
 
 
-  return new Date(
-    date
-  ).toLocaleString();
+  return new Date(date)
+    .toLocaleString();
 
 }
 
 
-/* ================================
+/* =================================
    LOGOUT
-================================ */
+================================= */
 
 async function logout(){
 
   const {error} =
-    await supabaseClient.auth.signOut();
+    await supabaseClient.auth
+      .signOut();
 
 
   if(error){
@@ -1277,6 +1009,7 @@ async function logout(){
     );
 
     return;
+
   }
 
 
@@ -1286,9 +1019,9 @@ async function logout(){
 }
 
 
-/* ================================
+/* =================================
    START
-================================ */
+================================= */
 
 checkLogin();
 
