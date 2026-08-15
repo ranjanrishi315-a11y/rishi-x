@@ -86,7 +86,7 @@ main{
   box-shadow:0 0 30px #ff6a0025;
 }
 
-.admin-badge{
+.badge{
   display:inline-block;
   padding:7px 12px;
   margin-bottom:18px;
@@ -113,8 +113,8 @@ main{
 }
 
 .value{
-  word-break:break-all;
   font-size:15px;
+  word-break:break-all;
 }
 
 .status{
@@ -126,6 +126,12 @@ main{
   border:1px solid #1d7138;
   color:#63e69a;
   font-size:13px;
+}
+
+.loading{
+  padding:70px 20px;
+  text-align:center;
+  color:#888;
 }
 
 .denied{
@@ -149,21 +155,7 @@ main{
   color:#999;
 }
 
-.loading{
-  text-align:center;
-  padding:70px 20px;
-  color:#888;
-}
-
-#adminContent{
-  display:none;
-}
-
 @media(max-width:600px){
-
-  header{
-    padding:15px 4%;
-  }
 
   .logo{
     font-size:20px;
@@ -208,11 +200,14 @@ main{
   id="loading"
   class="loading"
 >
-  🔐 Verifying admin access...
+  🔐 Checking admin access...
 </div>
 
 
-<main id="adminContent">
+<main
+  id="adminContent"
+  style="display:none;"
+>
 
   <section class="welcome">
 
@@ -221,7 +216,7 @@ main{
     </h1>
 
     <p>
-      RISHI X administration dashboard.
+      RISHI X administration dashboard
     </p>
 
   </section>
@@ -229,7 +224,7 @@ main{
 
   <section class="admin-card">
 
-    <div class="admin-badge">
+    <div class="badge">
       ✓ ADMIN ACCESS VERIFIED
     </div>
 
@@ -253,12 +248,12 @@ main{
     <div class="info">
 
       <div class="label">
-        ADMIN USER ID
+        ADMIN UID
       </div>
 
       <div
         class="value"
-        id="adminId"
+        id="adminUid"
       >
         Loading...
       </div>
@@ -280,7 +275,7 @@ main{
 
 
     <div class="status">
-      🔒 You are securely authenticated as the RISHI X administrator.
+      🔒 Your Supabase account is verified as administrator.
     </div>
 
   </section>
@@ -298,7 +293,7 @@ main{
   </h1>
 
   <p>
-    This account is not authorized to access the RISHI X Admin Panel.
+    This account is not authorized to access the Admin Panel.
   </p>
 
 </section>
@@ -306,9 +301,9 @@ main{
 
 <script>
 
-/* =================================
-   SUPABASE CONFIG
-================================= */
+/* ================================
+   SUPABASE
+================================ */
 
 const SUPABASE_URL =
   "https://asdbxlnttlsuhhnqeywa.supabase.co";
@@ -324,17 +319,17 @@ const supabaseClient =
   );
 
 
-/* =================================
-   YOUR ADMIN UID
-================================= */
+/* ================================
+   ADMIN UID
+================================ */
 
 const ADMIN_UID =
   "f3ffeb51-70a6-4a44-99fb-f4ff1fa2aedf";
 
 
-/* =================================
+/* ================================
    CHECK ADMIN
-================================= */
+================================ */
 
 async function checkAdmin(){
 
@@ -344,8 +339,6 @@ async function checkAdmin(){
   } =
     await supabaseClient.auth.getSession();
 
-
-  /* No valid session */
 
   if(
     error ||
@@ -364,8 +357,6 @@ async function checkAdmin(){
     data.session.user;
 
 
-  /* UID verification */
-
   if(
     user.id !== ADMIN_UID
   ){
@@ -375,21 +366,15 @@ async function checkAdmin(){
     ).style.display =
       "none";
 
-
     document.getElementById(
       "denied"
     ).style.display =
       "block";
 
-
     return;
 
   }
 
-
-  /* =================================
-     ADMIN VERIFIED
-  ================================= */
 
   document.getElementById(
     "adminEmail"
@@ -398,7 +383,7 @@ async function checkAdmin(){
 
 
   document.getElementById(
-    "adminId"
+    "adminUid"
   ).textContent =
     user.id;
 
@@ -417,9 +402,9 @@ async function checkAdmin(){
 }
 
 
-/* =================================
+/* ================================
    DASHBOARD
-================================= */
+================================ */
 
 function goDashboard(){
 
@@ -429,9 +414,9 @@ function goDashboard(){
 }
 
 
-/* =================================
+/* ================================
    LOGOUT
-================================= */
+================================ */
 
 async function logout(){
 
@@ -459,9 +444,9 @@ async function logout(){
 }
 
 
-/* =================================
+/* ================================
    START
-================================= */
+================================ */
 
 checkAdmin();
 
