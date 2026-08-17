@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -24,16 +26,22 @@ body{
     #050505;
 }
 
+/* HEADER */
+
 header{
   position:sticky;
   top:0;
   z-index:10;
+
   display:flex;
   justify-content:space-between;
   align-items:center;
+
   padding:16px 5%;
+
   background:rgba(8,8,8,.94);
   border-bottom:1px solid #252525;
+
   backdrop-filter:blur(12px);
 }
 
@@ -41,15 +49,20 @@ header{
   color:#ff6a00;
   font-size:23px;
   font-weight:900;
-  text-shadow:0 0 15px rgba(255,106,0,.6);
+
+  text-shadow:
+    0 0 15px rgba(255,106,0,.6);
 }
 
 .logout{
   padding:9px 15px;
+
   border:1px solid #ff6a00;
   border-radius:9px;
+
   background:transparent;
   color:#fff;
+
   font-weight:bold;
   cursor:pointer;
 }
@@ -58,11 +71,16 @@ header{
   background:#ff6a00;
 }
 
+/* MAIN */
+
 main{
   width:92%;
   max-width:1050px;
+
   margin:30px auto 50px;
 }
+
+/* WELCOME */
 
 .welcome{
   margin-bottom:24px;
@@ -74,17 +92,25 @@ main{
 
 .welcome p{
   margin-top:7px;
+
   color:#777;
   font-size:13px;
+
   word-break:break-all;
 }
 
+/* UPLOAD */
+
 .upload{
   padding:25px;
+
   background:#101010;
+
   border:1px solid rgba(255,106,0,.4);
   border-radius:20px;
-  box-shadow:0 0 30px rgba(255,106,0,.08);
+
+  box-shadow:
+    0 0 30px rgba(255,106,0,.08);
 }
 
 .upload h2{
@@ -98,23 +124,33 @@ main{
 
 .file-input{
   width:100%;
+
   margin-top:18px;
   padding:14px;
+
   border:1px dashed #ff6a00;
   border-radius:11px;
+
   background:#070707;
   color:#aaa;
 }
 
 .upload-btn{
   width:100%;
+
   margin-top:12px;
   padding:14px;
+
   border:0;
   border-radius:11px;
-  background:linear-gradient(90deg,#ff3d00,#ff8500);
+
+  background:
+    linear-gradient(90deg,#ff3d00,#ff8500);
+
   color:#fff;
+
   font-weight:800;
+
   cursor:pointer;
 }
 
@@ -125,10 +161,14 @@ main{
 
 #message{
   min-height:20px;
+
   margin-top:13px;
+
   color:#ff9b63;
   font-size:12px;
 }
+
+/* FILES */
 
 .files{
   margin-top:28px;
@@ -138,7 +178,7 @@ main{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:10px;
+
   margin-bottom:14px;
 }
 
@@ -146,14 +186,20 @@ main{
   font-size:21px;
 }
 
+/* SEARCH */
+
 .search{
   width:100%;
+
   padding:13px;
   margin-bottom:16px;
+
   border:1px solid #303030;
   border-radius:11px;
+
   background:#090909;
   color:#fff;
+
   outline:none;
 }
 
@@ -161,17 +207,27 @@ main{
   border-color:#ff6a00;
 }
 
+/* GRID */
+
 .file-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+
+  grid-template-columns:
+    repeat(auto-fill,minmax(230px,1fr));
+
   gap:15px;
 }
 
+/* CARD */
+
 .file-card{
   overflow:hidden;
+
   background:#0d0d0d;
+
   border:1px solid #242424;
   border-radius:15px;
+
   transition:.2s;
 }
 
@@ -180,23 +236,33 @@ main{
   transform:translateY(-2px);
 }
 
+/* PREVIEW */
+
 .preview{
   width:100%;
   height:175px;
+
   display:flex;
   align-items:center;
   justify-content:center;
+
   background:#070707;
+
   color:#777;
+
   overflow:hidden;
+
   font-size:45px;
 }
 
 .preview img{
   width:100%;
   height:100%;
+
   object-fit:cover;
 }
+
+/* INFO */
 
 .file-info{
   padding:14px;
@@ -205,6 +271,7 @@ main{
 .file-name{
   font-weight:bold;
   font-size:14px;
+
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;
@@ -212,30 +279,59 @@ main{
 
 .file-meta{
   margin-top:7px;
+
   color:#666;
   font-size:11px;
 }
 
+/* ACTIONS */
+
 .actions{
-  display:flex;
-  gap:8px;
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:7px;
+
   margin-top:12px;
 }
 
 .actions button{
-  flex:1;
-  padding:9px;
+  min-width:0;
+
+  padding:9px 5px;
+
   border:1px solid #ff6a00;
   border-radius:8px;
+
   background:transparent;
+
   color:#fff;
+
+  font-size:11px;
   font-weight:bold;
+
   cursor:pointer;
+
+  transition:.2s;
 }
 
 .actions button:hover{
   background:#ff6a00;
 }
+
+/* SHARE */
+
+.actions .share{
+  border-color:#00aaff;
+}
+
+.actions .share:hover{
+  background:#00aaff;
+}
+
+/* DELETE */
 
 .actions .delete{
   border-color:#ff3d00;
@@ -245,15 +341,24 @@ main{
   background:#ff3d00;
 }
 
+/* EMPTY */
+
 .empty{
   grid-column:1/-1;
+
   padding:35px 20px;
+
   text-align:center;
+
   color:#666;
+
   border:1px solid #222;
   border-radius:15px;
+
   background:#0d0d0d;
 }
+
+/* MOBILE */
 
 @media(max-width:600px){
 
@@ -286,11 +391,15 @@ main{
   .file-grid{
     grid-template-columns:1fr;
   }
+
 }
+
 </style>
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -301,13 +410,16 @@ main{
   <button
     class="logout"
     onclick="logout()">
+
     LOGOUT
+
   </button>
 
 </header>
 
 
 <main>
+
 
 <section class="welcome">
 
@@ -332,11 +444,13 @@ main{
     Store your private files securely.
   </p>
 
+
   <input
     class="file-input"
     type="file"
     id="file"
   >
+
 
   <button
     class="upload-btn"
@@ -347,6 +461,7 @@ main{
 
   </button>
 
+
   <p id="message"></p>
 
 </section>
@@ -354,9 +469,15 @@ main{
 
 <section class="files">
 
+
   <div class="files-title">
-    <h2>🗂️ My Files</h2>
+
+    <h2>
+      🗂️ My Files
+    </h2>
+
   </div>
+
 
   <input
     class="search"
@@ -365,6 +486,7 @@ main{
     placeholder="🔍 Search your files..."
     oninput="filterFiles()"
   >
+
 
   <div
     id="fileList"
@@ -376,7 +498,9 @@ main{
 
   </div>
 
+
 </section>
+
 
 </main>
 
@@ -384,14 +508,16 @@ main{
 <script>
 
 /* =================================
-   SUPABASE
+   SUPABASE CONFIG
 ================================= */
 
 const SUPABASE_URL =
   "https://asdbxlnttlsuhhnqeywa.supabase.co";
 
+
 const SUPABASE_PUBLISHABLE_KEY =
   "sb_publishable_GIzm11dFWDJmu9cQGAJy_w_432UbSU5";
+
 
 const BUCKET_NAME =
   "user-files";
@@ -405,6 +531,7 @@ const supabaseClient =
 
 
 let currentUser = null;
+
 let allFiles = [];
 
 
@@ -414,9 +541,9 @@ let allFiles = [];
 
 function showMessage(text){
 
-  document.getElementById(
-    "message"
-  ).textContent = text;
+  document
+    .getElementById("message")
+    .textContent = text;
 
 }
 
@@ -446,10 +573,10 @@ async function checkLogin(){
     data.session.user;
 
 
-  document.getElementById(
-    "userEmail"
-  ).textContent =
-    currentUser.email;
+  document
+    .getElementById("userEmail")
+    .textContent =
+      currentUser.email;
 
 
   await loadFiles();
@@ -465,6 +592,7 @@ async function uploadFile(){
 
   const input =
     document.getElementById("file");
+
 
   const file =
     input.files[0];
@@ -592,10 +720,12 @@ async function loadFiles(){
         {
           limit:100,
           offset:0,
+
           sortBy:{
             column:"created_at",
             order:"desc"
           }
+
         }
       );
 
@@ -620,7 +750,7 @@ async function loadFiles(){
 
 
 /* =================================
-   RENDER
+   RENDER FILES
 ================================= */
 
 function renderFiles(files){
@@ -646,19 +776,24 @@ function renderFiles(files){
 
   files.forEach(file => {
 
+
     const card =
       document.createElement(
         "div"
       );
 
+
     card.className =
       "file-card";
 
+
+    /* PREVIEW */
 
     const preview =
       document.createElement(
         "div"
       );
+
 
     preview.className =
       "preview";
@@ -672,16 +807,20 @@ function renderFiles(files){
 
 
     const imageTypes = [
+
       "jpg",
       "jpeg",
       "png",
       "gif",
       "webp",
       "bmp"
+
     ];
 
 
-    if(imageTypes.includes(extension)){
+    if(
+      imageTypes.includes(extension)
+    ){
 
       const img =
         document.createElement(
@@ -708,6 +847,7 @@ function renderFiles(files){
 
       preview.appendChild(img);
 
+
     }else{
 
       preview.textContent =
@@ -716,10 +856,13 @@ function renderFiles(files){
     }
 
 
+    /* INFO */
+
     const info =
       document.createElement(
         "div"
       );
+
 
     info.className =
       "file-info";
@@ -730,8 +873,10 @@ function renderFiles(files){
         "div"
       );
 
+
     name.className =
       "file-name";
+
 
     name.textContent =
       file.name;
@@ -742,69 +887,140 @@ function renderFiles(files){
         "div"
       );
 
+
     meta.className =
       "file-meta";
 
+
     meta.textContent =
       "Uploaded: " +
-      formatDate(file.created_at);
+      formatDate(
+        file.created_at
+      );
 
+
+    /* ACTIONS */
 
     const actions =
       document.createElement(
         "div"
       );
 
+
     actions.className =
       "actions";
 
+
+    /* OPEN */
 
     const openBtn =
       document.createElement(
         "button"
       );
 
+
     openBtn.textContent =
       "OPEN";
 
-    openBtn.onclick =
-      () => openFile(file.name);
 
+    openBtn.onclick =
+      () =>
+        openFile(
+          file.name
+        );
+
+
+    /* SHARE */
+
+    const shareBtn =
+      document.createElement(
+        "button"
+      );
+
+
+    shareBtn.textContent =
+      "SHARE";
+
+
+    shareBtn.className =
+      "share";
+
+
+    shareBtn.onclick =
+      () =>
+        shareFile(
+          file.name
+        );
+
+
+    /* DELETE */
 
     const deleteBtn =
       document.createElement(
         "button"
       );
 
+
     deleteBtn.textContent =
       "DELETE";
+
 
     deleteBtn.className =
       "delete";
 
-    deleteBtn.onclick =
-      () => deleteFile(file.name);
 
+    deleteBtn.onclick =
+      () =>
+        deleteFile(
+          file.name
+        );
+
+
+    /* APPEND */
 
     actions.appendChild(
       openBtn
     );
+
+
+    actions.appendChild(
+      shareBtn
+    );
+
 
     actions.appendChild(
       deleteBtn
     );
 
 
-    info.appendChild(name);
-    info.appendChild(meta);
-    info.appendChild(actions);
+    info.appendChild(
+      name
+    );
 
 
-    card.appendChild(preview);
-    card.appendChild(info);
+    info.appendChild(
+      meta
+    );
 
 
-    fileList.appendChild(card);
+    info.appendChild(
+      actions
+    );
+
+
+    card.appendChild(
+      preview
+    );
+
+
+    card.appendChild(
+      info
+    );
+
+
+    fileList.appendChild(
+      card
+    );
 
   });
 
@@ -890,7 +1106,127 @@ async function openFile(
 
 
 /* =================================
-   DELETE
+   SHARE FILE
+================================= */
+
+async function shareFile(
+  fileName
+){
+
+  const path =
+    currentUser.id +
+    "/" +
+    fileName;
+
+
+  showMessage(
+    "Creating secure share link..."
+  );
+
+
+  const {data,error} =
+    await supabaseClient.storage
+      .from(BUCKET_NAME)
+      .createSignedUrl(
+        path,
+        600
+      );
+
+
+  if(error){
+
+    showMessage(
+      "Unable to create share link: " +
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  const shareUrl =
+    data.signedUrl;
+
+
+  /* NATIVE SHARE */
+
+  if(
+    navigator.share
+  ){
+
+    try{
+
+      await navigator.share({
+
+        title:
+          fileName,
+
+        text:
+          "Shared from RISHI X Private Vault",
+
+        url:
+          shareUrl
+
+      });
+
+
+      showMessage(
+        "✅ Share menu opened."
+      );
+
+
+    }catch(error){
+
+      /*
+        User closed the share menu.
+        No error message needed.
+      */
+
+      console.log(
+        "Share cancelled."
+      );
+
+    }
+
+
+    return;
+
+  }
+
+
+  /* COPY FALLBACK */
+
+  try{
+
+    await navigator.clipboard.writeText(
+      shareUrl
+    );
+
+
+    showMessage(
+      "✅ Share link copied to clipboard!"
+    );
+
+
+  }catch(error){
+
+    /*
+      Older browsers
+    */
+
+    prompt(
+      "Copy this share link:",
+      shareUrl
+    );
+
+  }
+
+}
+
+
+/* =================================
+   DELETE FILE
 ================================= */
 
 async function deleteFile(
@@ -919,7 +1255,9 @@ async function deleteFile(
   const {error} =
     await supabaseClient.storage
       .from(BUCKET_NAME)
-      .remove([path]);
+      .remove([
+        path
+      ]);
 
 
   if(error){
@@ -966,7 +1304,9 @@ function filterFiles(){
     );
 
 
-  renderFiles(filtered);
+  renderFiles(
+    filtered
+  );
 
 }
 
