@@ -1,1 +1,1567 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RISHI X • Private Vault</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+/* =================================
+   RESET
+================================= */
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+
+/* =================================
+   BODY / BACKGROUND
+================================= */
+
+body{
+  min-height:100vh;
+
+  font-family:Arial,sans-serif;
+
+  color:#fff;
+
+  background:
+    linear-gradient(
+      rgba(0,0,0,.38),
+      rgba(0,0,0,.55)
+    ),
+    url("Screenshot_20260817_202842_Google.jpg");
+
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+  background-repeat:no-repeat;
+}
+
+
+/* =================================
+   HEADER
+================================= */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  padding:16px 5%;
+
+  background:rgba(5,5,5,.82);
+
+  border-bottom:1px solid rgba(255,255,255,.12);
+
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+}
+
+.logo{
+  color:#f3d9ad;
+
+  font-size:23px;
+  font-weight:900;
+
+  letter-spacing:.5px;
+
+  text-shadow:
+    0 0 12px rgba(220,180,120,.45);
+}
+
+.logout{
+  padding:9px 15px;
+
+  border:1px solid rgba(220,180,120,.65);
+  border-radius:9px;
+
+  background:rgba(0,0,0,.35);
+
+  color:#fff;
+
+  font-weight:bold;
+
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+.logout:hover{
+  background:rgba(220,180,120,.18);
+}
+
+
+/* =================================
+   MAIN
+================================= */
+
+main{
+  width:92%;
+  max-width:1050px;
+
+  margin:32px auto 55px;
+}
+
+
+/* =================================
+   WELCOME
+================================= */
+
+.welcome{
+  margin-bottom:25px;
+
+  padding:24px;
+
+  background:rgba(5,5,5,.68);
+
+  border:1px solid rgba(255,255,255,.1);
+
+  border-radius:18px;
+
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+
+.welcome h1{
+  font-size:30px;
+}
+
+.welcome p{
+  margin-top:8px;
+
+  color:#aaa;
+
+  font-size:13px;
+
+  word-break:break-all;
+}
+
+
+/* =================================
+   UPLOAD
+================================= */
+
+.upload{
+  padding:25px;
+
+  background:rgba(10,10,10,.75);
+
+  border:1px solid rgba(220,180,120,.35);
+
+  border-radius:20px;
+
+  box-shadow:
+    0 15px 45px rgba(0,0,0,.3);
+
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+
+.upload h2{
+  margin-bottom:8px;
+}
+
+.upload p{
+  color:#999;
+
+  font-size:13px;
+}
+
+.file-input{
+  width:100%;
+
+  margin-top:18px;
+  padding:14px;
+
+  border:1px dashed rgba(220,180,120,.65);
+
+  border-radius:11px;
+
+  background:rgba(0,0,0,.5);
+
+  color:#bbb;
+}
+
+.upload-btn{
+  width:100%;
+
+  margin-top:12px;
+  padding:14px;
+
+  border:0;
+  border-radius:11px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #8c5d2e,
+      #d8ad72
+    );
+
+  color:#fff;
+
+  font-weight:800;
+
+  cursor:pointer;
+
+  box-shadow:
+    0 5px 20px rgba(200,150,80,.18);
+
+  transition:.2s;
+}
+
+.upload-btn:hover{
+  transform:translateY(-1px);
+
+  filter:brightness(1.08);
+}
+
+.upload-btn:disabled{
+  opacity:.5;
+
+  cursor:not-allowed;
+}
+
+#message{
+  min-height:20px;
+
+  margin-top:13px;
+
+  color:#e4c28e;
+
+  font-size:12px;
+}
+
+
+/* =================================
+   FILES
+================================= */
+
+.files{
+  margin-top:30px;
+}
+
+.files-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin-bottom:15px;
+}
+
+.files-title h2{
+  font-size:21px;
+}
+
+
+/* =================================
+   SEARCH
+================================= */
+
+.search{
+  width:100%;
+
+  padding:14px;
+
+  margin-bottom:17px;
+
+  border:1px solid rgba(255,255,255,.12);
+
+  border-radius:11px;
+
+  background:rgba(5,5,5,.7);
+
+  color:#fff;
+
+  outline:none;
+
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+
+.search::placeholder{
+  color:#777;
+}
+
+.search:focus{
+  border-color:rgba(220,180,120,.65);
+
+  box-shadow:
+    0 0 15px rgba(220,180,120,.08);
+}
+
+
+/* =================================
+   FILE GRID
+================================= */
+
+.file-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(auto-fill,minmax(230px,1fr));
+
+  gap:16px;
+}
+
+
+/* =================================
+   FILE CARD
+================================= */
+
+.file-card{
+  overflow:hidden;
+
+  background:rgba(8,8,8,.76);
+
+  border:1px solid rgba(255,255,255,.11);
+
+  border-radius:16px;
+
+  transition:.25s;
+
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+
+.file-card:hover{
+  border-color:rgba(220,180,120,.55);
+
+  transform:translateY(-3px);
+
+  box-shadow:
+    0 12px 35px rgba(0,0,0,.3);
+}
+
+
+/* =================================
+   PREVIEW
+================================= */
+
+.preview{
+  width:100%;
+  height:175px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  background:rgba(0,0,0,.55);
+
+  color:#888;
+
+  overflow:hidden;
+
+  font-size:45px;
+}
+
+.preview img{
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+}
+
+
+/* =================================
+   FILE INFO
+================================= */
+
+.file-info{
+  padding:14px;
+}
+
+.file-name{
+  font-weight:bold;
+
+  font-size:14px;
+
+  overflow:hidden;
+
+  text-overflow:ellipsis;
+
+  white-space:nowrap;
+}
+
+.file-meta{
+  margin-top:7px;
+
+  color:#777;
+
+  font-size:11px;
+}
+
+
+/* =================================
+   ACTIONS
+================================= */
+
+.actions{
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:7px;
+
+  margin-top:12px;
+}
+
+.actions button{
+  min-width:0;
+
+  padding:9px 4px;
+
+  border:1px solid rgba(220,180,120,.55);
+
+  border-radius:8px;
+
+  background:rgba(0,0,0,.35);
+
+  color:#fff;
+
+  font-size:11px;
+
+  font-weight:bold;
+
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+.actions button:hover{
+  background:rgba(220,180,120,.2);
+
+  border-color:#d8ad72;
+}
+
+
+/* =================================
+   SHARE
+================================= */
+
+.actions .share{
+  border-color:#3fa9d8;
+}
+
+.actions .share:hover{
+  background:rgba(63,169,216,.2);
+
+  border-color:#5fc5f5;
+}
+
+
+/* =================================
+   DELETE
+================================= */
+
+.actions .delete{
+  border-color:#d94a3a;
+}
+
+.actions .delete:hover{
+  background:rgba(217,74,58,.2);
+
+  border-color:#ff6655;
+}
+
+
+/* =================================
+   EMPTY
+================================= */
+
+.empty{
+  grid-column:1/-1;
+
+  padding:40px 20px;
+
+  text-align:center;
+
+  color:#777;
+
+  border:1px solid rgba(255,255,255,.1);
+
+  border-radius:15px;
+
+  background:rgba(8,8,8,.7);
+
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+
+
+/* =================================
+   MOBILE
+================================= */
+
+@media(max-width:600px){
+
+  body{
+    background-attachment:scroll;
+
+    background-position:center;
+
+    background-size:cover;
+  }
+
+  header{
+    padding:14px 4%;
+  }
+
+  .logo{
+    font-size:19px;
+  }
+
+  .logout{
+    padding:8px 12px;
+
+    font-size:12px;
+  }
+
+  main{
+    width:94%;
+
+    margin-top:22px;
+  }
+
+  .welcome{
+    padding:20px;
+  }
+
+  .welcome h1{
+    font-size:25px;
+  }
+
+  .upload{
+    padding:20px;
+  }
+
+  .file-grid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+
+/* =================================
+   VERY SMALL SCREEN
+================================= */
+
+@media(max-width:360px){
+
+  .actions button{
+    font-size:10px;
+
+    padding:8px 2px;
+  }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =================================
+     HEADER
+================================= -->
+
+<header>
+
+  <div class="logo">
+    ⚡ RISHI X
+  </div>
+
+
+  <button
+    class="logout"
+    onclick="logout()">
+
+    LOGOUT
+
+  </button>
+
+</header>
+
+
+<!-- =================================
+     MAIN
+================================= -->
+
+<main>
+
+
+  <!-- WELCOME -->
+
+  <section class="welcome">
+
+    <h1>
+      My Private Vault
+    </h1>
+
+    <p id="userEmail">
+      Loading account...
+    </p>
+
+  </section>
+
+
+  <!-- UPLOAD -->
+
+  <section class="upload">
+
+    <h2>
+      📤 Upload File
+    </h2>
+
+    <p>
+      Store your private files securely.
+    </p>
+
+
+    <input
+      class="file-input"
+      type="file"
+      id="file"
+    >
+
+
+    <button
+      class="upload-btn"
+      id="uploadButton"
+      onclick="uploadFile()">
+
+      UPLOAD FILE
+
+    </button>
+
+
+    <p id="message"></p>
+
+  </section>
+
+
+  <!-- FILES -->
+
+  <section class="files">
+
+
+    <div class="files-title">
+
+      <h2>
+        🗂️ My Files
+      </h2>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <input
+      class="search"
+      id="search"
+      type="text"
+      placeholder="🔍 Search your files..."
+      oninput="filterFiles()"
+    >
+
+
+    <!-- FILE LIST -->
+
+    <div
+      id="fileList"
+      class="file-grid">
+
+      <div class="empty">
+        Loading files...
+      </div>
+
+    </div>
+
+
+  </section>
+
+
+</main>
+
+
+<script>
+
+/* =================================
+   SUPABASE CONFIG
+================================= */
+
+const SUPABASE_URL =
+  "https://asdbxlnttlsuhhnqeywa.supabase.co";
+
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_GIzm11dFWDJmu9cQGAJy_w_432UbSU5";
+
+
+const BUCKET_NAME =
+  "user-files";
+
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+
+let currentUser = null;
+
+let allFiles = [];
+
+
+/* =================================
+   MESSAGE
+================================= */
+
+function showMessage(text){
+
+  document
+    .getElementById("message")
+    .textContent = text;
+
+}
+
+
+/* =================================
+   CHECK LOGIN
+================================= */
+
+async function checkLogin(){
+
+  const {data,error} =
+    await supabaseClient.auth
+      .getSession();
+
+
+  if(error || !data.session){
+
+    window.location.href =
+      "index.html";
+
+    return;
+
+  }
+
+
+  currentUser =
+    data.session.user;
+
+
+  document
+    .getElementById("userEmail")
+    .textContent =
+      currentUser.email;
+
+
+  await loadFiles();
+
+}
+
+
+/* =================================
+   UPLOAD FILE
+================================= */
+
+async function uploadFile(){
+
+  const input =
+    document.getElementById("file");
+
+
+  const file =
+    input.files[0];
+
+
+  if(!file){
+
+    showMessage(
+      "Please select a file first."
+    );
+
+    return;
+
+  }
+
+
+  if(!currentUser){
+
+    showMessage(
+      "You are not logged in."
+    );
+
+    return;
+
+  }
+
+
+  const button =
+    document.getElementById(
+      "uploadButton"
+    );
+
+
+  button.disabled = true;
+
+  button.textContent =
+    "UPLOADING...";
+
+
+  showMessage(
+    "Uploading file..."
+  );
+
+
+  const safeName =
+    file.name.replace(
+      /[^a-zA-Z0-9._-]/g,
+      "_"
+    );
+
+
+  const filePath =
+    currentUser.id +
+    "/" +
+    Date.now() +
+    "_" +
+    safeName;
+
+
+  const {error} =
+    await supabaseClient.storage
+      .from(BUCKET_NAME)
+      .upload(
+        filePath,
+        file,
+        {
+          cacheControl:"3600",
+          upsert:false
+        }
+      );
+
+
+  button.disabled = false;
+
+  button.textContent =
+    "UPLOAD FILE";
+
+
+  if(error){
+
+    showMessage(
+      "Upload failed: " +
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  input.value = "";
+
+
+  showMessage(
+    "✅ File uploaded successfully!"
+  );
+
+
+  await loadFiles();
+
+}
+
+
+/* =================================
+   LOAD FILES
+================================= */
+
+async function loadFiles(){
+
+  const fileList =
+    document.getElementById(
+      "fileList"
+    );
+
+
+  fileList.innerHTML =
+    '<div class="empty">Loading files...</div>';
+
+
+  const {data,error} =
+    await supabaseClient.storage
+      .from(BUCKET_NAME)
+      .list(
+        currentUser.id,
+        {
+          limit:100,
+
+          offset:0,
+
+          sortBy:{
+            column:"created_at",
+            order:"desc"
+          }
+
+        }
+      );
+
+
+  if(error){
+
+    fileList.innerHTML =
+      '<div class="empty">Unable to load files.</div>';
+
+    return;
+
+  }
+
+
+  allFiles =
+    data || [];
+
+
+  renderFiles(allFiles);
+
+}
+
+
+/* =================================
+   RENDER FILES
+================================= */
+
+function renderFiles(files){
+
+  const fileList =
+    document.getElementById(
+      "fileList"
+    );
+
+
+  if(!files.length){
+
+    fileList.innerHTML =
+      '<div class="empty">No files found.</div>';
+
+    return;
+
+  }
+
+
+  fileList.innerHTML = "";
+
+
+  files.forEach(file => {
+
+
+    const card =
+      document.createElement(
+        "div"
+      );
+
+
+    card.className =
+      "file-card";
+
+
+    /* PREVIEW */
+
+    const preview =
+      document.createElement(
+        "div"
+      );
+
+
+    preview.className =
+      "preview";
+
+
+    const extension =
+      file.name
+        .split(".")
+        .pop()
+        .toLowerCase();
+
+
+    const imageTypes = [
+
+      "jpg",
+      "jpeg",
+      "png",
+      "gif",
+      "webp",
+      "bmp"
+
+    ];
+
+
+    if(
+      imageTypes.includes(extension)
+    ){
+
+      const img =
+        document.createElement(
+          "img"
+        );
+
+
+      createPreviewUrl(
+        file.name
+      )
+      .then(url => {
+
+        if(url){
+
+          img.src = url;
+
+        }else{
+
+          preview.textContent =
+            "🖼️";
+
+        }
+
+      });
+
+
+      preview.appendChild(
+        img
+      );
+
+
+    }else{
+
+      preview.textContent =
+        "📄";
+
+    }
+
+
+    /* INFO */
+
+    const info =
+      document.createElement(
+        "div"
+      );
+
+
+    info.className =
+      "file-info";
+
+
+    const name =
+      document.createElement(
+        "div"
+      );
+
+
+    name.className =
+      "file-name";
+
+
+    name.textContent =
+      file.name;
+
+
+    const meta =
+      document.createElement(
+        "div"
+      );
+
+
+    meta.className =
+      "file-meta";
+
+
+    meta.textContent =
+      "Uploaded: " +
+      formatDate(
+        file.created_at
+      );
+
+
+    /* ACTIONS */
+
+    const actions =
+      document.createElement(
+        "div"
+      );
+
+
+    actions.className =
+      "actions";
+
+
+    /* OPEN */
+
+    const openBtn =
+      document.createElement(
+        "button"
+      );
+
+
+    openBtn.textContent =
+      "OPEN";
+
+
+    openBtn.onclick =
+      () =>
+        openFile(
+          file.name
+        );
+
+
+    /* SHARE */
+
+    const shareBtn =
+      document.createElement(
+        "button"
+      );
+
+
+    shareBtn.textContent =
+      "SHARE";
+
+
+    shareBtn.className =
+      "share";
+
+
+    shareBtn.onclick =
+      () =>
+        shareFile(
+          file.name
+        );
+
+
+    /* DELETE */
+
+    const deleteBtn =
+      document.createElement(
+        "button"
+      );
+
+
+    deleteBtn.textContent =
+      "DELETE";
+
+
+    deleteBtn.className =
+      "delete";
+
+
+    deleteBtn.onclick =
+      () =>
+        deleteFile(
+          file.name
+        );
+
+
+    /* APPEND */
+
+    actions.appendChild(
+      openBtn
+    );
+
+
+    actions.appendChild(
+      shareBtn
+    );
+
+
+    actions.appendChild(
+      deleteBtn
+    );
+
+
+    info.appendChild(
+      name
+    );
+
+
+    info.appendChild(
+      meta
+    );
+
+
+    info.appendChild(
+      actions
+    );
+
+
+    card.appendChild(
+      preview
+    );
+
+
+    card.appendChild(
+      info
+    );
+
+
+    fileList.appendChild(
+      card
+    );
+
+  });
+
+}
+
+
+/* =================================
+   PREVIEW URL
+================================= */
+
+async function createPreviewUrl(
+  fileName
+){
+
+  const path =
+    currentUser.id +
+    "/" +
+    fileName;
+
+
+  const {data,error} =
+    await supabaseClient.storage
+      .from(BUCKET_NAME)
+      .createSignedUrl(
+        path,
+        600
+      );
+
+
+  if(error){
+
+    return null;
+
+  }
+
+
+  return data.signedUrl;
+
+}
+
+
+/* =================================
+   OPEN FILE
+================================= */
+
+async function openFile(
+  fileName
+){
+
+  const path =
+    currentUser.id +
+    "/" +
+    fileName;
+
+
+  const {data,error} =
+    await supabaseClient.storage
+      .from(BUCKET_NAME)
+      .createSignedUrl(
+        path,
+        600
+      );
+
+
+  if(error){
+
+    showMessage(
+      "Unable to open file: " +
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  window.open(
+    data.signedUrl,
+    "_blank"
+  );
+
+}
+
+
+/* =================================
+   SHARE FILE
+================================= */
+
+async function shareFile(
+  fileName
+){
+
+  const path =
+    currentUser.id +
+    "/" +
+    fileName;
+
+
+  showMessage(
+    "Creating secure share link..."
+  );
+
+
+  const {data,error} =
+    await supabaseClient.storage
+      .from(BUCKET_NAME)
+      .createSignedUrl(
+        path,
+        600
+      );
+
+
+  if(error){
+
+    showMessage(
+      "Unable to create share link: " +
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  const shareUrl =
+    data.signedUrl;
+
+
+  /* NATIVE PHONE SHARE */
+
+  if(
+    navigator.share
+  ){
+
+    try{
+
+      await navigator.share({
+
+        title:
+          fileName,
+
+        text:
+          "Shared from RISHI X Private Vault",
+
+        url:
+          shareUrl
+
+      });
+
+
+      showMessage(
+        "✅ Share menu opened."
+      );
+
+
+    }catch(error){
+
+      console.log(
+        "Share cancelled."
+      );
+
+    }
+
+
+    return;
+
+  }
+
+
+  /* COPY FALLBACK */
+
+  try{
+
+    await navigator.clipboard.writeText(
+      shareUrl
+    );
+
+
+    showMessage(
+      "✅ Share link copied to clipboard!"
+    );
+
+
+  }catch(error){
+
+    prompt(
+      "Copy this share link:",
+      shareUrl
+    );
+
+  }
+
+}
+
+
+/* =================================
+   DELETE FILE
+================================= */
+
+async function deleteFile(
+  fileName
+){
+
+  const confirmed =
+    confirm(
+      "Are you sure you want to delete this file?"
+    );
+
+
+  if(!confirmed){
+
+    return;
+
+  }
+
+
+  const path =
+    currentUser.id +
+    "/" +
+    fileName;
+
+
+  const {error} =
+    await supabaseClient.storage
+      .from(BUCKET_NAME)
+      .remove([
+        path
+      ]);
+
+
+  if(error){
+
+    showMessage(
+      "Delete failed: " +
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  showMessage(
+    "✅ File deleted."
+  );
+
+
+  await loadFiles();
+
+}
+
+
+/* =================================
+   SEARCH
+================================= */
+
+function filterFiles(){
+
+  const query =
+    document
+      .getElementById("search")
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  const filtered =
+    allFiles.filter(file =>
+      file.name
+        .toLowerCase()
+        .includes(query)
+    );
+
+
+  renderFiles(
+    filtered
+  );
+
+}
+
+
+/* =================================
+   DATE
+================================= */
+
+function formatDate(date){
+
+  if(!date){
+
+    return "Unknown date";
+
+  }
+
+
+  return new Date(date)
+    .toLocaleString();
+
+}
+
+
+/* =================================
+   LOGOUT
+================================= */
+
+async function logout(){
+
+  const {error} =
+    await supabaseClient.auth
+      .signOut();
+
+
+  if(error){
+
+    showMessage(
+      "Logout failed: " +
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  window.location.href =
+    "index.html";
+
+}
+
+
+/* =================================
+   START
+================================= */
+
+checkLogin();
+
+</script>
+
+</body>
+  </html>
