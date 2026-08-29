@@ -10,7 +10,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
 *{
   box-sizing:border-box;
   margin:0;
@@ -157,7 +156,7 @@ h2{
   font-size:13px;
 }
 
-/* LABEL */
+/* INPUT */
 
 label{
   display:block;
@@ -165,8 +164,6 @@ label{
   font-size:12px;
   margin:15px 0 8px;
 }
-
-/* INPUT */
 
 .input-wrap{
   position:relative;
@@ -176,7 +173,6 @@ label{
   position:absolute;
   left:14px;
   top:50%;
-
   transform:translateY(-50%);
 
   color:#777;
@@ -213,7 +209,7 @@ input:focus{
     0 0 0 3px rgba(255,106,0,.08);
 }
 
-/* LOGIN BUTTON */
+/* LOGIN */
 
 .login-btn{
   position:relative;
@@ -230,7 +226,6 @@ input:focus{
 
   font-weight:800;
   font-size:14px;
-  letter-spacing:.3px;
 
   cursor:pointer;
 
@@ -245,13 +240,6 @@ input:focus{
 
 .login-btn:hover{
   transform:translateY(-1px);
-
-  box-shadow:
-    0 10px 28px rgba(255,76,0,.28);
-}
-
-.login-btn:active{
-  transform:translateY(0);
 }
 
 .login-btn:disabled{
@@ -308,7 +296,6 @@ input:focus{
 
 .divider{
   display:flex;
-
   align-items:center;
 
   gap:10px;
@@ -325,19 +312,18 @@ input:focus{
   content:"";
 
   height:1px;
-
   flex:1;
 
   background:#242424;
 }
 
-/* AD */
+/* ADS */
 
 .ad-section{
   width:100%;
 
   margin-top:22px;
-  padding:12px 0;
+  padding:14px 0;
 
   text-align:center;
 
@@ -351,19 +337,27 @@ input:focus{
 
   letter-spacing:1.5px;
 
-  margin-bottom:8px;
+  margin-bottom:9px;
 }
 
-.ad-container{
+.ad-box{
   width:100%;
-  min-height:60px;
 
   display:flex;
-
   align-items:center;
   justify-content:center;
 
   overflow:hidden;
+
+  min-height:60px;
+}
+
+.ad-box.vertical{
+  min-height:300px;
+}
+
+.ad-box iframe{
+  max-width:100%;
 }
 
 /* SECURITY */
@@ -425,13 +419,8 @@ input:focus{
     font-size:23px;
   }
 
-  .ad-container{
-    transform:scale(.78);
-    transform-origin:center;
-    margin-left:auto;
-    margin-right:auto;
-    width:128%;
-    margin-left:-14%;
+  .ad-box{
+    width:100%;
   }
 
 }
@@ -453,9 +442,9 @@ input:focus{
   }
 
 }
-
 </style>
 </head>
+
 
 <body>
 
@@ -520,7 +509,7 @@ input:focus{
     </div>
 
 
-    <!-- LOGIN -->
+    <!-- LOGIN BUTTON -->
 
     <button
       id="loginButton"
@@ -551,9 +540,9 @@ input:focus{
     <p id="message"></p>
 
 
-    <!-- =============================
-         BANNER AD
-    ============================== -->
+    <!-- =================================
+         AD 1 — 468 x 60
+    ================================== -->
 
     <div class="ad-section">
 
@@ -561,7 +550,7 @@ input:focus{
         SPONSORED
       </div>
 
-      <div class="ad-container">
+      <div class="ad-box">
 
         <script>
           atOptions = {
@@ -573,7 +562,61 @@ input:focus{
           };
         </script>
 
-        <script src="https://www.highrevenueformat.com/cbe7551e78b2a4d8da1a1e69e033f841/invoke.js"></script>
+        <script
+          src="https://www.highrevenueformat.com/cbe7551e78b2a4d8da1a1e69e033f841/invoke.js">
+        </script>
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================
+         AD 2 — SCRIPT AD
+    ================================== -->
+
+    <div class="ad-section">
+
+      <div class="ad-label">
+        SPONSORED
+      </div>
+
+      <div class="ad-box">
+
+        <script
+          src="https://pl31082203.profitableratecpmnetwork.com/66/d8/59/66d859ac5480acb7dfdec6beea629101.js">
+        </script>
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================
+         AD 3 — 160 x 300
+    ================================== -->
+
+    <div class="ad-section">
+
+      <div class="ad-label">
+        SPONSORED
+      </div>
+
+      <div class="ad-box vertical">
+
+        <script>
+          atOptions = {
+            'key' : '399fd1e197355149b736948484624a5b',
+            'format' : 'iframe',
+            'height' : 300,
+            'width' : 160,
+            'params' : {}
+          };
+        </script>
+
+        <script
+          src="https://www.highrevenueformat.com/399fd1e197355149b736948484624a5b/invoke.js">
+        </script>
 
       </div>
 
@@ -760,7 +803,7 @@ async function sendOTP(){
 
 
 /* =================================
-   OPEN ADMIN
+   ADMIN
 ================================= */
 
 function openAdmin(){
@@ -772,7 +815,7 @@ function openAdmin(){
 
 
 /* =================================
-   CHECK LOGIN SESSION
+   CHECK SESSION
 ================================= */
 
 async function checkSession(){
@@ -843,5 +886,4 @@ checkSession();
 </script>
 
 </body>
-
 </html>
