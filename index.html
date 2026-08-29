@@ -10,6 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -26,16 +27,17 @@ body{
   align-items:center;
   justify-content:center;
   padding:25px 15px;
+
   font-family:Arial,sans-serif;
   color:#fff;
+
   background:
     radial-gradient(circle at 50% -10%,#5a2000 0%,transparent 38%),
     radial-gradient(circle at 0% 100%,#1b0800 0%,transparent 35%),
     #050505;
+
   overflow-x:hidden;
 }
-
-/* Background glow */
 
 body::before{
   content:"";
@@ -51,8 +53,6 @@ body::before{
   pointer-events:none;
 }
 
-/* Main */
-
 .container{
   width:100%;
   max-width:440px;
@@ -60,7 +60,7 @@ body::before{
   z-index:1;
 }
 
-/* Logo */
+/* LOGO */
 
 .logo{
   text-align:center;
@@ -71,14 +71,19 @@ body::before{
   width:58px;
   height:58px;
   margin:0 auto 12px;
+
   display:flex;
   align-items:center;
   justify-content:center;
+
   border-radius:18px;
+
   background:linear-gradient(145deg,#ff8500,#ff3d00);
+
   box-shadow:
     0 0 25px rgba(255,106,0,.35),
     inset 0 1px rgba(255,255,255,.2);
+
   font-size:27px;
 }
 
@@ -87,7 +92,9 @@ body::before{
   font-size:36px;
   font-weight:900;
   letter-spacing:1px;
-  text-shadow:0 0 20px rgba(255,106,0,.65);
+
+  text-shadow:
+    0 0 20px rgba(255,106,0,.65);
 }
 
 .logo p{
@@ -97,35 +104,45 @@ body::before{
   letter-spacing:3px;
 }
 
-/* Card */
+/* CARD */
 
 .card{
   padding:30px 26px 26px;
+
   background:rgba(15,15,15,.94);
+
   border:1px solid rgba(255,106,0,.28);
+
   border-radius:24px;
+
   box-shadow:
     0 25px 70px rgba(0,0,0,.55),
     0 0 35px rgba(255,106,0,.10);
+
   backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
 }
 
-/* Badge */
+/* BADGE */
 
 .badge{
   width:max-content;
   max-width:100%;
   margin:0 auto 20px;
+
   padding:7px 12px;
+
   border:1px solid rgba(255,106,0,.25);
   border-radius:50px;
+
   color:#ff9b63;
   background:rgba(255,106,0,.06);
+
   font-size:9px;
   letter-spacing:1.5px;
 }
 
-/* Heading */
+/* HEADING */
 
 h2{
   text-align:center;
@@ -140,7 +157,7 @@ h2{
   font-size:13px;
 }
 
-/* Labels */
+/* LABEL */
 
 label{
   display:block;
@@ -149,7 +166,7 @@ label{
   margin:15px 0 8px;
 }
 
-/* Input */
+/* INPUT */
 
 .input-wrap{
   position:relative;
@@ -159,21 +176,29 @@ label{
   position:absolute;
   left:14px;
   top:50%;
+
   transform:translateY(-50%);
+
   color:#777;
   font-size:15px;
+
   pointer-events:none;
 }
 
 input{
   width:100%;
+
   padding:14px 14px 14px 42px;
+
   border-radius:12px;
   border:1px solid #303030;
+
   background:#080808;
   color:#fff;
+
   outline:none;
   font-size:14px;
+
   transition:.2s;
 }
 
@@ -183,31 +208,46 @@ input::placeholder{
 
 input:focus{
   border-color:#ff6a00;
-  box-shadow:0 0 0 3px rgba(255,106,0,.08);
+
+  box-shadow:
+    0 0 0 3px rgba(255,106,0,.08);
 }
 
-/* Main button */
+/* LOGIN BUTTON */
 
 .login-btn{
   position:relative;
+
   width:100%;
+
   padding:14px;
   margin-top:18px;
+
   border:0;
   border-radius:12px;
+
   color:#fff;
+
   font-weight:800;
   font-size:14px;
   letter-spacing:.3px;
+
   cursor:pointer;
-  background:linear-gradient(100deg,#ff3d00,#ff8500);
-  box-shadow:0 8px 22px rgba(255,76,0,.18);
+
+  background:
+    linear-gradient(100deg,#ff3d00,#ff8500);
+
+  box-shadow:
+    0 8px 22px rgba(255,76,0,.18);
+
   transition:.2s;
 }
 
 .login-btn:hover{
   transform:translateY(-1px);
-  box-shadow:0 10px 28px rgba(255,76,0,.28);
+
+  box-shadow:
+    0 10px 28px rgba(255,76,0,.28);
 }
 
 .login-btn:active{
@@ -220,18 +260,26 @@ input:focus{
   transform:none;
 }
 
-/* Admin */
+/* ADMIN */
 
 .admin{
   width:100%;
+
   padding:13px;
   margin-top:11px;
+
   border-radius:12px;
+
   border:1px solid rgba(255,106,0,.45);
+
   background:transparent;
+
   color:#ff9b63;
+
   font-weight:700;
+
   cursor:pointer;
+
   transition:.2s;
 }
 
@@ -240,57 +288,113 @@ input:focus{
   border-color:#ff6a00;
 }
 
-/* Message */
+/* MESSAGE */
 
 #message{
   min-height:20px;
+
   text-align:center;
+
   margin-top:17px;
+
   color:#ff9b63;
+
   font-size:12px;
+
   line-height:1.5;
 }
 
-/* Divider */
+/* DIVIDER */
 
 .divider{
   display:flex;
+
   align-items:center;
+
   gap:10px;
+
   margin:22px 0 4px;
+
   color:#444;
+
   font-size:10px;
 }
 
 .divider::before,
 .divider::after{
   content:"";
+
   height:1px;
+
   flex:1;
+
   background:#242424;
 }
 
-/* Security note */
+/* AD */
+
+.ad-section{
+  width:100%;
+
+  margin-top:22px;
+  padding:12px 0;
+
+  text-align:center;
+
+  overflow:hidden;
+}
+
+.ad-label{
+  color:#555;
+
+  font-size:9px;
+
+  letter-spacing:1.5px;
+
+  margin-bottom:8px;
+}
+
+.ad-container{
+  width:100%;
+  min-height:60px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  overflow:hidden;
+}
+
+/* SECURITY */
 
 .security{
   text-align:center;
+
   margin-top:18px;
+
   color:#555;
+
   font-size:10px;
+
   line-height:1.5;
 }
 
-/* Footer */
+/* FOOTER */
 
 .footer{
   text-align:center;
+
   color:#4f4f4f;
+
   font-size:10px;
+
   margin-top:18px;
+
   letter-spacing:.2px;
 }
 
-/* Mobile */
+/* MOBILE */
 
 @media(max-width:480px){
 
@@ -320,9 +424,17 @@ input:focus{
   h2{
     font-size:23px;
   }
-}
 
-/* Small phones */
+  .ad-container{
+    transform:scale(.78);
+    transform-origin:center;
+    margin-left:auto;
+    margin-right:auto;
+    width:128%;
+    margin-left:-14%;
+  }
+
+}
 
 @media(max-width:350px){
 
@@ -339,10 +451,11 @@ input:focus{
   .admin{
     font-size:13px;
   }
+
 }
+
 </style>
 </head>
-
 
 <body>
 
@@ -378,6 +491,7 @@ input:focus{
       Welcome Back
     </h2>
 
+
     <p class="subtitle">
       Login to your private vault
     </p>
@@ -388,6 +502,7 @@ input:focus{
     <label for="email">
       Email Address
     </label>
+
 
     <div class="input-wrap">
 
@@ -436,6 +551,37 @@ input:focus{
     <p id="message"></p>
 
 
+    <!-- =============================
+         BANNER AD
+    ============================== -->
+
+    <div class="ad-section">
+
+      <div class="ad-label">
+        SPONSORED
+      </div>
+
+      <div class="ad-container">
+
+        <script>
+          atOptions = {
+            'key' : 'cbe7551e78b2a4d8da1a1e69e033f841',
+            'format' : 'iframe',
+            'height' : 60,
+            'width' : 468,
+            'params' : {}
+          };
+        </script>
+
+        <script src="https://www.highrevenueformat.com/cbe7551e78b2a4d8da1a1e69e033f841/invoke.js"></script>
+
+      </div>
+
+    </div>
+
+
+    <!-- SECURITY -->
+
     <p class="security">
       Your files are protected using secure authentication.
     </p>
@@ -461,8 +607,10 @@ input:focus{
 const SUPABASE_URL =
   "https://asdbxlnttlsuhhnqeywa.supabase.co";
 
+
 const SUPABASE_PUBLISHABLE_KEY =
   "sb_publishable_GIzm11dFWDJmu9cQGAJy_w_432UbSU5";
+
 
 const REDIRECT_URL =
   "https://ranjanrishi315-a11y.github.io/rishi-x/";
@@ -504,12 +652,11 @@ async function sendOTP(){
       .value
       .trim();
 
+
   const button =
     document
       .getElementById("loginButton");
 
-
-  /* Empty email */
 
   if(!email){
 
@@ -522,8 +669,6 @@ async function sendOTP(){
   }
 
 
-  /* Basic email check */
-
   if(!email.includes("@")){
 
     showMessage(
@@ -535,12 +680,11 @@ async function sendOTP(){
   }
 
 
-  /* Loading */
-
   button.disabled = true;
 
   button.textContent =
     "SENDING...";
+
 
   showMessage(
     "Sending login link..."
@@ -583,12 +727,11 @@ async function sendOTP(){
     button.textContent =
       "LINK SENT ✓";
 
+
     showMessage(
       "Login link sent! Check your email."
     );
 
-
-    /* Allow another attempt */
 
     setTimeout(function(){
 
@@ -700,4 +843,5 @@ checkSession();
 </script>
 
 </body>
+
 </html>
