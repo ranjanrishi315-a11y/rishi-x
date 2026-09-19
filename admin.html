@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>RISHI X • Admin Login</title>
+<title>RECX • Admin Login</title>
 
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -14,152 +16,440 @@
 }
 
 body{
+
   min-height:100vh;
+
   display:flex;
+
   align-items:center;
+
   justify-content:center;
-  font-family:Arial,sans-serif;
-  color:white;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  color:#fff;
+
   background:
-    radial-gradient(circle at top,#401500,transparent 45%),
-    #050505;
+
+    radial-gradient(
+      circle at 20% 10%,
+      #24105a,
+      transparent 35%
+    ),
+
+    radial-gradient(
+      circle at 80% 90%,
+      #071f55,
+      transparent 40%
+    ),
+
+    #03040a;
+
 }
+
+
+/* ================================
+   CARD
+================================ */
 
 .card{
+
   width:92%;
-  max-width:420px;
-  padding:30px;
-  background:#111;
-  border:1px solid #ff6a00;
-  border-radius:20px;
-  box-shadow:0 0 30px #ff6a0030;
+
+  max-width:430px;
+
+  padding:32px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(20,22,45,.95),
+      rgba(7,8,18,.96)
+    );
+
+  border:1px solid
+    rgba(120,100,255,.45);
+
+  border-radius:24px;
+
+  box-shadow:
+
+    0 0 35px
+      rgba(75,65,255,.20),
+
+    inset 0 0 25px
+      rgba(100,80,255,.04);
+
+  backdrop-filter:
+    blur(15px);
+
 }
+
+
+/* ================================
+   LOGO
+================================ */
 
 .logo{
+
   text-align:center;
-  color:#ff6a00;
-  font-size:34px;
+
+  font-size:38px;
+
   font-weight:900;
+
+  letter-spacing:3px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #8b5cff,
+      #39a7ff
+    );
+
+  -webkit-background-clip:text;
+
+  background-clip:text;
+
+  color:transparent;
+
+  text-shadow:
+    0 0 25px
+      rgba(90,100,255,.35);
+
   margin-bottom:8px;
-  text-shadow:0 0 15px #ff6a00;
+
 }
+
 
 .subtitle{
+
   text-align:center;
-  color:#888;
-  margin-bottom:25px;
+
+  color:#8f93ad;
+
+  font-size:14px;
+
+  margin-bottom:30px;
+
+  letter-spacing:1px;
+
 }
+
+
+/* ================================
+   LABEL
+================================ */
 
 label{
+
   display:block;
-  color:#bbb;
+
+  color:#bfc3dc;
+
   font-size:13px;
-  margin-bottom:8px;
+
+  margin-bottom:9px;
+
 }
+
+
+/* ================================
+   INPUT
+================================ */
 
 input{
+
   width:100%;
-  padding:14px;
-  border-radius:10px;
-  border:1px solid #333;
-  background:#050505;
-  color:white;
+
+  padding:15px;
+
+  border-radius:12px;
+
+  border:1px solid
+    #292d4a;
+
+  background:#060711;
+
+  color:#fff;
+
   outline:none;
+
+  font-size:14px;
+
+  transition:.25s;
+
 }
+
+
+input::placeholder{
+
+  color:#5f637b;
+
+}
+
 
 input:focus{
-  border-color:#ff6a00;
-  box-shadow:0 0 10px #ff6a0025;
+
+  border-color:#6d63ff;
+
+  box-shadow:
+    0 0 18px
+    rgba(90,90,255,.20);
+
 }
+
+
+/* ================================
+   LOGIN BUTTON
+================================ */
 
 button{
+
   width:100%;
-  padding:14px;
+
+  padding:15px;
+
   margin-top:18px;
+
   border:0;
-  border-radius:10px;
+
+  border-radius:12px;
+
   color:white;
-  font-weight:bold;
-  background:linear-gradient(90deg,#ff3d00,#ff8500);
+
+  font-weight:800;
+
+  letter-spacing:.5px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #704cff,
+      #258cff
+    );
+
+  box-shadow:
+    0 8px 25px
+    rgba(65,75,255,.22);
+
   cursor:pointer;
+
+  transition:.25s;
+
 }
+
 
 button:hover{
-  opacity:.9;
+
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 12px 30px
+    rgba(65,75,255,.35);
+
 }
+
+
+button:active{
+
+  transform:
+    translateY(0);
+
+}
+
 
 button:disabled{
-  opacity:.5;
+
+  opacity:.55;
+
   cursor:not-allowed;
+
+  transform:none;
+
 }
+
+
+/* ================================
+   MESSAGE
+================================ */
 
 #message{
+
   min-height:20px;
+
   text-align:center;
-  margin-top:15px;
-  color:#ff8a45;
+
+  margin-top:16px;
+
+  color:#7faaff;
+
   font-size:13px;
+
 }
+
+
+/* ================================
+   BACK BUTTON
+================================ */
 
 .back{
+
   margin-top:12px;
+
   background:transparent;
-  border:1px solid #333;
+
+  border:1px solid
+    #292d4a;
+
+  box-shadow:none;
+
+  color:#9da2bd;
+
 }
 
+
 .back:hover{
-  background:#181818;
+
+  background:#101225;
+
+  border-color:#464c70;
+
 }
+
+
+/* ================================
+   SECURITY TEXT
+================================ */
+
+.security{
+
+  margin-top:22px;
+
+  text-align:center;
+
+  color:#555a72;
+
+  font-size:11px;
+
+  letter-spacing:.4px;
+
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media(max-width:500px){
+
+  .card{
+
+    padding:25px;
+
+  }
+
+  .logo{
+
+    font-size:32px;
+
+  }
+
+}
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="card">
 
+
   <div class="logo">
-    👑 RISHI X
+
+    ◈ RECX
+
   </div>
 
+
   <p class="subtitle">
-    Secure Admin Access
+
+    SECURE ADMIN ACCESS
+
   </p>
 
+
   <label for="adminId">
+
     Admin ID
+
   </label>
 
+
   <input
+
     id="adminId"
+
     type="text"
+
     placeholder="Enter Admin ID"
+
     autocomplete="off"
+
   >
 
-  <button
-    id="loginButton"
-    onclick="login()">
-    ADMIN LOGIN
-  </button>
 
   <button
-    class="back"
-    onclick="goBack()">
-    ← Back to Website
+
+    id="loginButton"
+
+    onclick="login()">
+
+    ADMIN LOGIN
+
   </button>
+
+
+  <button
+
+    class="back"
+
+    onclick="goBack()">
+
+    ← Back to Website
+
+  </button>
+
 
   <p id="message"></p>
+
+
+  <div class="security">
+
+    🔒 AUTHORIZED ACCESS ONLY
+
+  </div>
+
 
 </div>
 
 
+
 <script>
+
 
 /* =================================
    ADMIN ID
 ================================= */
 
 const ADMIN_ID =
+
   "f3ffeb51-70a6-4a44-99fb-f4ff1fa2aedf";
 
 
@@ -168,6 +458,7 @@ const ADMIN_ID =
 ================================= */
 
 const ADMIN_SESSION_KEY =
+
   "rishi_x_admin_logged_in";
 
 
@@ -178,16 +469,28 @@ const ADMIN_SESSION_KEY =
 function login(){
 
   const input =
+
     document
+
       .getElementById("adminId")
+
       .value
+
       .trim();
 
+
   const message =
-    document.getElementById("message");
+
+    document.getElementById(
+      "message"
+    );
+
 
   const button =
-    document.getElementById("loginButton");
+
+    document.getElementById(
+      "loginButton"
+    );
 
 
   /* Empty ID */
@@ -195,6 +498,7 @@ function login(){
   if(!input){
 
     message.textContent =
+
       "Please enter Admin ID.";
 
     return;
@@ -207,6 +511,7 @@ function login(){
   if(input !== ADMIN_ID){
 
     message.textContent =
+
       "❌ Invalid Admin ID.";
 
     return;
@@ -219,17 +524,23 @@ function login(){
   button.disabled = true;
 
   button.textContent =
+
     "VERIFYING...";
 
+
   message.textContent =
+
     "✅ Admin ID verified.";
 
 
   /* Save admin login */
 
   sessionStorage.setItem(
+
     ADMIN_SESSION_KEY,
+
     "true"
+
   );
 
 
@@ -238,6 +549,7 @@ function login(){
   setTimeout(function(){
 
     window.location.href =
+
       "admin-dashboard.html";
 
   },500);
@@ -252,6 +564,7 @@ function login(){
 function goBack(){
 
   window.location.href =
+
     "index.html";
 
 }
@@ -262,9 +575,13 @@ function goBack(){
 ================================= */
 
 document
+
   .getElementById("adminId")
+
   .addEventListener(
+
     "keydown",
+
     function(event){
 
       if(event.key === "Enter"){
@@ -274,9 +591,12 @@ document
       }
 
     }
+
   );
+
 
 </script>
 
 </body>
+
 </html>
