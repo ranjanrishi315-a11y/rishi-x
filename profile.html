@@ -1,245 +1,553 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>RISHI X • Profile</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>RECX • Profile</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
 }
 
+
 body{
+
   min-height:100vh;
-  font-family:Arial,sans-serif;
+
+  font-family:
+    Arial,
+    sans-serif;
+
   color:#fff;
+
   background:
-    radial-gradient(circle at top,#401500,transparent 45%),
-    #050505;
+
+    radial-gradient(
+      circle at 15% 0%,
+      #24105a,
+      transparent 38%
+    ),
+
+    radial-gradient(
+      circle at 90% 100%,
+      #071f55,
+      transparent 40%
+    ),
+
+    #03040a;
+
 }
+
+
+/* =================================
+   HEADER
+================================= */
 
 header{
+
   display:flex;
+
   justify-content:space-between;
+
   align-items:center;
+
   padding:18px 5%;
-  background:#090909;
-  border-bottom:1px solid #252525;
+
+  background:
+    rgba(5,6,15,.90);
+
+  border-bottom:1px solid
+    rgba(100,100,150,.25);
+
+  backdrop-filter:
+    blur(15px);
+
 }
+
 
 .logo{
-  color:#ff6a00;
+
   font-size:25px;
+
   font-weight:900;
-  text-shadow:0 0 15px #ff6a00;
+
+  letter-spacing:2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #8b5cff,
+      #39a7ff
+    );
+
+  -webkit-background-clip:text;
+
+  background-clip:text;
+
+  color:transparent;
+
+  text-shadow:
+    0 0 20px
+    rgba(90,110,255,.35);
+
 }
+
 
 .logout{
-  padding:9px 16px;
-  border:1px solid #ff6a00;
-  border-radius:8px;
-  background:transparent;
+
+  padding:10px 17px;
+
+  border:1px solid
+    #303553;
+
+  border-radius:9px;
+
+  background:#0a0c18;
+
   color:#fff;
+
   cursor:pointer;
+
   font-weight:bold;
+
+  transition:.25s;
+
 }
+
 
 .logout:hover{
-  background:#ff6a00;
+
+  background:#17152d;
+
+  border-color:#6d63ff;
+
+  transform:
+    translateY(-1px);
+
 }
+
+
+/* =================================
+   MAIN
+================================= */
 
 main{
+
   width:92%;
+
   max-width:800px;
+
   margin:40px auto;
+
 }
+
 
 .title{
+
   margin-bottom:25px;
+
 }
+
 
 .title h1{
+
   font-size:32px;
+
 }
+
 
 .title p{
-  margin-top:7px;
-  color:#888;
+
+  margin-top:8px;
+
+  color:#858aa4;
+
 }
+
+
+/* =================================
+   PROFILE CARD
+================================= */
 
 .profile-card{
-  padding:28px;
-  background:#111;
-  border:1px solid #ff6a00;
-  border-radius:20px;
-  box-shadow:0 0 30px #ff6a0025;
+
+  padding:30px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(18,20,40,.96),
+      rgba(7,8,17,.96)
+    );
+
+  border:1px solid
+    rgba(100,100,170,.35);
+
+  border-radius:22px;
+
+  box-shadow:
+    0 0 35px
+    rgba(70,70,180,.12);
+
+  backdrop-filter:
+    blur(15px);
+
 }
+
+
+/* =================================
+   AVATAR
+================================= */
 
 .avatar{
+
   width:90px;
+
   height:90px;
-  margin:0 auto 20px;
+
+  margin:
+    0 auto 20px;
+
   display:flex;
+
   align-items:center;
+
   justify-content:center;
+
   border-radius:50%;
-  background:linear-gradient(135deg,#ff3d00,#ff8500);
+
+  background:
+    linear-gradient(
+      135deg,
+      #704cff,
+      #258cff
+    );
+
   font-size:40px;
+
   font-weight:bold;
-  box-shadow:0 0 25px #ff6a0060;
+
+  box-shadow:
+    0 0 30px
+    rgba(80,100,255,.40);
+
 }
+
 
 .profile-card h2{
+
   text-align:center;
+
   margin-bottom:25px;
+
 }
+
+
+/* =================================
+   INFORMATION
+================================= */
 
 .info{
+
   padding:16px;
+
   margin-top:12px;
-  background:#080808;
-  border:1px solid #292929;
+
+  background:#060711;
+
+  border:1px solid
+    #252941;
+
   border-radius:12px;
+
 }
+
 
 .label{
-  color:#777;
-  font-size:12px;
-  margin-bottom:6px;
+
+  color:#646a84;
+
+  font-size:11px;
+
+  letter-spacing:1px;
+
+  margin-bottom:7px;
+
 }
+
 
 .value{
-  font-size:16px;
+
+  font-size:15px;
+
   word-break:break-word;
+
+  color:#dce0f3;
+
 }
+
+
+/* =================================
+   STATS
+================================= */
 
 .stats{
+
   display:grid;
-  grid-template-columns:repeat(2,1fr);
+
+  grid-template-columns:
+    repeat(2,1fr);
+
   gap:15px;
+
   margin-top:25px;
+
 }
+
 
 .stat{
+
   padding:22px;
+
   text-align:center;
-  background:#0b0b0b;
-  border:1px solid #292929;
+
+  background:#080a15;
+
+  border:1px solid
+    #252941;
+
   border-radius:14px;
+
 }
+
 
 .stat-number{
-  color:#ff6a00;
+
+  color:#8c72ff;
+
   font-size:30px;
+
   font-weight:bold;
+
 }
+
 
 .stat-label{
+
   margin-top:7px;
-  color:#888;
+
+  color:#858aa4;
+
   font-size:13px;
+
 }
+
+
+/* =================================
+   BUTTONS
+================================= */
 
 .buttons{
+
   display:grid;
-  grid-template-columns:1fr 1fr;
+
+  grid-template-columns:
+    1fr 1fr;
+
   gap:12px;
+
   margin-top:25px;
+
 }
+
 
 .buttons button{
+
   padding:14px;
-  border:1px solid #ff6a00;
-  border-radius:10px;
-  background:transparent;
+
+  border:1px solid
+    #303553;
+
+  border-radius:11px;
+
+  background:#0a0c18;
+
   color:#fff;
+
   font-weight:bold;
+
   cursor:pointer;
+
+  transition:.25s;
+
 }
+
 
 .buttons button:hover{
-  background:#ff6a00;
+
+  background:
+    linear-gradient(
+      90deg,
+      #704cff,
+      #258cff
+    );
+
+  border-color:transparent;
+
+  transform:
+    translateY(-2px);
+
 }
+
+
+/* =================================
+   STATUS
+================================= */
 
 .status{
+
   margin-top:20px;
+
   text-align:center;
-  color:#59e391;
+
+  color:#63e69a;
+
   font-size:13px;
+
 }
 
+
+/* =================================
+   LOADING
+================================= */
+
 .loading{
+
   text-align:center;
+
   padding:40px;
-  color:#888;
+
+  color:#858aa4;
+
 }
+
+
+/* =================================
+   MOBILE
+================================= */
 
 @media(max-width:600px){
 
   main{
+
     margin-top:25px;
+
   }
+
 
   .title h1{
+
     font-size:27px;
+
   }
+
 
   .stats{
-    grid-template-columns:1fr 1fr;
+
+    grid-template-columns:
+      1fr 1fr;
+
   }
 
+
   .buttons{
-    grid-template-columns:1fr;
+
+    grid-template-columns:
+      1fr;
+
   }
+
 }
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <header>
 
+
   <div class="logo">
-    ⚡ RISHI X
+
+    ◈ RECX
+
   </div>
+
 
   <button
     class="logout"
     onclick="logout()"
   >
+
     Logout
+
   </button>
+
 
 </header>
 
 
+
 <main>
+
 
   <div class="title">
 
+
     <h1>
+
       My Profile
+
     </h1>
 
+
     <p>
-      Manage your RISHI X account.
+
+      Manage your RECX account.
+
     </p>
 
+
   </div>
+
 
 
   <div
     id="loading"
     class="loading"
   >
+
     Loading profile...
+
   </div>
+
 
 
   <section
@@ -248,145 +556,217 @@ main{
     style="display:none;"
   >
 
+
     <div class="avatar">
+
       👤
+
     </div>
 
+
     <h2>
-      RISHI X User
+
+      RECX User
+
     </h2>
+
 
 
     <div class="info">
 
+
       <div class="label">
+
         EMAIL ADDRESS
+
       </div>
+
 
       <div
         class="value"
         id="userEmail"
       >
+
         Loading...
+
       </div>
+
 
     </div>
 
 
+
     <div class="info">
 
+
       <div class="label">
+
         USER ID
+
       </div>
+
 
       <div
         class="value"
         id="userId"
       >
+
         Loading...
+
       </div>
+
 
     </div>
 
 
+
     <div class="info">
 
+
       <div class="label">
+
         ACCOUNT CREATED
+
       </div>
+
 
       <div
         class="value"
         id="createdAt"
       >
+
         Loading...
+
       </div>
+
 
     </div>
 
 
+
     <div class="stats">
 
+
       <div class="stat">
+
 
         <div
           class="stat-number"
           id="fileCount"
         >
+
           0
+
         </div>
+
 
         <div class="stat-label">
+
           My Files
+
         </div>
 
+
       </div>
+
 
 
       <div class="stat">
 
+
         <div class="stat-number">
+
           ✓
+
         </div>
 
+
         <div class="stat-label">
+
           Account Active
+
         </div>
+
 
       </div>
 
+
     </div>
+
 
 
     <div class="buttons">
 
+
       <button
         onclick="goDashboard()"
       >
+
         🏠 DASHBOARD
+
       </button>
+
 
       <button
         onclick="logout()"
       >
+
         🚪 LOGOUT
+
       </button>
 
+
     </div>
+
 
 
     <div
       class="status"
       id="status"
     >
+
       🔐 Your account is authenticated
+
     </div>
 
+
   </section>
+
 
 </main>
 
 
+
 <script>
+
 
 /* ================================
    SUPABASE
 ================================ */
 
 const SUPABASE_URL =
+
   "https://asdbxlnttlsuhhnqeywa.supabase.co";
 
+
 const SUPABASE_PUBLISHABLE_KEY =
-  "sb_publishable_GIzm11dFWDJmu9cQGAJy_w_432UbSU5";
+
+  "sb_publishable_GIzm11dFWDmu9cQGAJy_w_432UbSU5";
+
 
 const BUCKET_NAME =
+
   "user-files";
 
 
 const supabaseClient =
+
   window.supabase.createClient(
+
     SUPABASE_URL,
+
     SUPABASE_PUBLISHABLE_KEY
+
   );
 
 
@@ -400,7 +780,10 @@ async function loadProfile(){
     data,
     error
   } =
-    await supabaseClient.auth.getSession();
+
+    await supabaseClient
+      .auth
+      .getSession();
 
 
   if(
@@ -423,12 +806,15 @@ async function loadProfile(){
   document.getElementById(
     "userEmail"
   ).textContent =
-    user.email || "Not available";
+
+    user.email ||
+    "Not available";
 
 
   document.getElementById(
     "userId"
   ).textContent =
+
     user.id;
 
 
@@ -437,6 +823,7 @@ async function loadProfile(){
     document.getElementById(
       "createdAt"
     ).textContent =
+
       new Date(
         user.created_at
       ).toLocaleString();
@@ -452,12 +839,14 @@ async function loadProfile(){
   document.getElementById(
     "loading"
   ).style.display =
+
     "none";
 
 
   document.getElementById(
     "profile"
   ).style.display =
+
     "block";
 
 }
@@ -475,14 +864,19 @@ async function loadFileCount(
     data,
     error
   } =
-    await supabaseClient.storage
+
+    await supabaseClient
+      .storage
       .from(BUCKET_NAME)
       .list(
+
         userId,
+
         {
           limit:1000,
           offset:0
         }
+
       );
 
 
@@ -491,6 +885,7 @@ async function loadFileCount(
     document.getElementById(
       "fileCount"
     ).textContent =
+
       "—";
 
     return;
@@ -501,6 +896,7 @@ async function loadFileCount(
   document.getElementById(
     "fileCount"
   ).textContent =
+
     data
       ? data.length
       : 0;
@@ -515,6 +911,7 @@ async function loadFileCount(
 function goDashboard(){
 
   window.location.href =
+
     "dashboard-new.html";
 
 }
@@ -529,7 +926,10 @@ async function logout(){
   const {
     error
   } =
-    await supabaseClient.auth.signOut();
+
+    await supabaseClient
+      .auth
+      .signOut();
 
 
   if(error){
@@ -537,6 +937,7 @@ async function logout(){
     document.getElementById(
       "status"
     ).textContent =
+
       "Logout failed: " +
       error.message;
 
@@ -546,6 +947,7 @@ async function logout(){
 
 
   window.location.href =
+
     "index.html";
 
 }
@@ -557,7 +959,9 @@ async function logout(){
 
 loadProfile();
 
+
 </script>
 
 </body>
+
 </html>
