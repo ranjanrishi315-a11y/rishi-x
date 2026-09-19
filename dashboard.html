@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>RECX • MADS Dashboard</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>RISHI X Dashboard</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -16,765 +24,1062 @@
 }
 
 body{
+
   min-height:100vh;
+
   font-family:Arial,sans-serif;
+
   color:#fff;
+
   background:
-    radial-gradient(circle at top,#21115c,transparent 40%),
-    radial-gradient(circle at bottom right,#001d3d,transparent 35%),
-    #050509;
+    radial-gradient(
+      circle at top,
+      #401500,
+      transparent 45%
+    ),
+    #050505;
+
 }
+
 
 header{
+
   display:flex;
+
   justify-content:space-between;
+
   align-items:center;
+
   padding:18px 5%;
-  background:rgba(5,5,12,.85);
-  border-bottom:1px solid #29234a;
-  position:sticky;
-  top:0;
-  z-index:10;
-  backdrop-filter:blur(15px);
+
+  background:#090909;
+
+  border-bottom:1px solid #252525;
+
 }
+
 
 .logo{
+
+  color:#ff6a00;
+
   font-size:25px;
+
   font-weight:900;
-  letter-spacing:2px;
-  color:#8f7cff;
-  text-shadow:0 0 18px #715cff;
+
+  text-shadow:
+    0 0 15px #ff6a00;
+
 }
 
-.header-right{
-  display:flex;
-  gap:8px;
-}
 
-button{
-  cursor:pointer;
-  border:0;
-}
+.logout{
 
-.header-btn{
-  padding:9px 14px;
-  border-radius:9px;
-  background:#121020;
-  border:1px solid #3d356d;
+  padding:9px 16px;
+
+  border:1px solid #ff6a00;
+
+  border-radius:8px;
+
+  background:transparent;
+
   color:#fff;
+
+  cursor:pointer;
+
+  font-weight:bold;
+
 }
 
-.header-btn:hover{
-  border-color:#8f7cff;
-  box-shadow:0 0 15px #6755ff33;
+
+.logout:hover{
+
+  background:#ff6a00;
+
 }
+
 
 main{
+
   width:92%;
-  max-width:1100px;
-  margin:30px auto 60px;
+
+  max-width:1000px;
+
+  margin:35px auto;
+
 }
 
-.hero{
-  padding:25px;
-  border:1px solid #332b63;
-  border-radius:20px;
-  background:linear-gradient(135deg,#0e0b20,#090b15);
-  box-shadow:0 0 35px #503cff16;
+
+.welcome{
+
+  margin-bottom:25px;
+
 }
 
-.hero h1{
+
+.welcome h1{
+
   font-size:30px;
+
 }
 
-.hero p{
-  margin-top:8px;
-  color:#8d8a9f;
+
+.welcome p{
+
+  color:#888;
+
+  margin-top:7px;
+
 }
 
-.section-title{
-  margin:30px 0 15px;
-  font-size:20px;
-}
 
-.products{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:15px;
-}
+.upload{
 
-.product{
-  padding:20px;
-  border:1px solid #292342;
-  border-radius:17px;
-  background:#0b0a13;
-  transition:.25s;
-}
+  padding:25px;
 
-.product:hover{
-  transform:translateY(-3px);
-  border-color:#7463ff;
-  box-shadow:0 0 25px #6b5aff18;
-}
+  background:#111;
 
-.product h3{
-  color:#b7adff;
-  margin-bottom:8px;
-}
+  border:1px solid #ff6a00;
 
-.product p{
-  color:#777487;
-  font-size:13px;
-  line-height:1.5;
-}
+  border-radius:18px;
 
-.plans{
-  margin-top:15px;
-  display:grid;
-  gap:8px;
-}
-
-.plan{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:12px;
-  border:1px solid #252037;
-  border-radius:10px;
-  background:#0f0d18;
-}
-
-.plan span{
-  color:#aaa5b9;
-}
-
-.buy{
-  padding:8px 12px;
-  border-radius:8px;
-  background:linear-gradient(90deg,#6552ff,#8e6cff);
-  color:white;
-  font-weight:bold;
-}
-
-.buy:hover{
-  filter:brightness(1.15);
-}
-
-.requests{
-  display:grid;
-  gap:12px;
-}
-
-.request{
-  padding:18px;
-  background:#0b0a12;
-  border:1px solid #292342;
-  border-radius:15px;
-}
-
-.request-top{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-}
-
-.request-name{
-  font-weight:bold;
-}
-
-.status{
-  padding:5px 9px;
-  border-radius:20px;
-  font-size:11px;
-  font-weight:bold;
-  text-transform:uppercase;
-}
-
-.pending{
-  background:#3a2d00;
-  color:#ffd34e;
-}
-
-.approved{
-  background:#073b28;
-  color:#57e6aa;
-}
-
-.rejected{
-  background:#3c1017;
-  color:#ff7181;
-}
-
-.meta{
-  margin-top:9px;
-  color:#777487;
-  font-size:12px;
-}
-
-.delivery{
-  margin-top:13px;
-  padding:13px;
-  border-radius:10px;
-  background:#101c17;
-  border:1px solid #1d6045;
-  color:#75edb9;
-  word-break:break-word;
-}
-
-.empty{
   text-align:center;
-  padding:30px;
-  border:1px dashed #30294c;
-  border-radius:15px;
-  color:#777487;
+
+  box-shadow:
+    0 0 25px #ff6a0025;
+
 }
+
+
+.upload h2{
+
+  margin-bottom:10px;
+
+}
+
+
+.upload p{
+
+  color:#888;
+
+  font-size:14px;
+
+}
+
+
+.file{
+
+  width:100%;
+
+  margin-top:20px;
+
+  padding:15px;
+
+  border:1px dashed #ff6a00;
+
+  border-radius:10px;
+
+  background:#070707;
+
+  color:#aaa;
+
+}
+
+
+#uploadButton{
+
+  width:100%;
+
+  margin-top:15px;
+
+  padding:14px;
+
+  border:0;
+
+  border-radius:10px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #ff3d00,
+      #ff8500
+    );
+
+  color:white;
+
+  font-weight:bold;
+
+  cursor:pointer;
+
+}
+
+
+#uploadButton:disabled{
+
+  opacity:.5;
+
+  cursor:not-allowed;
+
+}
+
 
 #message{
+
   min-height:20px;
+
+  margin-top:15px;
+
+  color:#ff9b63;
+
   text-align:center;
-  margin-top:15px;
-  color:#a9a1c2;
-}
 
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:#0009;
-  z-index:100;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.modal-box{
-  width:100%;
-  max-width:430px;
-  padding:24px;
-  background:#0d0b17;
-  border:1px solid #5145a0;
-  border-radius:18px;
-  box-shadow:0 0 40px #000;
-}
-
-.modal-box h2{
-  margin-bottom:8px;
-}
-
-.modal-box p{
-  color:#8b8798;
   font-size:13px;
-  margin-bottom:18px;
+
 }
 
-select,
-textarea{
-  width:100%;
-  padding:12px;
-  border-radius:9px;
-  border:1px solid #30294a;
-  background:#08070d;
-  color:white;
-  outline:none;
+
+.files{
+
+  margin-top:30px;
+
 }
 
-textarea{
-  min-height:80px;
-  resize:vertical;
-  margin-top:10px;
+
+.files h2{
+
+  margin-bottom:15px;
+
 }
 
-.modal-actions{
-  display:flex;
+
+.file-list{
+
+  display:grid;
+
   gap:10px;
-  margin-top:15px;
+
 }
 
-.modal-actions button{
-  flex:1;
-  padding:12px;
-  border-radius:9px;
+
+.file-card{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  gap:15px;
+
+  padding:15px;
+
+  background:#0d0d0d;
+
+  border:1px solid #252525;
+
+  border-radius:12px;
+
 }
 
-.confirm{
-  background:#6d5aff;
+
+.file-name{
+
+  overflow:hidden;
+
+  text-overflow:ellipsis;
+
+  white-space:nowrap;
+
+  color:#eee;
+
+}
+
+
+.file-actions{
+
+  display:flex;
+
+  gap:8px;
+
+  flex-shrink:0;
+
+}
+
+
+.file-actions button{
+
+  padding:8px 12px;
+
+  border-radius:7px;
+
+  cursor:pointer;
+
+  font-weight:bold;
+
+  border:1px solid #ff6a00;
+
+  background:transparent;
+
   color:white;
+
 }
 
-.cancel{
-  background:#171421;
-  border:1px solid #30294a !important;
-  color:white;
+
+.file-actions button:hover{
+
+  background:#ff6a00;
+
 }
+
+
+.delete-btn{
+
+  border-color:
+    #ff3d00 !important;
+
+}
+
+
+.empty{
+
+  padding:30px;
+
+  text-align:center;
+
+  color:#777;
+
+  border:1px solid #222;
+
+  border-radius:15px;
+
+  background:#0d0d0d;
+
+}
+
+
+.loading{
+
+  text-align:center;
+
+  color:#777;
+
+  padding:20px;
+
+}
+
 
 @media(max-width:600px){
-  .hero h1{
-    font-size:24px;
+
+  .file-card{
+
+    flex-direction:column;
+
+    align-items:stretch;
+
   }
 
-  .header-right .header-btn{
-    padding:8px 9px;
-    font-size:11px;
+  .file-actions{
+
+    width:100%;
+
   }
+
+  .file-actions button{
+
+    flex:1;
+
+  }
+
 }
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <header>
 
-  <div class="logo">⚡ RECX</div>
+  <div class="logo">
 
-  <div class="header-right">
-    <button class="header-btn" onclick="location.href='profile.html'">
-      PROFILE
-    </button>
+    ⚡ RISHI X
 
-    <button class="header-btn" onclick="logout()">
-      LOGOUT
-    </button>
   </div>
+
+
+  <button
+    class="logout"
+    onclick="logout()"
+  >
+
+    Logout
+
+  </button>
 
 </header>
 
+
 <main>
 
-  <section class="hero">
-    <h1>MADS STORE</h1>
-    <p id="userEmail">Loading account...</p>
-  </section>
 
-  <h2 class="section-title">Available MADS</h2>
+<section class="welcome">
 
-  <section class="products">
+  <h1>
 
-    <div class="product">
-      <h3>Recxmonster MADS</h3>
-      <p>Choose your preferred plan.</p>
+    My Dashboard
 
-      <div class="plans">
-
-        <div class="plan">
-          <span>1 Day — ₹60</span>
-          <button class="buy"
-            onclick="openRequest('Recxmonster MADS','1 Day',60)">
-            REQUEST
-          </button>
-        </div>
-
-        <div class="plan">
-          <span>7 Days — ₹100</span>
-          <button class="buy"
-            onclick="openRequest('Recxmonster MADS','7 Days',100)">
-            REQUEST
-          </button>
-        </div>
-
-        <div class="plan">
-          <span>30 Days — ₹250</span>
-          <button class="buy"
-            onclick="openRequest('Recxmonster MADS','30 Days',250)">
-            REQUEST
-          </button>
-        </div>
-
-        <div class="plan">
-          <span>90 Days — ₹500</span>
-          <button class="buy"
-            onclick="openRequest('Recxmonster MADS','90 Days',500)">
-            REQUEST
-          </button>
-        </div>
-
-        <div class="plan">
-          <span>Lifetime — ₹1000</span>
-          <button class="buy"
-            onclick="openRequest('Recxmonster MADS','Lifetime',1000)">
-            REQUEST
-          </button>
-        </div>
-
-      </div>
-    </div>
+  </h1>
 
 
-    <div class="product">
-      <h3>RecxInstall and Play MADS</h3>
-      <p>Select your required plan.</p>
+  <p id="userEmail">
 
-      <div class="plans">
+    Loading account...
 
-        <div class="plan">
-          <span>7 Days — ₹80</span>
-          <button class="buy"
-            onclick="openRequest('RecxInstall and Play MADS','7 Days',80)">
-            REQUEST
-          </button>
-        </div>
+  </p>
 
-        <div class="plan">
-          <span>30 Days — ₹200</span>
-          <button class="buy"
-            onclick="openRequest('RecxInstall and Play MADS','30 Days',200)">
-            REQUEST
-          </button>
-        </div>
-
-        <div class="plan">
-          <span>90 Days — ₹500</span>
-          <button class="buy"
-            onclick="openRequest('RecxInstall and Play MADS','90 Days',500)">
-            REQUEST
-          </button>
-        </div>
-
-        <div class="plan">
-          <span>Lifetime — ₹1000</span>
-          <button class="buy"
-            onclick="openRequest('RecxInstall and Play MADS','Lifetime',1000)">
-            REQUEST
-          </button>
-        </div>
-
-      </div>
-    </div>
+</section>
 
 
-    <div class="product">
-      <h3>Recx Vali MADS Ultra</h3>
-      <p>Select your required plan.</p>
 
-      <div class="plans">
-
-        <div class="plan">
-          <span>1 Day — ₹50</span>
-          <button class="buy"
-            onclick="openRequest('Recx Vali MADS Ultra','1 Day',50)">
-            REQUEST
-          </button>
-        </div>
-
-        <div class="plan">
-          <span>7 Days — ₹125</span>
-          <button class="buy"
-            onclick="openRequest('Recx Vali MADS Ultra','7 Days',125)">
-            REQUEST
-          </button>
-        </div>
-
-        <div class="plan">
-          <span>30 Days — ₹300</span>
-          <button class="buy"
-            onclick="openRequest('Recx Vali MADS Ultra','30 Days',300)">
-            REQUEST
-          </button>
-        </div>
-
-        <div class="plan">
-          <span>90 Days — ₹600</span>
-          <button class="buy"
-            onclick="openRequest('Recx Vali MADS Ultra','90 Days',600)">
-            REQUEST
-          </button>
-        </div>
-
-        <div class="plan">
-          <span>Lifetime — ₹1200</span>
-          <button class="buy"
-            onclick="openRequest('Recx Vali MADS Ultra','Lifetime',1200)">
-            REQUEST
-          </button>
-        </div>
-
-      </div>
-    </div>
-
-  </section>
+<section class="upload">
 
 
-  <h2 class="section-title">My Requests</h2>
+  <h2>
 
-  <section class="requests" id="requestList">
-    <div class="empty">
-      Loading requests...
-    </div>
-  </section>
+    📤 Upload File
+
+  </h2>
+
+
+  <p>
+
+    Your files are stored in your private vault.
+
+  </p>
+
+
+  <input
+    class="file"
+    type="file"
+    id="file"
+  >
+
+
+  <button
+    id="uploadButton"
+    onclick="uploadFile()"
+  >
+
+    UPLOAD FILE
+
+  </button>
+
 
   <p id="message"></p>
+
+
+</section>
+
+
+
+<section class="files">
+
+
+  <h2>
+
+    🗂️ My Files
+
+  </h2>
+
+
+  <div
+    id="fileList"
+    class="file-list"
+  >
+
+    <div class="loading">
+
+      Loading files...
+
+    </div>
+
+  </div>
+
+
+</section>
+
 
 </main>
 
 
-<!-- REQUEST MODAL -->
-
-<div class="modal" id="requestModal">
-
-  <div class="modal-box">
-
-    <h2>Request MADS</h2>
-
-    <p id="selectedProduct"></p>
-
-    <select id="paymentStatus">
-      <option value="payment_submitted">
-        Payment submitted
-      </option>
-      <option value="payment_pending">
-        Payment pending
-      </option>
-    </select>
-
-    <textarea
-      id="paymentNote"
-      placeholder="Payment reference / note (optional)">
-    </textarea>
-
-    <div class="modal-actions">
-
-      <button
-        class="cancel"
-        onclick="closeRequest()">
-        CANCEL
-      </button>
-
-      <button
-        class="confirm"
-        onclick="submitRequest()">
-        SEND REQUEST
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
 
 <script>
+
+
+/* =================================
+   SUPABASE CONFIGURATION
+================================= */
+
 
 const SUPABASE_URL =
   "https://asdbxlnttlsuhhnqeywa.supabase.co";
 
+
 const SUPABASE_PUBLISHABLE_KEY =
-  "sb_publishable_GIzm11dFWDJmu9cQGAJy_w_432UbSU5";
+  "sb_publishable_GIzm11dFWDmu9cQGAJy_w_432UbSU5";
+
+
+const BUCKET_NAME =
+  "user-files";
+
 
 const supabaseClient =
   window.supabase.createClient(
+
     SUPABASE_URL,
+
     SUPABASE_PUBLISHABLE_KEY
+
   );
 
 
 let currentUser = null;
-let selectedProduct = null;
-let selectedPlan = null;
-let selectedPrice = null;
 
 
-function showMessage(message){
-  document.getElementById("message").textContent = message;
+
+/* =================================
+   MESSAGE
+================================= */
+
+
+function showMessage(text){
+
+  document.getElementById(
+    "message"
+  ).textContent = text;
+
 }
+
+
+
+/* =================================
+   CHECK LOGIN
+================================= */
 
 
 async function checkLogin(){
 
-  const {data,error} =
-    await supabaseClient.auth.getSession();
-
-  if(error || !data.session){
-    location.href="index.html";
-    return;
-  }
-
-  currentUser = data.session.user;
-
-  document.getElementById("userEmail")
-    .textContent = currentUser.email;
-
-  loadRequests();
-}
-
-
-async function loadRequests(){
-
-  const list =
-    document.getElementById("requestList");
-
-  list.innerHTML =
-    '<div class="empty">Loading...</div>';
-
-  const {data,error} =
+  const {
+    data,
+    error
+  } =
     await supabaseClient
-      .from("mads_requests")
-      .select("*")
-      .eq("user_id",currentUser.id)
-      .order("created_at",{ascending:false});
+      .auth
+      .getSession();
+
 
   if(error){
 
-    list.innerHTML =
-      '<div class="empty">Could not load requests.</div>';
-
     console.error(error);
-    return;
-  }
 
-  if(!data.length){
-
-    list.innerHTML =
-      '<div class="empty">No requests yet.</div>';
+    window.location.href =
+      "index.html";
 
     return;
+
   }
 
-  list.innerHTML = data.map(r => {
 
-    const status =
-      (r.status || "pending").toLowerCase();
+  if(!data.session){
 
-    return `
-      <div class="request">
+    window.location.href =
+      "index.html";
 
-        <div class="request-top">
+    return;
 
-          <div class="request-name">
-            ${escapeHTML(r.product_name)}
-          </div>
+  }
 
-          <span class="status ${status}">
-            ${escapeHTML(status)}
-          </span>
 
-        </div>
+  currentUser =
+    data.session.user;
 
-        <div class="meta">
-          Plan: ${escapeHTML(r.plan_name)}
-          • ₹${Number(r.price)}
-        </div>
 
-        <div class="meta">
-          ${new Date(r.created_at).toLocaleString()}
-        </div>
+  document.getElementById(
+    "userEmail"
+  ).textContent =
+    currentUser.email;
 
-        ${
-          r.delivery_value
-          ? `
-            <div class="delivery">
-              <b>Delivery:</b><br>
-              ${escapeHTML(r.delivery_value)}
-            </div>
-          `
-          : ""
+
+  await loadFiles();
+
+}
+
+
+
+/* =================================
+   UPLOAD FILE
+================================= */
+
+
+async function uploadFile(){
+
+  const input =
+    document.getElementById(
+      "file"
+    );
+
+
+  const file =
+    input.files[0];
+
+
+  if(!file){
+
+    showMessage(
+      "Please select a file first."
+    );
+
+    return;
+
+  }
+
+
+  if(!currentUser){
+
+    showMessage(
+      "You are not logged in."
+    );
+
+    return;
+
+  }
+
+
+  const button =
+    document.getElementById(
+      "uploadButton"
+    );
+
+
+  button.disabled = true;
+
+  button.textContent =
+    "UPLOADING...";
+
+
+  showMessage(
+    "Uploading file..."
+  );
+
+
+  const filePath =
+
+    currentUser.id +
+
+    "/" +
+
+    Date.now() +
+
+    "_" +
+
+    file.name;
+
+
+  const {
+    error
+  } =
+
+    await supabaseClient
+      .storage
+      .from(BUCKET_NAME)
+      .upload(
+
+        filePath,
+
+        file,
+
+        {
+
+          cacheControl:
+            "3600",
+
+          upsert:false
+
         }
 
-      </div>
-    `;
-
-  }).join("");
-}
+      );
 
 
-function openRequest(product,plan,price){
+  button.disabled = false;
 
-  selectedProduct = product;
-  selectedPlan = plan;
-  selectedPrice = price;
+  button.textContent =
+    "UPLOAD FILE";
 
-  document.getElementById("selectedProduct")
-    .textContent =
-      `${product} • ${plan} • ₹${price}`;
-
-  document.getElementById("requestModal")
-    .style.display="flex";
-}
-
-
-function closeRequest(){
-
-  document.getElementById("requestModal")
-    .style.display="none";
-
-}
-
-
-async function submitRequest(){
-
-  if(!currentUser) return;
-
-  const note =
-    document.getElementById("paymentNote")
-      .value.trim();
-
-  showMessage("Sending request...");
-
-  const {error} =
-    await supabaseClient
-      .from("mads_requests")
-      .insert({
-
-        user_id:currentUser.id,
-
-        user_email:currentUser.email,
-
-        product_name:selectedProduct,
-
-        plan_name:selectedPlan,
-
-        price:selectedPrice,
-
-        status:"pending",
-
-        payment_note:note || null
-
-      });
 
   if(error){
 
     console.error(error);
 
     showMessage(
-      "Request failed: " + error.message
+      "Upload failed: " +
+      error.message
     );
 
     return;
+
   }
 
-  closeRequest();
 
-  document.getElementById("paymentNote")
-    .value="";
+  input.value = "";
+
 
   showMessage(
-    "Request submitted successfully."
+    "File uploaded successfully."
   );
 
-  loadRequests();
+
+  await loadFiles();
+
 }
+
+
+
+/* =================================
+   LOAD FILES
+================================= */
+
+
+async function loadFiles(){
+
+  const list =
+    document.getElementById(
+      "fileList"
+    );
+
+
+  list.innerHTML =
+    '<div class="loading">Loading files...</div>';
+
+
+  const {
+    data,
+    error
+  } =
+
+    await supabaseClient
+      .storage
+      .from(BUCKET_NAME)
+      .list(
+
+        currentUser.id,
+
+        {
+
+          limit:100,
+
+          sortBy:{
+            column:"created_at",
+
+            order:"desc"
+
+          }
+
+        }
+
+      );
+
+
+  if(error){
+
+    console.error(error);
+
+    list.innerHTML =
+      '<div class="empty">Unable to load files.</div>';
+
+    return;
+
+  }
+
+
+  if(!data || data.length === 0){
+
+    list.innerHTML =
+      '<div class="empty">No files uploaded yet.</div>';
+
+    return;
+
+  }
+
+
+  list.innerHTML = "";
+
+
+  data.forEach(file => {
+
+    if(!file.name){
+
+      return;
+
+    }
+
+
+    const card =
+      document.createElement(
+        "div"
+      );
+
+
+    card.className =
+      "file-card";
+
+
+    const name =
+      document.createElement(
+        "div"
+      );
+
+
+    name.className =
+      "file-name";
+
+
+    name.textContent =
+      file.name;
+
+
+    const actions =
+      document.createElement(
+        "div"
+      );
+
+
+    actions.className =
+      "file-actions";
+
+
+    const openButton =
+      document.createElement(
+        "button"
+      );
+
+
+    openButton.textContent =
+      "OPEN";
+
+
+    openButton.onclick =
+      function(){
+
+        openFile(file.name);
+
+      };
+
+
+    const deleteButton =
+      document.createElement(
+        "button"
+      );
+
+
+    deleteButton.textContent =
+      "DELETE";
+
+
+    deleteButton.className =
+      "delete-btn";
+
+
+    deleteButton.onclick =
+      function(){
+
+        deleteFile(file.name);
+
+      };
+
+
+    actions.appendChild(
+      openButton
+    );
+
+
+    actions.appendChild(
+      deleteButton
+    );
+
+
+    card.appendChild(
+      name
+    );
+
+
+    card.appendChild(
+      actions
+    );
+
+
+    list.appendChild(
+      card
+    );
+
+  });
+
+}
+
+
+
+/* =================================
+   OPEN FILE
+================================= */
+
+
+async function openFile(
+  fileName
+){
+
+  const filePath =
+
+    currentUser.id +
+
+    "/" +
+
+    fileName;
+
+
+  const {
+    data,
+    error
+  } =
+
+    await supabaseClient
+      .storage
+      .from(BUCKET_NAME)
+      .createSignedUrl(
+
+        filePath,
+
+        3600
+
+      );
+
+
+  if(error){
+
+    showMessage(
+      "Unable to open file."
+    );
+
+    return;
+
+  }
+
+
+  window.open(
+    data.signedUrl,
+    "_blank"
+  );
+
+}
+
+
+
+/* =================================
+   DELETE FILE
+================================= */
+
+
+async function deleteFile(
+  fileName
+){
+
+  const confirmDelete =
+    confirm(
+      "Delete this file?"
+    );
+
+
+  if(!confirmDelete){
+
+    return;
+
+  }
+
+
+  const filePath =
+
+    currentUser.id +
+
+    "/" +
+
+    fileName;
+
+
+  const {
+    error
+  } =
+
+    await supabaseClient
+      .storage
+      .from(BUCKET_NAME)
+      .remove([
+
+        filePath
+
+      ]);
+
+
+  if(error){
+
+    showMessage(
+      "Delete failed."
+    );
+
+    return;
+
+  }
+
+
+  showMessage(
+    "File deleted."
+  );
+
+
+  await loadFiles();
+
+}
+
+
+
+/* =================================
+   LOGOUT
+================================= */
 
 
 async function logout(){
 
-  await supabaseClient.auth.signOut();
+  await supabaseClient
+    .auth
+    .signOut();
 
-  location.href="index.html";
+
+  window.location.href =
+    "index.html";
+
 }
 
 
-function escapeHTML(value){
 
-  return String(value ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
+/* =================================
+   START
+================================= */
 
 
 checkLogin();
 
+
 </script>
 
 </body>
+
 </html>
