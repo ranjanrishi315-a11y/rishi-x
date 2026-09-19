@@ -1,291 +1,700 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>RISHI X • Admin Dashboard</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>RECX • Admin Dashboard</title>
+
 
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
   padding:0;
 }
 
+
 body{
+
   min-height:100vh;
-  font-family:Arial,sans-serif;
+
+  font-family:
+    Arial,
+    sans-serif;
+
   color:#fff;
+
   background:
-    radial-gradient(circle at top,#401500,transparent 45%),
-    #050505;
+
+    radial-gradient(
+      circle at 15% 0%,
+      #24105a,
+      transparent 38%
+    ),
+
+    radial-gradient(
+      circle at 90% 100%,
+      #071f55,
+      transparent 40%
+    ),
+
+    #03040a;
+
 }
+
+
+/* =================================
+   HEADER
+================================= */
 
 header{
+
   display:flex;
+
   justify-content:space-between;
+
   align-items:center;
+
+  gap:15px;
+
   padding:18px 5%;
-  background:#090909;
-  border-bottom:1px solid #252525;
+
+  background:
+    rgba(5,6,15,.90);
+
+  border-bottom:1px solid
+    rgba(100,100,150,.25);
+
+  backdrop-filter:
+    blur(15px);
+
 }
+
 
 .logo{
-  color:#ff6a00;
-  font-size:24px;
+
+  color:#fff;
+
+  font-size:25px;
+
   font-weight:900;
-  text-shadow:0 0 15px #ff6a00;
+
+  letter-spacing:2px;
+
+  text-shadow:
+    0 0 20px
+    rgba(80,120,255,.55);
+
 }
+
+
+.logo span{
+
+  background:
+    linear-gradient(
+      90deg,
+      #8b5cff,
+      #39a7ff
+    );
+
+  -webkit-background-clip:text;
+
+  background-clip:text;
+
+  color:transparent;
+
+}
+
 
 .header-buttons{
+
   display:flex;
+
   gap:10px;
+
 }
+
 
 .header-buttons button{
-  padding:9px 14px;
-  border:1px solid #ff6a00;
-  border-radius:8px;
-  background:transparent;
+
+  padding:10px 14px;
+
+  border:1px solid
+    #303553;
+
+  border-radius:9px;
+
+  background:#0a0c18;
+
   color:#fff;
+
   cursor:pointer;
+
   font-weight:bold;
+
+  transition:.25s;
+
 }
+
 
 .header-buttons button:hover{
-  background:#ff6a00;
+
+  border-color:#6d63ff;
+
+  background:#17152d;
+
+  transform:
+    translateY(-1px);
+
 }
+
+
+/* =================================
+   MAIN
+================================= */
 
 main{
+
   width:92%;
+
   max-width:1100px;
+
   margin:35px auto;
+
 }
+
 
 .welcome{
+
   margin-bottom:25px;
+
 }
+
 
 .welcome h1{
+
   font-size:32px;
+
 }
+
 
 .welcome p{
+
   margin-top:8px;
-  color:#888;
+
+  color:#858aa4;
+
 }
+
+
+/* =================================
+   STATS
+================================= */
 
 .grid{
+
   display:grid;
-  grid-template-columns:repeat(2,1fr);
+
+  grid-template-columns:
+    repeat(2,1fr);
+
   gap:15px;
+
 }
+
 
 .card{
+
   padding:25px;
-  background:#111;
-  border:1px solid #252525;
-  border-radius:15px;
-  box-shadow:0 0 20px #ff6a0012;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(18,20,40,.95),
+      rgba(7,8,17,.95)
+    );
+
+  border:1px solid
+    rgba(90,100,160,.25);
+
+  border-radius:17px;
+
+  box-shadow:
+    0 0 25px
+    rgba(70,70,180,.08);
+
 }
+
 
 .card h3{
-  color:#888;
-  font-size:13px;
+
+  color:#777d98;
+
+  font-size:12px;
+
+  letter-spacing:1px;
+
   margin-bottom:12px;
+
 }
+
 
 .number{
-  color:#ff6a00;
+
+  color:#8c72ff;
+
   font-size:28px;
+
   font-weight:bold;
+
 }
+
+
+/* =================================
+   SECTION
+================================= */
 
 .section{
+
   margin-top:25px;
+
   padding:25px;
-  background:#111;
-  border:1px solid #252525;
-  border-radius:15px;
+
+  background:
+    rgba(10,11,23,.92);
+
+  border:1px solid
+    rgba(90,100,160,.25);
+
+  border-radius:17px;
+
 }
+
+
+.section h2{
+
+  font-size:20px;
+
+}
+
+
+/* =================================
+   INFO
+================================= */
 
 .info{
+
   margin-top:12px;
+
   padding:15px;
-  background:#080808;
-  border:1px solid #292929;
-  border-radius:10px;
+
+  background:#060711;
+
+  border:1px solid
+    #22263d;
+
+  border-radius:11px;
+
 }
+
 
 .label{
-  color:#777;
+
+  color:#646a84;
+
   font-size:11px;
+
+  letter-spacing:1px;
+
   margin-bottom:6px;
+
 }
+
 
 .value{
+
   word-break:break-all;
+
+  color:#d9dcf0;
+
 }
+
+
+/* =================================
+   STATUS
+================================= */
 
 .status{
+
   margin-top:18px;
-  padding:13px;
+
+  padding:14px;
+
   text-align:center;
-  border-radius:10px;
-  background:#092014;
-  border:1px solid #1d7138;
+
+  border-radius:11px;
+
+  background:
+    rgba(10,70,45,.25);
+
+  border:1px solid
+    rgba(50,190,125,.35);
+
   color:#63e69a;
+
 }
 
-@media(max-width:600px){
+
+/* =================================
+   ADMIN TOOLS
+================================= */
+
+.tool-box{
+
+  margin-top:15px;
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:12px;
+
+}
+
+
+.tool{
+
+  padding:18px;
+
+  border-radius:12px;
+
+  border:1px solid
+    #242941;
+
+  background:#070914;
+
+  color:#8f95b0;
+
+  text-align:center;
+
+  font-size:13px;
+
+}
+
+
+/* =================================
+   MOBILE
+================================= */
+
+@media(max-width:700px){
 
   .grid{
+
     grid-template-columns:1fr;
+
+  }
+
+  .tool-box{
+
+    grid-template-columns:1fr;
+
   }
 
   .welcome h1{
+
     font-size:26px;
+
+  }
+
+  .header-buttons{
+
+    gap:6px;
+
   }
 
   .header-buttons button{
-    padding:8px 10px;
-    font-size:11px;
+
+    padding:8px 9px;
+
+    font-size:10px;
+
   }
+
 }
+
+
+@media(max-width:430px){
+
+  header{
+
+    align-items:flex-start;
+
+  }
+
+  .logo{
+
+    font-size:21px;
+
+  }
+
+  .header-buttons{
+
+    flex-direction:column;
+
+  }
+
+}
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <header>
 
+
   <div class="logo">
-    👑 RISHI X
+
+    ◈ <span>RECX</span>
+
   </div>
+
 
   <div class="header-buttons">
 
-    <button onclick="goUserDashboard()">
+
+    <button
+      onclick="goUserDashboard()"
+    >
+
       🏠 User Dashboard
+
     </button>
 
-    <button onclick="logoutAdmin()">
+
+    <button
+      onclick="logoutAdmin()"
+    >
+
       Logout
+
     </button>
+
 
   </div>
+
 
 </header>
 
 
+
 <main>
+
 
   <section class="welcome">
 
+
     <h1>
-      👑 Admin Dashboard
+
+      👑 RECX Admin Dashboard
+
     </h1>
 
+
     <p>
-      Welcome to the RISHI X administration panel.
+
+      Welcome to the RECX administration panel.
+
     </p>
 
+
   </section>
+
 
 
   <section class="grid">
 
+
     <div class="card">
 
+
       <h3>
+
         ACCESS LEVEL
+
       </h3>
 
+
       <div class="number">
+
         ADMIN
+
       </div>
 
+
     </div>
+
 
 
     <div class="card">
 
+
       <h3>
+
         STATUS
+
       </h3>
 
+
       <div class="number">
+
         ACTIVE
+
       </div>
 
+
     </div>
+
 
   </section>
 
 
+
   <section class="section">
 
+
     <h2>
+
       🔐 Admin Information
+
     </h2>
 
 
     <div class="info">
 
+
       <div class="label">
+
         ADMIN ID
+
       </div>
+
 
       <div class="value">
+
         f3ffeb51-70a6-4a44-99fb-f4ff1fa2aedf
+
       </div>
 
+
     </div>
+
 
 
     <div class="info">
 
+
       <div class="label">
+
         ACCESS
+
       </div>
+
 
       <div class="value">
+
         Administrator
+
       </div>
 
+
     </div>
+
 
 
     <div class="status">
+
       ✅ Admin access verified successfully.
+
     </div>
 
+
   </section>
+
 
 
   <section class="section">
 
+
     <h2>
+
       🛠️ Admin Tools
+
     </h2>
 
-    <div class="info">
-      Admin tools can be added here later.
+
+    <div class="tool-box">
+
+
+      <div class="tool">
+
+        📋 Requests
+
+      </div>
+
+
+      <div class="tool">
+
+        ⏳ Pending
+
+      </div>
+
+
+      <div class="tool">
+
+        🔑 Key Delivery
+
+      </div>
+
+
     </div>
 
+
+    <div class="info">
+
+      Admin request-management tools can be connected here.
+
+    </div>
+
+
   </section>
+
 
 </main>
 
 
+
 <script>
+
 
 /* =================================
    ADMIN SESSION
 ================================= */
 
 const ADMIN_SESSION_KEY =
+
   "rishi_x_admin_logged_in";
 
 
@@ -296,9 +705,11 @@ const ADMIN_SESSION_KEY =
 function checkAdminLogin(){
 
   const loggedIn =
+
     sessionStorage.getItem(
       ADMIN_SESSION_KEY
     );
+
 
   if(loggedIn !== "true"){
 
@@ -306,9 +717,12 @@ function checkAdminLogin(){
       "admin.html";
 
     return false;
+
   }
 
+
   return true;
+
 }
 
 
@@ -319,20 +733,21 @@ function checkAdminLogin(){
 function goUserDashboard(){
 
   window.location.href =
-    "dashboard.html";
+    "dashboard-new.html";
 
 }
 
 
 /* =================================
    ADMIN LOGOUT
-================================ */
+================================= */
 
 function logoutAdmin(){
 
   sessionStorage.removeItem(
     ADMIN_SESSION_KEY
   );
+
 
   window.location.href =
     "admin.html";
@@ -342,11 +757,13 @@ function logoutAdmin(){
 
 /* =================================
    START
-================================ */
+================================= */
 
 checkAdminLogin();
+
 
 </script>
 
 </body>
+
 </html>
