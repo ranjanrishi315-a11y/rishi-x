@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -10,193 +11,401 @@
 
 <style>
 
+/* =========================
+   RESET
+========================= */
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial,Helvetica,sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
     min-height:100vh;
     color:#fff;
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+
     background:
-        radial-gradient(circle at 15% 15%,rgba(0,180,255,.14),transparent 28%),
-        radial-gradient(circle at 85% 80%,rgba(150,0,255,.14),transparent 30%),
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(0,180,255,.13),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(145,0,255,.13),
+            transparent 32%
+        ),
         #05070c;
+
     overflow-x:hidden;
 }
 
-/* BACKGROUND */
+
+/* =========================
+   BACKGROUND
+========================= */
 
 .bg{
     position:fixed;
     inset:0;
     pointer-events:none;
     overflow:hidden;
-    z-index:-1;
+    z-index:-5;
+}
+
+.grid{
+    position:absolute;
+    inset:0;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        );
+
+    background-size:45px 45px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent
+        );
 }
 
 .orb{
     position:absolute;
-    width:280px;
-    height:280px;
     border-radius:50%;
     filter:blur(100px);
-    opacity:.18;
+    opacity:.16;
 }
 
-.orb.one{
-    background:#00b7ff;
-    top:-100px;
-    left:-80px;
+.orb-one{
+    width:330px;
+    height:330px;
+    background:#00bfff;
+    top:-150px;
+    left:-130px;
 }
 
-.orb.two{
-    background:#9d00ff;
-    right:-100px;
-    bottom:-100px;
+.orb-two{
+    width:360px;
+    height:360px;
+    background:#8d00ff;
+    right:-170px;
+    bottom:-160px;
 }
 
-/* HEADER */
+.orb-three{
+    width:220px;
+    height:220px;
+    background:#0066ff;
+    left:40%;
+    top:45%;
+    opacity:.07;
+}
+
+
+/* =========================
+   HEADER
+========================= */
 
 header{
+    position:sticky;
+    top:0;
+    z-index:100;
+
     width:100%;
-    padding:18px 5%;
+
     display:flex;
     align-items:center;
     justify-content:space-between;
-    border-bottom:1px solid rgba(255,255,255,.08);
-    background:rgba(4,6,12,.72);
-    backdrop-filter:blur(18px);
-    position:sticky;
-    top:0;
-    z-index:50;
+
+    padding:17px 5%;
+
+    background:
+        rgba(3,5,10,.78);
+
+    backdrop-filter:blur(22px);
+
+    border-bottom:
+        1px solid rgba(255,255,255,.07);
+
+    box-shadow:
+        0 10px 40px rgba(0,0,0,.2);
 }
 
 .logo{
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:9px;
+
     font-size:21px;
-    font-weight:900;
+    font-weight:950;
+
     letter-spacing:1px;
 }
 
-.logo span{
-    color:#00c8ff;
-    text-shadow:0 0 18px rgba(0,200,255,.8);
+.logo-symbol{
+    color:#00d9ff;
+    text-shadow:
+        0 0 10px rgba(0,217,255,.7),
+        0 0 25px rgba(0,217,255,.3);
+}
+
+.logo-name{
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            #73e8ff
+        );
+
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
 }
 
 .header-right{
     display:flex;
-    gap:10px;
+    align-items:center;
+    gap:9px;
 }
 
 .header-btn{
-    text-decoration:none;
-    color:#fff;
-    padding:10px 15px;
-    border:1px solid rgba(255,255,255,.1);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    min-height:38px;
+
+    padding:0 14px;
+
     border-radius:12px;
-    background:rgba(255,255,255,.04);
-    font-size:13px;
+
+    border:
+        1px solid rgba(255,255,255,.09);
+
+    background:
+        rgba(255,255,255,.035);
+
+    color:#dce4f1;
+
+    text-decoration:none;
+
+    font-size:12px;
+    font-weight:700;
+
+    cursor:pointer;
+
     transition:.25s;
 }
 
 .header-btn:hover{
-    border-color:#00c8ff;
-    box-shadow:0 0 20px rgba(0,200,255,.15);
+    border-color:
+        rgba(0,210,255,.4);
+
+    color:#00d5ff;
+
+    background:
+        rgba(0,210,255,.06);
+
     transform:translateY(-2px);
+
+    box-shadow:
+        0 8px 25px rgba(0,210,255,.08);
 }
 
-/* MAIN */
+
+/* =========================
+   MAIN
+========================= */
 
 .container{
     width:min(900px,92%);
-    margin:auto;
-    padding:55px 0 80px;
+
+    margin:0 auto;
+
+    padding:
+        58px 0
+        80px;
 }
+
+
+/* =========================
+   HERO
+========================= */
 
 .hero{
     text-align:center;
-    margin-bottom:42px;
+
+    margin-bottom:38px;
 }
 
 .badge{
-    display:inline-block;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
     padding:7px 13px;
-    border:1px solid rgba(0,200,255,.25);
+
     border-radius:50px;
-    color:#5edcff;
-    background:rgba(0,200,255,.06);
-    font-size:11px;
+
+    border:
+        1px solid rgba(0,210,255,.22);
+
+    background:
+        rgba(0,210,255,.055);
+
+    color:#69ddff;
+
+    font-size:10px;
+    font-weight:800;
+
     letter-spacing:2px;
+
+    box-shadow:
+        0 0 25px rgba(0,210,255,.05);
+
     margin-bottom:16px;
 }
 
 .hero h1{
-    font-size:clamp(32px,7vw,58px);
+    font-size:
+        clamp(35px,8vw,62px);
+
+    line-height:1;
+
     font-weight:950;
-    letter-spacing:-2px;
+
+    letter-spacing:-2.5px;
 }
 
 .hero h1 span{
-    background:linear-gradient(90deg,#00d5ff,#7d5cff,#d14cff);
+    background:
+        linear-gradient(
+            90deg,
+            #00d9ff,
+            #7366ff,
+            #c34dff
+        );
+
     -webkit-background-clip:text;
+    background-clip:text;
+
     color:transparent;
 }
 
 .hero p{
-    margin-top:12px;
-    color:#8994a7;
-    font-size:14px;
+    margin-top:14px;
+
+    color:#778397;
+
+    font-size:13px;
 }
 
-/* STORE CARD */
+
+/* =========================
+   PRODUCT CARD
+========================= */
 
 .store-card{
+
     position:relative;
-    padding:22px;
-    border:1px solid rgba(255,255,255,.09);
-    border-radius:25px;
+
+    margin-bottom:17px;
+
+    padding:20px;
+
+    border-radius:24px;
+
+    border:
+        1px solid rgba(255,255,255,.085);
+
     background:
-        linear-gradient(145deg,
-        rgba(255,255,255,.055),
-        rgba(255,255,255,.018));
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.018)
+        );
+
     backdrop-filter:blur(20px);
+
     box-shadow:
-        0 25px 70px rgba(0,0,0,.45),
-        inset 0 1px rgba(255,255,255,.06);
-    margin-bottom:18px;
+        0 25px 70px rgba(0,0,0,.38),
+        inset 0 1px rgba(255,255,255,.045);
+
     overflow:hidden;
-    transition:.3s;
+
+    transition:
+        transform .3s ease,
+        border-color .3s ease,
+        box-shadow .3s ease;
 }
 
 .store-card::before{
     content:"";
+
     position:absolute;
-    width:130px;
-    height:130px;
-    background:#00c8ff;
-    filter:blur(80px);
-    opacity:.07;
-    top:-70px;
-    right:-50px;
+
+    width:160px;
+    height:160px;
+
+    top:-90px;
+    right:-70px;
+
+    border-radius:50%;
+
+    background:#00cfff;
+
+    filter:blur(90px);
+
+    opacity:.055;
+
+    pointer-events:none;
 }
 
 .store-card:hover{
-    transform:translateY(-3px);
-    border-color:rgba(0,200,255,.25);
+
+    border-color:
+        rgba(0,205,255,.2);
+
+    box-shadow:
+        0 28px 75px rgba(0,0,0,.45),
+        0 0 35px rgba(0,180,255,.035);
 }
 
-/* CARD HEADER */
+
+/* =========================
+   CARD HEADER
+========================= */
 
 .card-header{
+
+    position:relative;
+    z-index:2;
+
     width:100%;
+
     display:flex;
     align-items:center;
     justify-content:space-between;
+
     cursor:pointer;
     user-select:none;
 }
@@ -204,247 +413,604 @@ header{
 .product-info{
     display:flex;
     align-items:center;
-    gap:15px;
+
+    gap:14px;
+
+    min-width:0;
 }
 
 .product-icon{
-    width:48px;
-    height:48px;
-    border-radius:15px;
+
+    width:49px;
+    height:49px;
+
+    flex:0 0 49px;
+
     display:grid;
     place-items:center;
+
+    border-radius:15px;
+
+    border:
+        1px solid rgba(0,205,255,.18);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0,205,255,.14),
+            rgba(120,0,255,.1)
+        );
+
+    box-shadow:
+        inset 0 1px rgba(255,255,255,.05),
+        0 0 25px rgba(0,200,255,.05);
+
+    color:#71e6ff;
+
     font-size:20px;
-    background:linear-gradient(
-        145deg,
-        rgba(0,200,255,.18),
-        rgba(120,0,255,.12)
-    );
-    border:1px solid rgba(0,200,255,.18);
-    box-shadow:0 0 25px rgba(0,200,255,.08);
+}
+
+.product-text{
+    min-width:0;
 }
 
 .product-name{
-    font-size:17px;
-    font-weight:800;
+
+    font-size:16px;
+
+    font-weight:850;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
 }
 
 .product-sub{
-    color:#6e788b;
-    font-size:11px;
-    margin-top:4px;
+
+    margin-top:5px;
+
+    color:#687489;
+
+    font-size:10px;
+
+    letter-spacing:.3px;
 }
 
 .arrow{
-    width:38px;
-    height:38px;
-    border-radius:12px;
+
+    width:40px;
+    height:40px;
+
+    flex:0 0 40px;
+
     display:grid;
     place-items:center;
-    border:1px solid rgba(255,255,255,.1);
-    background:rgba(255,255,255,.035);
-    color:#aeb8c9;
-    font-size:18px;
-    transition:.35s;
+
+    border-radius:13px;
+
+    border:
+        1px solid rgba(255,255,255,.09);
+
+    background:
+        rgba(255,255,255,.035);
+
+    color:#8b97aa;
+
+    font-size:20px;
+
+    transition:
+        transform .35s ease,
+        color .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
 }
 
 .store-card.open .arrow{
+
     transform:rotate(180deg);
-    color:#00d5ff;
-    border-color:rgba(0,213,255,.35);
-    box-shadow:0 0 20px rgba(0,213,255,.12);
+
+    color:#00d8ff;
+
+    border-color:
+        rgba(0,215,255,.35);
+
+    box-shadow:
+        0 0 22px rgba(0,215,255,.1);
 }
 
-/* PLANS */
+
+/* =========================
+   PLANS
+========================= */
 
 .plans{
+
+    position:relative;
+    z-index:2;
+
     max-height:0;
+
     overflow:hidden;
+
     opacity:0;
+
+    margin-top:0;
+
     transition:
-        max-height .45s ease,
-        opacity .3s ease,
+        max-height .5s ease,
+        opacity .35s ease,
         margin-top .35s ease;
 }
 
 .store-card.open .plans{
-    max-height:600px;
+
+    max-height:650px;
+
     opacity:1;
-    margin-top:20px;
+
+    margin-top:19px;
 }
 
 .plan{
+
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:15px 16px;
-    margin-top:9px;
+
+    width:100%;
+
+    padding:14px 15px;
+
+    margin-top:8px;
+
     border-radius:15px;
-    border:1px solid rgba(255,255,255,.07);
-    background:rgba(255,255,255,.025);
+
+    border:
+        1px solid rgba(255,255,255,.065);
+
+    background:
+        rgba(255,255,255,.022);
+
     cursor:pointer;
-    transition:.25s;
+
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        background .25s ease,
+        box-shadow .25s ease;
+}
+
+.plan:first-child{
+    margin-top:0;
 }
 
 .plan:hover{
-    transform:translateX(4px);
-    border-color:rgba(0,210,255,.35);
-    background:rgba(0,190,255,.06);
-    box-shadow:0 8px 25px rgba(0,0,0,.25);
+
+    transform:
+        translateX(4px);
+
+    border-color:
+        rgba(0,210,255,.32);
+
+    background:
+        rgba(0,190,255,.055);
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.25);
 }
 
 .plan-left{
     display:flex;
     align-items:center;
-    gap:12px;
+
+    gap:11px;
 }
 
 .plan-dot{
-    width:8px;
-    height:8px;
+
+    width:7px;
+    height:7px;
+
     border-radius:50%;
-    background:#00d5ff;
-    box-shadow:0 0 12px #00d5ff;
+
+    background:#00d9ff;
+
+    box-shadow:
+        0 0 12px #00d9ff;
 }
 
 .plan-name{
-    font-size:14px;
+
+    color:#dce3ed;
+
+    font-size:13px;
+
     font-weight:700;
 }
 
 .plan-right{
+
     display:flex;
     align-items:center;
+
     gap:12px;
 }
 
 .price{
+
+    color:#ffffff;
+
+    font-size:14px;
+
     font-weight:900;
-    font-size:15px;
 }
 
 .buy-arrow{
-    color:#657186;
+
+    color:#596679;
+
+    font-size:16px;
+
     transition:.2s;
 }
 
 .plan:hover .buy-arrow{
-    color:#00d5ff;
-    transform:translateX(3px);
+
+    color:#00d8ff;
+
+    transform:
+        translateX(3px);
 }
 
-/* SOCIAL */
+
+/* =========================
+   COMMUNITY
+========================= */
 
 .social-box{
-    margin-top:35px;
-    padding:20px;
-    border:1px solid rgba(255,255,255,.08);
+
+    margin-top:34px;
+
+    padding:22px;
+
     border-radius:22px;
-    background:rgba(255,255,255,.025);
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    background:
+        rgba(255,255,255,.025);
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:
+        0 20px 55px rgba(0,0,0,.25);
+
     text-align:center;
 }
 
 .social-title{
-    color:#8792a5;
-    font-size:12px;
-    letter-spacing:1px;
-    margin-bottom:15px;
+
+    color:#7e899b;
+
+    font-size:10px;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    margin-bottom:17px;
 }
 
 .socials{
+
     display:flex;
+
+    align-items:center;
     justify-content:center;
+
     gap:10px;
+
     flex-wrap:wrap;
 }
 
 .social{
+
+    min-width:145px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:9px;
+
+    padding:12px 17px;
+
+    border-radius:14px;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    background:
+        rgba(255,255,255,.035);
+
     text-decoration:none;
-    color:#fff;
-    padding:11px 15px;
-    border-radius:12px;
-    border:1px solid rgba(255,255,255,.08);
-    background:rgba(255,255,255,.035);
+
     font-size:12px;
-    transition:.25s;
+
+    font-weight:800;
+
+    transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease;
 }
 
-.social:hover{
-    transform:translateY(-2px);
-    border-color:#00c8ff;
+.social svg{
+
+    width:19px;
+    height:19px;
+
+    fill:currentColor;
+
+    flex:0 0 19px;
 }
 
-/* FOOTER */
+
+/* TELEGRAM */
+
+.social.telegram{
+
+    color:#2AABEE;
+}
+
+.social.telegram:hover{
+
+    background:
+        rgba(42,171,238,.09);
+
+    border-color:
+        rgba(42,171,238,.45);
+
+    box-shadow:
+        0 0 25px rgba(42,171,238,.16);
+
+    transform:
+        translateY(-3px);
+}
+
+
+/* WHATSAPP */
+
+.social.whatsapp{
+
+    color:#25D366;
+}
+
+.social.whatsapp:hover{
+
+    background:
+        rgba(37,211,102,.09);
+
+    border-color:
+        rgba(37,211,102,.45);
+
+    box-shadow:
+        0 0 25px rgba(37,211,102,.16);
+
+    transform:
+        translateY(-3px);
+}
+
+
+/* YOUTUBE */
+
+.social.youtube{
+
+    color:#FF3B30;
+}
+
+.social.youtube:hover{
+
+    background:
+        rgba(255,59,48,.09);
+
+    border-color:
+        rgba(255,59,48,.45);
+
+    box-shadow:
+        0 0 25px rgba(255,59,48,.16);
+
+    transform:
+        translateY(-3px);
+}
+
+
+/* =========================
+   FOOTER
+========================= */
 
 footer{
+
+    padding:
+        10px 20px
+        28px;
+
     text-align:center;
-    color:#4e596b;
-    font-size:11px;
-    padding:20px;
+
+    color:#4d5869;
+
+    font-size:10px;
+
+    letter-spacing:.3px;
 }
 
-/* MOBILE */
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:600px){
 
     header{
-        padding:15px 4%;
+
+        padding:
+            14px 4%;
+    }
+
+    .logo{
+
+        font-size:18px;
     }
 
     .header-btn{
-        padding:9px 11px;
-        font-size:11px;
+
+        min-height:36px;
+
+        padding:
+            0 11px;
+
+        font-size:10px;
     }
 
     .container{
-        padding-top:40px;
+
+        width:92%;
+
+        padding-top:43px;
+    }
+
+    .hero{
+
+        margin-bottom:30px;
+    }
+
+    .hero h1{
+
+        font-size:
+            clamp(34px,12vw,50px);
+    }
+
+    .hero p{
+
+        font-size:12px;
     }
 
     .store-card{
-        padding:17px;
+
+        padding:16px;
+
         border-radius:20px;
     }
 
-    .product-name{
-        font-size:15px;
+    .product-icon{
+
+        width:44px;
+        height:44px;
+
+        flex-basis:44px;
     }
 
-    .product-icon{
-        width:43px;
-        height:43px;
+    .product-name{
+
+        font-size:14px;
+    }
+
+    .product-sub{
+
+        font-size:9px;
+    }
+
+    .arrow{
+
+        width:37px;
+        height:37px;
+
+        flex-basis:37px;
     }
 
     .plan{
-        padding:14px;
+
+        padding:13px;
     }
 
+    .plan-name{
+
+        font-size:12px;
+    }
+
+    .price{
+
+        font-size:13px;
+    }
+
+    .social{
+
+        width:100%;
+    }
 }
 
 </style>
+
 </head>
+
 
 <body>
 
+
+<!-- =========================
+     BACKGROUND
+========================= -->
+
 <div class="bg">
-    <div class="orb one"></div>
-    <div class="orb two"></div>
+
+    <div class="grid"></div>
+
+    <div class="orb orb-one"></div>
+
+    <div class="orb orb-two"></div>
+
+    <div class="orb orb-three"></div>
+
 </div>
+
+
+<!-- =========================
+     HEADER
+========================= -->
 
 <header>
 
     <div class="logo">
-        ⚡ <span>RECX</span>
+
+        <div class="logo-symbol">
+            ⚡
+        </div>
+
+        <div class="logo-name">
+            RECX
+        </div>
+
     </div>
+
 
     <div class="header-right">
 
-        <a href="profile.html" class="header-btn">
+        <a
+            href="profile.html"
+            class="header-btn"
+        >
             Profile
         </a>
 
         <button
+            type="button"
             class="header-btn"
             onclick="logout()"
-            style="cursor:pointer;color:white;"
         >
             Logout
         </button>
@@ -454,7 +1020,15 @@ footer{
 </header>
 
 
+
+<!-- =========================
+     MAIN
+========================= -->
+
 <main class="container">
+
+
+    <!-- HERO -->
 
     <section class="hero">
 
@@ -463,17 +1037,21 @@ footer{
         </div>
 
         <h1>
-            MADS <span>STORE</span>
+            MADS
+            <span>STORE</span>
         </h1>
 
         <p>
-            Select a product to view available plans
+            Select a product to explore available plans
         </p>
 
     </section>
 
 
-    <!-- PRODUCT 1 -->
+
+    <!-- =========================
+         MADS 1
+    ========================= -->
 
     <div class="store-card">
 
@@ -488,7 +1066,7 @@ footer{
                     ⚡
                 </div>
 
-                <div>
+                <div class="product-text">
 
                     <div class="product-name">
                         RECXmonster MADS
@@ -502,92 +1080,189 @@ footer{
 
             </div>
 
+
             <div class="arrow">
-               ⌄
+                ⌄
             </div>
 
         </div>
 
 
+
         <div class="plans">
 
+
             <div
                 class="plan"
-                onclick="buy('RECXmonster MADS','1 Day',60)"
+                onclick="buy(
+                    'RECXmonster MADS',
+                    '1 Day',
+                    60
+                )"
             >
+
                 <div class="plan-left">
+
                     <div class="plan-dot"></div>
-                    <div class="plan-name">1 Day</div>
+
+                    <div class="plan-name">
+                        1 Day
+                    </div>
+
                 </div>
 
                 <div class="plan-right">
-                    <div class="price">₹60</div>
-                    <div class="buy-arrow">→</div>
+
+                    <div class="price">
+                        ₹60
+                    </div>
+
+                    <div class="buy-arrow">
+                        →
+                    </div>
+
                 </div>
+
             </div>
 
 
+
             <div
                 class="plan"
-                onclick="buy('RECXmonster MADS','7 Days',100)"
+                onclick="buy(
+                    'RECXmonster MADS',
+                    '7 Days',
+                    100
+                )"
             >
+
                 <div class="plan-left">
+
                     <div class="plan-dot"></div>
-                    <div class="plan-name">7 Days</div>
+
+                    <div class="plan-name">
+                        7 Days
+                    </div>
+
                 </div>
 
                 <div class="plan-right">
-                    <div class="price">₹100</div>
-                    <div class="buy-arrow">→</div>
+
+                    <div class="price">
+                        ₹100
+                    </div>
+
+                    <div class="buy-arrow">
+                        →
+                    </div>
+
                 </div>
+
             </div>
 
 
+
             <div
                 class="plan"
-                onclick="buy('RECXmonster MADS','30 Days',250)"
+                onclick="buy(
+                    'RECXmonster MADS',
+                    '30 Days',
+                    250
+                )"
             >
+
                 <div class="plan-left">
+
                     <div class="plan-dot"></div>
-                    <div class="plan-name">30 Days</div>
+
+                    <div class="plan-name">
+                        30 Days
+                    </div>
+
                 </div>
 
                 <div class="plan-right">
-                    <div class="price">₹250</div>
-                    <div class="buy-arrow">→</div>
+
+                    <div class="price">
+                        ₹250
+                    </div>
+
+                    <div class="buy-arrow">
+                        →
+                    </div>
+
                 </div>
+
             </div>
 
 
+
             <div
                 class="plan"
-                onclick="buy('RECXmonster MADS','90 Days',500)"
+                onclick="buy(
+                    'RECXmonster MADS',
+                    '90 Days',
+                    500
+                )"
             >
+
                 <div class="plan-left">
+
                     <div class="plan-dot"></div>
-                    <div class="plan-name">90 Days</div>
+
+                    <div class="plan-name">
+                        90 Days
+                    </div>
+
                 </div>
 
                 <div class="plan-right">
-                    <div class="price">₹500</div>
-                    <div class="buy-arrow">→</div>
+
+                    <div class="price">
+                        ₹500
+                    </div>
+
+                    <div class="buy-arrow">
+                        →
+                    </div>
+
                 </div>
+
             </div>
 
 
+
             <div
                 class="plan"
-                onclick="buy('RECXmonster MADS','Lifetime',1000)"
+                onclick="buy(
+                    'RECXmonster MADS',
+                    'Lifetime',
+                    1000
+                )"
             >
+
                 <div class="plan-left">
+
                     <div class="plan-dot"></div>
-                    <div class="plan-name">Lifetime</div>
+
+                    <div class="plan-name">
+                        Lifetime
+                    </div>
+
                 </div>
 
                 <div class="plan-right">
-                    <div class="price">₹1000</div>
-                    <div class="buy-arrow">→</div>
+
+                    <div class="price">
+                        ₹1000
+                    </div>
+
+                    <div class="buy-arrow">
+                        →
+                    </div>
+
                 </div>
+
             </div>
 
         </div>
@@ -595,7 +1270,10 @@ footer{
     </div>
 
 
-    <!-- PRODUCT 2 -->
+
+    <!-- =========================
+         MADS 2
+    ========================= -->
 
     <div class="store-card">
 
@@ -610,7 +1288,7 @@ footer{
                     ◈
                 </div>
 
-                <div>
+                <div class="product-text">
 
                     <div class="product-name">
                         RecxInstall and Play MADS
@@ -624,76 +1302,154 @@ footer{
 
             </div>
 
+
             <div class="arrow">
-               ⌄
+                ⌄
             </div>
 
         </div>
 
 
+
         <div class="plans">
 
+
             <div
                 class="plan"
-                onclick="buy('RecxInstall and Play MADS','7 Days',80)"
+                onclick="buy(
+                    'RecxInstall and Play MADS',
+                    '7 Days',
+                    80
+                )"
             >
+
                 <div class="plan-left">
+
                     <div class="plan-dot"></div>
-                    <div class="plan-name">7 Days</div>
+
+                    <div class="plan-name">
+                        7 Days
+                    </div>
+
                 </div>
 
                 <div class="plan-right">
-                    <div class="price">₹80</div>
-                    <div class="buy-arrow">→</div>
+
+                    <div class="price">
+                        ₹80
+                    </div>
+
+                    <div class="buy-arrow">
+                        →
+                    </div>
+
                 </div>
+
             </div>
 
 
+
             <div
                 class="plan"
-                onclick="buy('RecxInstall and Play MADS','30 Days',200)"
+                onclick="buy(
+                    'RecxInstall and Play MADS',
+                    '30 Days',
+                    200
+                )"
             >
+
                 <div class="plan-left">
+
                     <div class="plan-dot"></div>
-                    <div class="plan-name">30 Days</div>
+
+                    <div class="plan-name">
+                        30 Days
+                    </div>
+
                 </div>
 
                 <div class="plan-right">
-                    <div class="price">₹200</div>
-                    <div class="buy-arrow">→</div>
+
+                    <div class="price">
+                        ₹200
+                    </div>
+
+                    <div class="buy-arrow">
+                        →
+                    </div>
+
                 </div>
+
             </div>
 
 
+
             <div
                 class="plan"
-                onclick="buy('RecxInstall and Play MADS','90 Days',500)"
+                onclick="buy(
+                    'RecxInstall and Play MADS',
+                    '90 Days',
+                    500
+                )"
             >
+
                 <div class="plan-left">
+
                     <div class="plan-dot"></div>
-                    <div class="plan-name">90 Days</div>
+
+                    <div class="plan-name">
+                        90 Days
+                    </div>
+
                 </div>
 
                 <div class="plan-right">
-                    <div class="price">₹500</div>
-                    <div class="buy-arrow">→</div>
+
+                    <div class="price">
+                        ₹500
+                    </div>
+
+                    <div class="buy-arrow">
+                        →
+                    </div>
+
                 </div>
+
             </div>
 
 
+
             <div
                 class="plan"
-                onclick="buy('RecxInstall and Play MADS','Lifetime',1000)"
+                onclick="buy(
+                    'RecxInstall and Play MADS',
+                    'Lifetime',
+                    1000
+                )"
             >
+
                 <div class="plan-left">
+
                     <div class="plan-dot"></div>
-                    <div class="plan-name">Lifetime</div>
+
+                    <div class="plan-name">
+                        Lifetime
+                    </div>
+
                 </div>
 
                 <div class="plan-right">
-                    <div class="price">₹1000</div>
-                    <div class="buy-arrow">→</div>
+
+                    <div class="price">
+                        ₹1000
+                    </div>
+
+                    <div class="buy-arrow">
+                        →
+                    </div>
+
                 </div>
+
             </div>
 
         </div>
@@ -701,7 +1457,10 @@ footer{
     </div>
 
 
-    <!-- PRODUCT 3 -->
+
+    <!-- =========================
+         MADS 3
+    ========================= -->
 
     <div class="store-card">
 
@@ -716,7 +1475,7 @@ footer{
                     ✦
                 </div>
 
-                <div>
+                <div class="product-text">
 
                     <div class="product-name">
                         RecxValimod Ultra MADS
@@ -730,92 +1489,189 @@ footer{
 
             </div>
 
+
             <div class="arrow">
-               ⌄
+                ⌄
             </div>
 
         </div>
 
 
+
         <div class="plans">
 
+
             <div
                 class="plan"
-                onclick="buy('RecxValimod Ultra MADS','1 Day',50)"
+                onclick="buy(
+                    'RecxValimod Ultra MADS',
+                    '1 Day',
+                    50
+                )"
             >
+
                 <div class="plan-left">
+
                     <div class="plan-dot"></div>
-                    <div class="plan-name">1 Day</div>
+
+                    <div class="plan-name">
+                        1 Day
+                    </div>
+
                 </div>
 
                 <div class="plan-right">
-                    <div class="price">₹50</div>
-                    <div class="buy-arrow">→</div>
+
+                    <div class="price">
+                        ₹50
+                    </div>
+
+                    <div class="buy-arrow">
+                        →
+                    </div>
+
                 </div>
+
             </div>
 
 
+
             <div
                 class="plan"
-                onclick="buy('RecxValimod Ultra MADS','7 Days',125)"
+                onclick="buy(
+                    'RecxValimod Ultra MADS',
+                    '7 Days',
+                    125
+                )"
             >
+
                 <div class="plan-left">
+
                     <div class="plan-dot"></div>
-                    <div class="plan-name">7 Days</div>
+
+                    <div class="plan-name">
+                        7 Days
+                    </div>
+
                 </div>
 
                 <div class="plan-right">
-                    <div class="price">₹125</div>
-                    <div class="buy-arrow">→</div>
+
+                    <div class="price">
+                        ₹125
+                    </div>
+
+                    <div class="buy-arrow">
+                        →
+                    </div>
+
                 </div>
+
             </div>
 
 
+
             <div
                 class="plan"
-                onclick="buy('RecxValimod Ultra MADS','30 Days',300)"
+                onclick="buy(
+                    'RecxValimod Ultra MADS',
+                    '30 Days',
+                    300
+                )"
             >
+
                 <div class="plan-left">
+
                     <div class="plan-dot"></div>
-                    <div class="plan-name">30 Days</div>
+
+                    <div class="plan-name">
+                        30 Days
+                    </div>
+
                 </div>
 
                 <div class="plan-right">
-                    <div class="price">₹300</div>
-                    <div class="buy-arrow">→</div>
+
+                    <div class="price">
+                        ₹300
+                    </div>
+
+                    <div class="buy-arrow">
+                        →
+                    </div>
+
                 </div>
+
             </div>
 
 
+
             <div
                 class="plan"
-                onclick="buy('RecxValimod Ultra MADS','90 Days',600)"
+                onclick="buy(
+                    'RecxValimod Ultra MADS',
+                    '90 Days',
+                    600
+                )"
             >
+
                 <div class="plan-left">
+
                     <div class="plan-dot"></div>
-                    <div class="plan-name">90 Days</div>
+
+                    <div class="plan-name">
+                        90 Days
+                    </div>
+
                 </div>
 
                 <div class="plan-right">
-                    <div class="price">₹600</div>
-                    <div class="buy-arrow">→</div>
+
+                    <div class="price">
+                        ₹600
+                    </div>
+
+                    <div class="buy-arrow">
+                        →
+                    </div>
+
                 </div>
+
             </div>
 
 
+
             <div
                 class="plan"
-                onclick="buy('RecxValimod Ultra MADS','Lifetime',1200)"
+                onclick="buy(
+                    'RecxValimod Ultra MADS',
+                    'Lifetime',
+                    1200
+                )"
             >
+
                 <div class="plan-left">
+
                     <div class="plan-dot"></div>
-                    <div class="plan-name">Lifetime</div>
+
+                    <div class="plan-name">
+                        Lifetime
+                    </div>
+
                 </div>
 
                 <div class="plan-right">
-                    <div class="price">₹1200</div>
-                    <div class="buy-arrow">→</div>
+
+                    <div class="price">
+                        ₹1200
+                    </div>
+
+                    <div class="buy-arrow">
+                        →
+                    </div>
+
                 </div>
+
             </div>
 
         </div>
@@ -823,7 +1679,10 @@ footer{
     </div>
 
 
-    <!-- SOCIAL -->
+
+    <!-- =========================
+         COMMUNITY
+    ========================= -->
 
     <div class="social-box">
 
@@ -831,30 +1690,143 @@ footer{
             JOIN RECX COMMUNITY
         </div>
 
+
         <div class="socials">
 
+
+            <!-- TELEGRAM -->
+
             <a
-                class="social"
+                class="social telegram"
                 href="https://t.me/panalstoreff"
                 target="_blank"
+                rel="noopener noreferrer"
             >
-                Telegram
+
+                <svg viewBox="0 0 24 24">
+
+                    <path d="
+                    M21.8 3.2
+                    18.6 20
+                    c-.24 1.2-.87 1.5-1.77.94
+                    l-4.86-3.58
+                    -2.35 2.26
+                    c-.26.26-.48.48-.98.48
+                    l.35-4.96
+                    9.03-8.16
+                    c.39-.35-.09-.55-.61-.2
+                    L6.25 13.94
+                    1.5 12.45
+                    c-1.03-.32-1.05-1.03.21-1.52
+                    L20.26 3.72
+                    c.86-.32 1.61.2 1.54-.52z
+                    "/>
+
+                </svg>
+
+                <span>
+                    Telegram
+                </span>
+
             </a>
 
+
+
+            <!-- WHATSAPP -->
+
             <a
-                class="social"
+                class="social whatsapp"
                 href="https://whatsapp.com/channel/0029VbDyKyj0VycFxIRkAf2p"
                 target="_blank"
+                rel="noopener noreferrer"
             >
-                WhatsApp
+
+                <svg viewBox="0 0 24 24">
+
+                    <path d="
+                    M12 2.1
+                    a9.8 9.8 0 0 0-8.46 14.9
+                    L2 22
+                    l5.14-1.5
+                    A9.9 9.9 0 1 0 12 2.1
+                    zm0 17.9
+                    c-1.58 0-3.12-.42-4.48-1.22
+                    l-.32-.19-3.05.89.9-2.97
+                    -.21-.31
+                    A7.98 7.98 0 1 1 12 20
+                    zm4.37-5.98
+                    c-.24-.12-1.42-.7-1.64-.78
+                    -.22-.08-.38-.12-.54.12
+                    -.16.24-.62.78-.76.94
+                    -.14.16-.28.18-.52.06
+                    -.24-.12-1.02-.38-1.94-1.2
+                    -.72-.64-1.2-1.43-1.34-1.67
+                    -.14-.24-.01-.37.1-.49
+                    .11-.11.24-.28.36-.42
+                    .12-.14.16-.24.24-.4
+                    .08-.16.04-.3-.02-.42
+                    -.06-.12-.54-1.3-.74-1.78
+                    -.2-.47-.4-.4-.54-.41
+                    h-.46
+                    c-.16 0-.42.06-.64.3
+                    -.22.24-.84.82-.84 2
+                    s.86 2.32.98 2.48
+                    c.12.16 1.69 2.58 4.1 3.62
+                    .57.25 1.02.4 1.37.51
+                    .58.18 1.1.15 1.52.09
+                    .46-.07 1.42-.58 1.62-1.14
+                    .2-.56.2-1.04.14-1.14
+                    -.06-.1-.22-.16-.46-.28z
+                    "/>
+
+                </svg>
+
+                <span>
+                    WhatsApp
+                </span>
+
             </a>
 
+
+
+            <!-- YOUTUBE -->
+
             <a
-                class="social"
+                class="social youtube"
                 href="https://youtube.com/@recxpanal-te6os?si=wEXVJ6vGkDRTCCRt"
                 target="_blank"
+                rel="noopener noreferrer"
             >
-                YouTube
+
+                <svg viewBox="0 0 24 24">
+
+                    <path d="
+                    M23.5 6.2
+                    a3 3 0 0 0-2.1-2.12
+                    C19.55 3.55 12 3.55 12 3.55
+                    s-7.55 0-9.4.53
+                    A3 3 0 0 0 .5 6.2
+                    31.2 31.2 0 0 0 0 12
+                    a31.2 31.2 0 0 0 .5 5.8
+                    3 3 0 0 0 2.1 2.12
+                    c1.85.53 9.4.53 9.4.53
+                    s7.55 0 9.4-.53
+                    a3 3 0 0 0 2.1-2.12
+                    A31.2 31.2 0 0 0 24 12
+                    a31.2 31.2 0 0 0-.5-5.8z
+
+                    M9.6 15.6
+                    V8.4
+                    l6.3 3.6
+                    -6.3 3.6z
+                    "/>
+
+                </svg>
+
+                <span>
+                    YouTube
+                </span>
+
             </a>
 
         </div>
@@ -864,12 +1836,24 @@ footer{
 </main>
 
 
+
+<!-- =========================
+     FOOTER
+========================= -->
+
 <footer>
+
     © 2026 RECX • Secure Digital Store
+
 </footer>
 
 
+
 <script>
+
+/* =========================
+   SUPABASE
+========================= */
 
 const SUPABASE_URL =
 "https://asdbxlnttlsuhhnqeywa.supabase.co";
@@ -884,75 +1868,147 @@ window.supabase.createClient(
 );
 
 
-/* LOGIN CHECK */
+/* =========================
+   LOGIN CHECK
+========================= */
 
 async function checkLogin(){
 
-    const {
-        data:{
-            session
+    try{
+
+        const {
+            data:{
+                session
+            }
+        } =
+        await supabaseClient
+        .auth
+        .getSession();
+
+
+        if(!session){
+
+            window.location.href =
+            "index.html";
+
+            return;
         }
-    } = await supabaseClient.auth.getSession();
 
-    if(!session){
+    }catch(error){
 
-        window.location.href =
-        "index.html";
+        console.error(
+            "Session error:",
+            error
+        );
 
-        return;
     }
+
 }
 
 
-/* LOGOUT */
+/* =========================
+   LOGOUT
+========================= */
 
 async function logout(){
 
-    await supabaseClient.auth.signOut();
+    try{
+
+        await supabaseClient
+        .auth
+        .signOut();
+
+    }catch(error){
+
+        console.error(
+            "Logout error:",
+            error
+        );
+
+    }
 
     window.location.href =
     "index.html";
+
 }
 
 
-/* OPEN / CLOSE CARD */
+/* =========================
+   CARD OPEN / CLOSE
+========================= */
 
 function toggleCard(card){
 
-    const isOpen =
+    const alreadyOpen =
         card.classList.contains("open");
+
+
+    /*
+       Close all cards
+    */
 
     document
         .querySelectorAll(".store-card")
-        .forEach(item=>{
+        .forEach(function(item){
+
             item.classList.remove("open");
+
         });
 
-    if(!isOpen){
+
+    /*
+       Open clicked card
+    */
+
+    if(!alreadyOpen){
+
         card.classList.add("open");
+
     }
+
 }
 
 
-/* BUY PLAN */
+/* =========================
+   OPEN PAYMENT PAGE
+========================= */
 
-function buy(product,plan,amount){
+function buy(
+    product,
+    plan,
+    amount
+){
 
     const params =
         new URLSearchParams({
-            product:product,
-            plan:plan,
-            amount:amount
+
+            product:
+                product,
+
+            plan:
+                plan,
+
+            amount:
+                amount
+
         });
 
+
     window.location.href =
-        "payment.html?" + params.toString();
+        "payment.html?" +
+        params.toString();
+
 }
 
+
+/* =========================
+   START
+========================= */
 
 checkLogin();
 
 </script>
 
+
 </body>
-</html>
+    </html>
