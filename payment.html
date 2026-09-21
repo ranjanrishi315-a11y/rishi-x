@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RECX • Payment</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(0,190,255,.13),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 85%,
+            rgba(140,0,255,.14),
+            transparent 32%
+        ),
+        #05070c;
+
+    overflow-x:hidden;
+}
+
+.bg{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-2;
+}
+
+.grid{
+    position:absolute;
+    inset:0;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        );
+
+    background-size:45px 45px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent
+        );
+}
+
+.orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(100px);
+    opacity:.16;
+}
+
+.orb1{
+    width:320px;
+    height:320px;
+    background:#00bfff;
+    top:-150px;
+    left:-130px;
+}
+
+.orb2{
+    width:350px;
+    height:350px;
+    background:#8d00ff;
+    right:-160px;
+    bottom:-160px;
+}
+
+
+/* HEADER */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:50;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:17px 5%;
+
+    background:rgba(3,5,10,.78);
+
+    backdrop-filter:blur(22px);
+
+    border-bottom:
+        1px solid rgba(255,255,255,.07);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:9px;
+
+    font-size:21px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.logo span{
+    color:#00d9ff;
+
+    text-shadow:
+        0 0 10px rgba(0,217,255,.7),
+        0 0 25px rgba(0,217,255,.25);
+}
+
+.back-btn{
+    text-decoration:none;
+
+    color:#dce5f2;
+
+    padding:10px 15px;
+
+    border-radius:12px;
+
+    border:
+        1px solid rgba(255,255,255,.09);
+
+    background:
+        rgba(255,255,255,.035);
+
+    font-size:12px;
+    font-weight:700;
+
+    transition:.25s;
+}
+
+.back-btn:hover{
+    color:#00d9ff;
+
+    border-color:
+        rgba(0,217,255,.35);
+
+    transform:translateY(-2px);
+}
+
+
+/* MAIN */
+
+.container{
+    width:min(620px,92%);
+
+    margin:auto;
+
+    padding:
+        45px 0
+        70px;
+}
+
+
+/* TITLE */
+
+.hero{
+    text-align:center;
+
+    margin-bottom:25px;
+}
+
+.badge{
+    display:inline-block;
+
+    padding:7px 13px;
+
+    border-radius:50px;
+
+    border:
+        1px solid rgba(0,210,255,.22);
+
+    background:
+        rgba(0,210,255,.05);
+
+    color:#65dcff;
+
+    font-size:10px;
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    margin-bottom:14px;
+}
+
+.hero h1{
+    font-size:
+        clamp(31px,8vw,48px);
+
+    font-weight:950;
+
+    letter-spacing:-1.8px;
+}
+
+.hero h1 span{
+    background:
+        linear-gradient(
+            90deg,
+            #00d9ff,
+            #7366ff,
+            #c34dff
+        );
+
+    -webkit-background-clip:text;
+    background-clip:text;
+
+    color:transparent;
+}
+
+
+/* SELECTED PLAN */
+
+.selected-card{
+
+    padding:20px;
+
+    border-radius:22px;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.018)
+        );
+
+    backdrop-filter:blur(20px);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.35);
+
+    margin-bottom:18px;
+}
+
+.selected-label{
+
+    color:#68758a;
+
+    font-size:10px;
+
+    letter-spacing:1.5px;
+
+    font-weight:800;
+
+    margin-bottom:9px;
+}
+
+.product-name{
+
+    color:#fff;
+
+    font-size:17px;
+
+    font-weight:850;
+}
+
+.plan-row{
+
+    margin-top:15px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding-top:15px;
+
+    border-top:
+        1px solid rgba(255,255,255,.07);
+}
+
+.plan-name{
+
+    color:#aeb9ca;
+
+    font-size:13px;
+}
+
+.amount{
+
+    color:#00d9ff;
+
+    font-size:22px;
+
+    font-weight:950;
+
+    text-shadow:
+        0 0 18px rgba(0,217,255,.25);
+}
+
+
+/* PAYMENT CARD */
+
+.payment-card{
+
+    padding:22px;
+
+    border-radius:24px;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    background:
+        rgba(255,255,255,.025);
+
+    backdrop-filter:blur(20px);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.38);
+
+    text-align:center;
+}
+
+.payment-title{
+
+    font-size:15px;
+
+    font-weight:850;
+
+    margin-bottom:6px;
+}
+
+.payment-sub{
+
+    color:#707c90;
+
+    font-size:11px;
+
+    margin-bottom:20px;
+}
+
+
+/* QR */
+
+.qr-wrapper{
+
+    width:250px;
+    max-width:80vw;
+
+    margin:0 auto 18px;
+
+    padding:13px;
+
+    border-radius:20px;
+
+    background:#fff;
+
+    box-shadow:
+        0 0 45px rgba(0,210,255,.12);
+}
+
+.qr-wrapper img{
+
+    display:block;
+
+    width:100%;
+
+    height:auto;
+
+    border-radius:9px;
+}
+
+
+/* UPI */
+
+.upi-box{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    padding:12px 13px;
+
+    margin-bottom:20px;
+
+    border-radius:13px;
+
+    background:
+        rgba(0,210,255,.045);
+
+    border:
+        1px solid rgba(0,210,255,.15);
+
+    text-align:left;
+}
+
+.upi-text small{
+
+    display:block;
+
+    color:#68768b;
+
+    font-size:9px;
+
+    margin-bottom:4px;
+}
+
+.upi-text strong{
+
+    color:#dfe8f5;
+
+    font-size:12px;
+
+    word-break:break-all;
+}
+
+.copy-btn{
+
+    flex-shrink:0;
+
+    padding:8px 11px;
+
+    border:0;
+
+    border-radius:9px;
+
+    color:#fff;
+
+    background:
+        rgba(0,210,255,.12);
+
+    border:
+        1px solid rgba(0,210,255,.2);
+
+    cursor:pointer;
+
+    font-size:10px;
+}
+
+
+/* UPLOAD */
+
+.upload-title{
+
+    text-align:left;
+
+    color:#aeb9ca;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    margin-bottom:9px;
+}
+
+.file-box{
+
+    position:relative;
+
+    border:
+        1px dashed rgba(0,210,255,.25);
+
+    border-radius:16px;
+
+    padding:20px;
+
+    background:
+        rgba(0,210,255,.025);
+
+    transition:.25s;
+}
+
+.file-box:hover{
+
+    border-color:
+        rgba(0,210,255,.5);
+
+    background:
+        rgba(0,210,255,.045);
+}
+
+.file-box input{
+
+    width:100%;
+
+    color:#8d9aae;
+
+    font-size:11px;
+}
+
+.preview{
+
+    display:none;
+
+    margin-top:14px;
+
+    border-radius:14px;
+
+    overflow:hidden;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+}
+
+.preview img{
+
+    display:block;
+
+    width:100%;
+
+    max-height:300px;
+
+    object-fit:contain;
+
+    background:#030407;
+}
+
+
+/* SUBMIT */
+
+.submit-btn{
+
+    width:100%;
+
+    margin-top:18px;
+
+    padding:15px;
+
+    border:0;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00bfe9,
+            #536cff
+        );
+
+    color:#fff;
+
+    font-size:13px;
+
+    font-weight:900;
+
+    letter-spacing:.3px;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 12px 30px rgba(0,150,255,.18);
+
+    transition:.25s;
+}
+
+.submit-btn:hover{
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 16px 38px rgba(0,150,255,.28);
+}
+
+.submit-btn:disabled{
+
+    opacity:.55;
+
+    cursor:not-allowed;
+
+    transform:none;
+}
+
+
+/* STATUS */
+
+.status{
+
+    display:none;
+
+    margin-top:15px;
+
+    padding:13px;
+
+    border-radius:13px;
+
+    font-size:11px;
+
+    line-height:1.5;
+}
+
+.status.success{
+
+    display:block;
+
+    color:#69f3a1;
+
+    background:
+        rgba(37,211,102,.06);
+
+    border:
+        1px solid rgba(37,211,102,.2);
+}
+
+.status.error{
+
+    display:block;
+
+    color:#ff7777;
+
+    background:
+        rgba(255,50,50,.06);
+
+    border:
+        1px solid rgba(255,50,50,.2);
+}
+
+.status.info{
+
+    display:block;
+
+    color:#72ddff;
+
+    background:
+        rgba(0,210,255,.06);
+
+    border:
+        1px solid rgba(0,210,255,.2);
+}
+
+
+/* NOTE */
+
+.note{
+
+    margin-top:17px;
+
+    color:#586578;
+
+    font-size:10px;
+
+    line-height:1.6;
+
+    text-align:center;
+}
+
+
+/* FOOTER */
+
+footer{
+
+    text-align:center;
+
+    color:#4d5869;
+
+    font-size:10px;
+
+    padding:
+        0 20px
+        28px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    header{
+        padding:14px 4%;
+    }
+
+    .logo{
+        font-size:18px;
+    }
+
+    .back-btn{
+        font-size:10px;
+        padding:9px 11px;
+    }
+
+    .container{
+        padding-top:35px;
+    }
+
+    .payment-card,
+    .selected-card{
+        padding:17px;
+    }
+
+    .qr-wrapper{
+        width:230px;
+    }
+
+    .upi-box{
+        align-items:flex-start;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="bg">
+
+    <div class="grid"></div>
+
+    <div class="orb orb1"></div>
+
+    <div class="orb orb2"></div>
+
+</div>
+
+
+
+<header>
+
+    <div class="logo">
+        ⚡ <span>RECX</span>
+    </div>
+
+    <a
+        href="dashboard-new.html"
+        class="back-btn"
+    >
+        ← Back to Store
+    </a>
+
+</header>
+
+
+
+<main class="container">
+
+
+    <section class="hero">
+
+        <div class="badge">
+            SECURE PAYMENT
+        </div>
+
+        <h1>
+            Complete <span>Payment</span>
+        </h1>
+
+    </section>
+
+
+
+    <!-- SELECTED PRODUCT -->
+
+    <div class="selected-card">
+
+        <div class="selected-label">
+            SELECTED MADS
+        </div>
+
+        <div
+            class="product-name"
+            id="productName"
+        >
+            Loading...
+        </div>
+
+        <div class="plan-row">
+
+            <div>
+
+                <div class="selected-label">
+                    SELECTED PLAN
+                </div>
+
+                <div
+                    class="plan-name"
+                    id="planName"
+                >
+                    Loading...
+                </div>
+
+            </div>
+
+            <div
+                class="amount"
+                id="amount"
+            >
+                ₹0
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- PAYMENT -->
+
+    <div class="payment-card">
+
+        <div class="payment-title">
+            Scan & Pay
+        </div>
+
+        <div class="payment-sub">
+            Scan the QR using your UPI app
+        </div>
+
+
+        <!-- QR ONLY HERE -->
+
+        <div class="qr-wrapper">
+
+            <img
+                src="phonepe-qr.png"
+                alt="RECX Payment QR"
+                onerror="
+                    this.style.display='none';
+                    document.getElementById('qrError').style.display='block';
+                "
+            >
+
+            <div
+                id="qrError"
+                style="
+                    display:none;
+                    color:#111;
+                    padding:35px 10px;
+                    font-size:12px;
+                "
+            >
+                QR image not found.<br>
+                Please upload <b>phonepe-qr.png</b>
+                in the same GitHub folder.
+            </div>
+
+        </div>
+
+
+
+        <!-- UPI -->
+
+        <div class="upi-box">
+
+            <div class="upi-text">
+
+                <small>
+                    UPI ID
+                </small>
+
+                <strong id="upiId">
+                    7493885422-2@ybl
+                </strong>
+
+            </div>
+
+            <button
+                type="button"
+                class="copy-btn"
+                onclick="copyUPI()"
+            >
+                Copy
+            </button>
+
+        </div>
+
+
+
+        <!-- UPLOAD -->
+
+        <div class="upload-title">
+            Upload Payment Screenshot
+        </div>
+
+        <div class="file-box">
+
+            <input
+                type="file"
+                id="paymentScreenshot"
+                accept="image/png,image/jpeg,image/webp"
+            >
+
+            <div
+                id="preview"
+                class="preview"
+            >
+                <img
+                    id="previewImage"
+                    alt="Payment screenshot preview"
+                >
+            </div>
+
+        </div>
+
+
+
+        <button
+            type="button"
+            id="submitBtn"
+            class="submit-btn"
+            onclick="submitPayment()"
+        >
+            SUBMIT PAYMENT REQUEST
+        </button>
+
+
+
+        <div
+            id="status"
+            class="status"
+        ></div>
+
+
+        <div class="note">
+            Upload a clear payment screenshot after completing
+            the payment. Your request will be reviewed manually.
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<footer>
+    © 2026 RECX • Secure Digital Store
+</footer>
+
+
+
+<script>
+
+/* =========================
+   SUPABASE
+========================= */
+
+const SUPABASE_URL =
+"https://asdbxlnttlsuhhnqeywa.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_GIzm11dFWDJmu9cQGAJy_w_432UbSU5";
+
+const BUCKET_NAME =
+"user-files";
+
+const UPI_ID =
+"7493885422-2@ybl";
+
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* =========================
+   URL DATA
+========================= */
+
+const params =
+new URLSearchParams(
+    window.location.search
+);
+
+const product =
+params.get("product");
+
+const plan =
+params.get("plan");
+
+const amount =
+params.get("amount");
+
+
+/* =========================
+   DISPLAY DATA
+========================= */
+
+document.getElementById(
+    "productName"
+).textContent =
+product || "Unknown Product";
+
+
+document.getElementById(
+    "planName"
+).textContent =
+plan || "Unknown Plan";
+
+
+document.getElementById(
+    "amount"
+).textContent =
+"₹" + (amount || "0");
+
+
+document.getElementById(
+    "upiId"
+).textContent =
+UPI_ID;
+
+
+/* =========================
+   SESSION
+========================= */
+
+async function checkLogin(){
+
+    const {
+        data:{
+            session
+        }
+    } =
+    await supabaseClient
+    .auth
+    .getSession();
+
+
+    if(!session){
+
+        window.location.href =
+        "index.html";
+
+        return null;
+    }
+
+    return session;
+}
+
+
+/* =========================
+   FILE PREVIEW
+========================= */
+
+document
+    .getElementById(
+        "paymentScreenshot"
+    )
+    .addEventListener(
+        "change",
+        function(){
+
+            const file =
+                this.files[0];
+
+            if(!file){
+
+                document
+                    .getElementById(
+                        "preview"
+                    )
+                    .style.display =
+                    "none";
+
+                return;
+            }
+
+
+            if(file.size > 8 * 1024 * 1024){
+
+                showStatus(
+                    "Screenshot must be smaller than 8 MB.",
+                    "error"
+                );
+
+                this.value = "";
+
+                return;
+            }
+
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function(e){
+
+                    document
+                        .getElementById(
+                            "previewImage"
+                        )
+                        .src =
+                        e.target.result;
+
+                    document
+                        .getElementById(
+                            "preview"
+                        )
+                        .style.display =
+                        "block";
+                };
+
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+
+/* =========================
+   COPY UPI
+========================= */
+
+async function copyUPI(){
+
+    try{
+
+        await navigator
+            .clipboard
+            .writeText(UPI_ID);
+
+        showStatus(
+            "UPI ID copied successfully.",
+            "success"
+        );
+
+    }catch(error){
+
+        showStatus(
+            "Could not copy UPI ID.",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+function showStatus(
+    message,
+    type
+){
+
+    const box =
+        document.getElementById(
+            "status"
+        );
+
+    box.textContent =
+        message;
+
+    box.className =
+        "status " + type;
+
+}
+
+
+/* =========================
+   SUBMIT PAYMENT
+========================= */
+
+async function submitPayment(){
+
+    const button =
+        document.getElementById(
+            "submitBtn"
+        );
+
+    const fileInput =
+        document.getElementById(
+            "paymentScreenshot"
+        );
+
+    const file =
+        fileInput.files[0];
+
+
+    if(!product || !plan || !amount){
+
+        showStatus(
+            "Invalid payment details. Please return to the store and select a plan again.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(!file){
+
+        showStatus(
+            "Please upload your payment screenshot first.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(
+        !file.type.startsWith(
+            "image/"
+        )
+    ){
+
+        showStatus(
+            "Please upload an image file.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    if(
+        file.size >
+        8 * 1024 * 1024
+    ){
+
+        showStatus(
+            "Screenshot must be smaller than 8 MB.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    button.disabled =
+        true;
+
+    button.textContent =
+        "SUBMITTING...";
+
+
+    showStatus(
+        "Checking your account...",
+        "info"
+    );
+
+
+    try{
+
+        const {
+            data:{
+                session
+            }
+        } =
+        await supabaseClient
+        .auth
+        .getSession();
+
+
+        if(!session){
+
+            window.location.href =
+            "index.html";
+
+            return;
+        }
+
+
+        const user =
+            session.user;
+
+
+        /*
+           Safe filename
+        */
+
+        const extension =
+            file.name
+                .split(".")
+                .pop()
+                .toLowerCase();
+
+
+        const fileName =
+            "payment_" +
+            Date.now() +
+            "_" +
+            crypto.randomUUID() +
+            "." +
+            extension;
+
+
+        const filePath =
+            user.id +
+            "/payments/" +
+            fileName;
+
+
+        showStatus(
+            "Uploading payment screenshot...",
+            "info"
+        );
+
+
+        /*
+           Upload screenshot
+        */
+
+        const {
+            error:
+            uploadError
+        } =
+        await supabaseClient
+        .storage
+        .from(BUCKET_NAME)
+        .upload(
+            filePath,
+            file,
+            {
+                cacheControl:"3600",
+                upsert:false,
+                contentType:file.type
+            }
+        );
+
+
+        if(uploadError){
+
+            throw uploadError;
+        }
+
+
+        showStatus(
+            "Screenshot uploaded. Creating payment request...",
+            "info"
+        );
+
+
+        /*
+           Create request
+        */
+
+        const {
+            error:
+            requestError
+        } =
+        await supabaseClient
+        .from("mads_requests")
+        .insert({
+
+            user_id:
+                user.id,
+
+            user_email:
+                user.email,
+
+            product:
+                product,
+
+            plan:
+                plan,
+
+            amount:
+                Number(amount),
+
+            payment_screenshot:
+                filePath,
+
+            status:
+                "pending"
+
+        });
+
+
+        if(requestError){
+
+            /*
+               If database insert fails,
+               remove uploaded screenshot
+               so an orphan file is not left.
+            */
+
+            await supabaseClient
+                .storage
+                .from(BUCKET_NAME)
+                .remove([
+                    filePath
+                ]);
+
+            throw requestError;
+        }
+
+
+        showStatus(
+            "Payment request submitted successfully. Status: PENDING. You can return to the dashboard and check your request.",
+            "success"
+        );
+
+
+        button.textContent =
+            "REQUEST SUBMITTED";
+
+
+        /*
+           Disable file input after success
+        */
+
+        fileInput.disabled =
+            true;
+
+
+        /*
+           Give user a short delay
+           before returning to dashboard.
+        */
+
+        setTimeout(
+            function(){
+
+                window.location.href =
+                "dashboard-new.html";
+
+            },
+            2200
+        );
+
+
+    }catch(error){
+
+        console.error(
+            "Payment submission error:",
+            error
+        );
+
+
+        showStatus(
+            "Request failed: " +
+            (
+                error.message ||
+                "Unknown error"
+            ),
+            "error"
+        );
+
+
+        button.disabled =
+            false;
+
+        button.textContent =
+            "SUBMIT PAYMENT REQUEST";
+
+    }
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+checkLogin();
+
+</script>
+
+</body>
+  </html>
