@@ -1,769 +1,978 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>RECX • Admin Dashboard</title>
 
-
 <style>
-
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
-
 
 body{
-
-  min-height:100vh;
-
-  font-family:
-    Arial,
-    sans-serif;
-
-  color:#fff;
-
-  background:
-
-    radial-gradient(
-      circle at 15% 0%,
-      #24105a,
-      transparent 38%
-    ),
-
-    radial-gradient(
-      circle at 90% 100%,
-      #071f55,
-      transparent 40%
-    ),
-
-    #03040a;
-
+    min-height:100vh;
+    font-family:Arial,sans-serif;
+    background:
+        radial-gradient(circle at 20% 10%,rgba(255,70,0,.14),transparent 30%),
+        radial-gradient(circle at 90% 80%,rgba(0,170,255,.12),transparent 30%),
+        #050505;
+    color:#fff;
 }
-
-
-/* =================================
-   HEADER
-================================= */
 
 header{
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
-
-  gap:15px;
-
-  padding:18px 5%;
-
-  background:
-    rgba(5,6,15,.90);
-
-  border-bottom:1px solid
-    rgba(100,100,150,.25);
-
-  backdrop-filter:
-    blur(15px);
-
+    position:sticky;
+    top:0;
+    z-index:20;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 5%;
+    background:rgba(5,5,5,.82);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(255,255,255,.08);
 }
-
 
 .logo{
-
-  color:#fff;
-
-  font-size:25px;
-
-  font-weight:900;
-
-  letter-spacing:2px;
-
-  text-shadow:
-    0 0 20px
-    rgba(80,120,255,.55);
-
+    font-size:24px;
+    font-weight:900;
+    letter-spacing:2px;
 }
-
 
 .logo span{
-
-  background:
-    linear-gradient(
-      90deg,
-      #8b5cff,
-      #39a7ff
-    );
-
-  -webkit-background-clip:text;
-
-  background-clip:text;
-
-  color:transparent;
-
+    color:#ff4b00;
 }
 
-
-.header-buttons{
-
-  display:flex;
-
-  gap:10px;
-
+.header-right{
+    display:flex;
+    gap:10px;
 }
 
-
-.header-buttons button{
-
-  padding:10px 14px;
-
-  border:1px solid
-    #303553;
-
-  border-radius:9px;
-
-  background:#0a0c18;
-
-  color:#fff;
-
-  cursor:pointer;
-
-  font-weight:bold;
-
-  transition:.25s;
-
+button{
+    border:0;
+    cursor:pointer;
+    font-weight:700;
 }
 
-
-.header-buttons button:hover{
-
-  border-color:#6d63ff;
-
-  background:#17152d;
-
-  transform:
-    translateY(-1px);
-
+.btn{
+    padding:11px 16px;
+    border-radius:12px;
+    color:#fff;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.12);
 }
 
-
-/* =================================
-   MAIN
-================================= */
-
-main{
-
-  width:92%;
-
-  max-width:1100px;
-
-  margin:35px auto;
-
+.btn:hover{
+    background:rgba(255,255,255,.15);
 }
 
-
-.welcome{
-
-  margin-bottom:25px;
-
+.logout{
+    background:#ff3b30;
 }
 
-
-.welcome h1{
-
-  font-size:32px;
-
+.container{
+    width:min(1200px,92%);
+    margin:30px auto;
 }
 
-
-.welcome p{
-
-  margin-top:8px;
-
-  color:#858aa4;
-
+.hero{
+    padding:28px;
+    border:1px solid rgba(255,255,255,.09);
+    border-radius:24px;
+    background:rgba(255,255,255,.045);
+    backdrop-filter:blur(20px);
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
 }
 
-
-/* =================================
-   STATS
-================================= */
-
-.grid{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(2,1fr);
-
-  gap:15px;
-
+.hero h1{
+    font-size:32px;
+    margin-bottom:8px;
 }
 
-
-.card{
-
-  padding:25px;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(18,20,40,.95),
-      rgba(7,8,17,.95)
-    );
-
-  border:1px solid
-    rgba(90,100,160,.25);
-
-  border-radius:17px;
-
-  box-shadow:
-    0 0 25px
-    rgba(70,70,180,.08);
-
+.hero p{
+    color:#999;
 }
 
-
-.card h3{
-
-  color:#777d98;
-
-  font-size:12px;
-
-  letter-spacing:1px;
-
-  margin-bottom:12px;
-
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    margin-top:20px;
 }
 
-
-.number{
-
-  color:#8c72ff;
-
-  font-size:28px;
-
-  font-weight:bold;
-
+.stat{
+    padding:20px;
+    border-radius:18px;
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.08);
 }
 
-
-/* =================================
-   SECTION
-================================= */
-
-.section{
-
-  margin-top:25px;
-
-  padding:25px;
-
-  background:
-    rgba(10,11,23,.92);
-
-  border:1px solid
-    rgba(90,100,160,.25);
-
-  border-radius:17px;
-
+.stat small{
+    color:#888;
 }
 
-
-.section h2{
-
-  font-size:20px;
-
+.stat strong{
+    display:block;
+    font-size:28px;
+    margin-top:8px;
 }
 
-
-/* =================================
-   INFO
-================================= */
-
-.info{
-
-  margin-top:12px;
-
-  padding:15px;
-
-  background:#060711;
-
-  border:1px solid
-    #22263d;
-
-  border-radius:11px;
-
+.toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    margin:25px 0 15px;
 }
 
-
-.label{
-
-  color:#646a84;
-
-  font-size:11px;
-
-  letter-spacing:1px;
-
-  margin-bottom:6px;
-
+.filter{
+    padding:12px 14px;
+    border-radius:12px;
+    color:#fff;
+    background:#111;
+    border:1px solid #292929;
 }
 
-
-.value{
-
-  word-break:break-all;
-
-  color:#d9dcf0;
-
+.requests{
+    display:grid;
+    gap:16px;
 }
 
+.request{
+    padding:22px;
+    border-radius:20px;
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.09);
+}
 
-/* =================================
-   STATUS
-================================= */
+.top{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    align-items:flex-start;
+}
+
+.product{
+    font-size:20px;
+    font-weight:800;
+}
+
+.meta{
+    color:#999;
+    margin-top:7px;
+    line-height:1.6;
+}
 
 .status{
-
-  margin-top:18px;
-
-  padding:14px;
-
-  text-align:center;
-
-  border-radius:11px;
-
-  background:
-    rgba(10,70,45,.25);
-
-  border:1px solid
-    rgba(50,190,125,.35);
-
-  color:#63e69a;
-
+    padding:7px 11px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:800;
+    text-transform:uppercase;
 }
 
-
-/* =================================
-   ADMIN TOOLS
-================================= */
-
-.tool-box{
-
-  margin-top:15px;
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
-  gap:12px;
-
+.pending{
+    background:rgba(255,180,0,.14);
+    color:#ffc107;
 }
 
-
-.tool{
-
-  padding:18px;
-
-  border-radius:12px;
-
-  border:1px solid
-    #242941;
-
-  background:#070914;
-
-  color:#8f95b0;
-
-  text-align:center;
-
-  font-size:13px;
-
+.approved{
+    background:rgba(0,220,120,.13);
+    color:#00dc78;
 }
 
+.rejected{
+    background:rgba(255,60,60,.13);
+    color:#ff5555;
+}
 
-/* =================================
-   MOBILE
-================================= */
+.details{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:18px;
+}
+
+.box{
+    padding:14px;
+    border-radius:14px;
+    background:#0c0c0c;
+    border:1px solid #202020;
+}
+
+.box label{
+    display:block;
+    color:#777;
+    font-size:11px;
+    text-transform:uppercase;
+    margin-bottom:6px;
+}
+
+.box div{
+    word-break:break-word;
+}
+
+.actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:18px;
+}
+
+.view{
+    background:#168cff;
+}
+
+.approve{
+    background:#00a968;
+}
+
+.reject{
+    background:#d83232;
+}
+
+.key-area{
+    margin-top:16px;
+    display:none;
+}
+
+.key-area.show{
+    display:block;
+}
+
+.key-input,
+.note-input{
+    width:100%;
+    padding:13px;
+    border-radius:12px;
+    border:1px solid #292929;
+    background:#080808;
+    color:#fff;
+    outline:none;
+}
+
+.key-input:focus,
+.note-input:focus{
+    border-color:#ff4b00;
+}
+
+.note-input{
+    margin-top:9px;
+}
+
+.empty{
+    padding:50px;
+    text-align:center;
+    color:#777;
+    border:1px dashed #292929;
+    border-radius:20px;
+}
+
+.loading{
+    text-align:center;
+    padding:40px;
+    color:#888;
+}
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:25px;
+    transform:translateX(-50%);
+    padding:13px 18px;
+    border-radius:12px;
+    background:#171717;
+    border:1px solid #333;
+    display:none;
+    z-index:100;
+}
 
 @media(max-width:700px){
+    .stats{
+        grid-template-columns:1fr;
+    }
 
-  .grid{
+    .details{
+        grid-template-columns:1fr;
+    }
 
-    grid-template-columns:1fr;
+    .top{
+        flex-direction:column;
+    }
 
-  }
+    .hero h1{
+        font-size:26px;
+    }
 
-  .tool-box{
-
-    grid-template-columns:1fr;
-
-  }
-
-  .welcome h1{
-
-    font-size:26px;
-
-  }
-
-  .header-buttons{
-
-    gap:6px;
-
-  }
-
-  .header-buttons button{
-
-    padding:8px 9px;
-
-    font-size:10px;
-
-  }
-
+    .toolbar{
+        flex-direction:column;
+        align-items:stretch;
+    }
 }
-
-
-@media(max-width:430px){
-
-  header{
-
-    align-items:flex-start;
-
-  }
-
-  .logo{
-
-    font-size:21px;
-
-  }
-
-  .header-buttons{
-
-    flex-direction:column;
-
-  }
-
-}
-
 </style>
-
 </head>
-
 
 <body>
 
-
 <header>
+    <div class="logo">REC<span>X</span> <small>ADMIN</small></div>
 
-
-  <div class="logo">
-
-    ◈ <span>RECX</span>
-
-  </div>
-
-
-  <div class="header-buttons">
-
-
-    <button
-      onclick="goUserDashboard()"
-    >
-
-      🏠 User Dashboard
-
-    </button>
-
-
-    <button
-      onclick="logoutAdmin()"
-    >
-
-      Logout
-
-    </button>
-
-
-  </div>
-
-
+    <div class="header-right">
+        <button class="btn" onclick="loadRequests()">↻ Refresh</button>
+        <button class="btn logout" onclick="logout()">Logout</button>
+    </div>
 </header>
 
+<main class="container">
 
+<section class="hero">
+    <h1>Admin Control Center</h1>
+    <p>Manage RECX MADS payment requests securely.</p>
 
-<main>
+    <div class="stats">
+        <div class="stat">
+            <small>PENDING</small>
+            <strong id="pendingCount">0</strong>
+        </div>
 
+        <div class="stat">
+            <small>APPROVED</small>
+            <strong id="approvedCount">0</strong>
+        </div>
 
-  <section class="welcome">
-
-
-    <h1>
-
-      👑 RECX Admin Dashboard
-
-    </h1>
-
-
-    <p>
-
-      Welcome to the RECX administration panel.
-
-    </p>
-
-
-  </section>
-
-
-
-  <section class="grid">
-
-
-    <div class="card">
-
-
-      <h3>
-
-        ACCESS LEVEL
-
-      </h3>
-
-
-      <div class="number">
-
-        ADMIN
-
-      </div>
-
-
+        <div class="stat">
+            <small>REJECTED</small>
+            <strong id="rejectedCount">0</strong>
+        </div>
     </div>
-
-
-
-    <div class="card">
-
-
-      <h3>
-
-        STATUS
-
-      </h3>
-
-
-      <div class="number">
-
-        ACTIVE
-
-      </div>
-
-
-    </div>
-
-
-  </section>
-
-
-
-  <section class="section">
-
-
-    <h2>
-
-      🔐 Admin Information
-
-    </h2>
-
-
-    <div class="info">
-
-
-      <div class="label">
-
-        ADMIN ID
-
-      </div>
-
-
-      <div class="value">
-
-        f3ffeb51-70a6-4a44-99fb-f4ff1fa2aedf
-
-      </div>
-
-
-    </div>
-
-
-
-    <div class="info">
-
-
-      <div class="label">
-
-        ACCESS
-
-      </div>
-
-
-      <div class="value">
-
-        Administrator
-
-      </div>
-
-
-    </div>
-
-
-
-    <div class="status">
-
-      ✅ Admin access verified successfully.
-
-    </div>
-
-
-  </section>
-
-
-
-  <section class="section">
-
-
-    <h2>
-
-      🛠️ Admin Tools
-
-    </h2>
-
-
-    <div class="tool-box">
-
-
-      <div class="tool">
-
-        📋 Requests
-
-      </div>
-
-
-      <div class="tool">
-
-        ⏳ Pending
-
-      </div>
-
-
-      <div class="tool">
-
-        🔑 Key Delivery
-
-      </div>
-
-
-    </div>
-
-
-    <div class="info">
-
-      Admin request-management tools can be connected here.
-
-    </div>
-
-
-  </section>
-
+</section>
+
+<div class="toolbar">
+    <h2>Payment Requests</h2>
+
+    <select id="filter" class="filter" onchange="renderRequests()">
+        <option value="all">All Requests</option>
+        <option value="pending">Pending</option>
+        <option value="approved">Approved</option>
+        <option value="rejected">Rejected</option>
+    </select>
+</div>
+
+<section id="requests" class="requests">
+    <div class="loading">Loading requests...</div>
+</section>
 
 </main>
 
+<div id="toast" class="toast"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
+const SUPABASE_URL =
+"https://asdbxlnttlsuhhnqeywa.supabase.co";
 
-/* =================================
-   ADMIN SESSION
-================================= */
+const SUPABASE_KEY =
+"sb_publishable_GIzm11dFWDJmu9cQGAJy_w_432UbSU5";
 
-const ADMIN_SESSION_KEY =
+const BUCKET =
+"user-files";
 
-  "rishi_x_admin_logged_in";
+const {createClient} =
+supabase;
+
+const db =
+createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+let requests = [];
 
 
-/* =================================
-   CHECK ADMIN LOGIN
-================================= */
+/* ==========================================
+   TOAST
+========================================== */
 
-function checkAdminLogin(){
+function toast(message){
 
-  const loggedIn =
+    const el =
+        document.getElementById("toast");
 
-    sessionStorage.getItem(
-      ADMIN_SESSION_KEY
+    el.textContent =
+        message;
+
+    el.style.display =
+        "block";
+
+    setTimeout(()=>{
+        el.style.display =
+            "none";
+    },2500);
+}
+
+
+/* ==========================================
+   AUTH + ADMIN CHECK
+========================================== */
+
+async function checkAdmin(){
+
+    const {
+        data:{session}
+    } =
+    await db.auth.getSession();
+
+    if(!session){
+
+        alert(
+            "Admin session not found. Please login again."
+        );
+
+        window.location.href =
+            "admin.html";
+
+        return false;
+    }
+
+    const {
+        data,
+        error
+    } =
+    await db.rpc("is_admin");
+
+    if(error || data !== true){
+
+        alert(
+            "Access denied."
+        );
+
+        await db.auth.signOut();
+
+        window.location.href =
+            "admin.html";
+
+        return false;
+    }
+
+    return true;
+}
+
+
+/* ==========================================
+   LOAD REQUESTS
+========================================== */
+
+async function loadRequests(){
+
+    const ok =
+        await checkAdmin();
+
+    if(!ok) return;
+
+    document.getElementById("requests")
+        .innerHTML =
+        `<div class="loading">Loading requests...</div>`;
+
+    const {
+        data,
+        error
+    } =
+    await db
+        .from("mads_requests")
+        .select("*")
+        .order("created_at",{ascending:false});
+
+    if(error){
+
+        console.error(error);
+
+        document.getElementById("requests")
+            .innerHTML =
+            `<div class="empty">
+                Failed to load requests.<br>
+                ${escapeHtml(error.message)}
+            </div>`;
+
+        return;
+    }
+
+    requests =
+        data || [];
+
+    updateStats();
+    renderRequests();
+}
+
+
+/* ==========================================
+   STATS
+========================================== */
+
+function updateStats(){
+
+    document.getElementById("pendingCount")
+        .textContent =
+        requests.filter(x =>
+            x.status === "pending"
+        ).length;
+
+    document.getElementById("approvedCount")
+        .textContent =
+        requests.filter(x =>
+            x.status === "approved"
+        ).length;
+
+    document.getElementById("rejectedCount")
+        .textContent =
+        requests.filter(x =>
+            x.status === "rejected"
+        ).length;
+}
+
+
+/* ==========================================
+   RENDER
+========================================== */
+
+function renderRequests(){
+
+    const filter =
+        document.getElementById("filter")
+            .value;
+
+    const list =
+        filter === "all"
+        ? requests
+        : requests.filter(x =>
+            x.status === filter
+        );
+
+    const container =
+        document.getElementById("requests");
+
+    if(!list.length){
+
+        container.innerHTML =
+        `<div class="empty">
+            No requests found.
+        </div>`;
+
+        return;
+    }
+
+    container.innerHTML =
+        list.map(renderRequest).join("");
+}
+
+
+/* ==========================================
+   REQUEST CARD
+========================================== */
+
+function renderRequest(r){
+
+    const date =
+        new Date(r.created_at)
+        .toLocaleString();
+
+    return `
+    <article class="request">
+
+        <div class="top">
+
+            <div>
+                <div class="product">
+                    ${escapeHtml(r.product)}
+                </div>
+
+                <div class="meta">
+                    ${escapeHtml(r.plan)}
+                    • ₹${escapeHtml(r.amount)}
+                    <br>
+                    ${escapeHtml(date)}
+                </div>
+            </div>
+
+            <span class="status ${escapeHtml(r.status)}">
+                ${escapeHtml(r.status)}
+            </span>
+
+        </div>
+
+
+        <div class="details">
+
+            <div class="box">
+                <label>User Email</label>
+                <div>
+                    ${escapeHtml(r.user_email || "Not available")}
+                </div>
+            </div>
+
+            <div class="box">
+                <label>Request ID</label>
+                <div>
+                    ${escapeHtml(r.id)}
+                </div>
+            </div>
+
+            <div class="box">
+                <label>Product</label>
+                <div>
+                    ${escapeHtml(r.product)}
+                </div>
+            </div>
+
+            <div class="box">
+                <label>Plan / Amount</label>
+                <div>
+                    ${escapeHtml(r.plan)}
+                    • ₹${escapeHtml(r.amount)}
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="actions">
+
+            ${
+                r.payment_screenshot
+                ?
+                `<button class="btn view"
+                    onclick="viewScreenshot('${escapeAttr(r.payment_screenshot)}')">
+                    🖼 View Payment
+                </button>`
+                :
+                `<button class="btn" disabled>
+                    No Screenshot
+                </button>`
+            }
+
+            ${
+                r.status === "pending"
+                ?
+                `
+                <button class="btn approve"
+                    onclick="showKeyArea('${escapeAttr(r.id)}')">
+                    ✓ Approve
+                </button>
+
+                <button class="btn reject"
+                    onclick="rejectRequest('${escapeAttr(r.id)}')">
+                    ✕ Reject
+                </button>
+                `
+                :
+                ""
+            }
+
+        </div>
+
+
+        ${
+            r.status === "pending"
+            ?
+            `
+            <div
+                class="key-area"
+                id="key-${escapeAttr(r.id)}">
+
+                <input
+                    class="key-input"
+                    id="key-input-${escapeAttr(r.id)}"
+                    placeholder="Enter customer key">
+
+                <input
+                    class="note-input"
+                    id="note-input-${escapeAttr(r.id)}"
+                    placeholder="Admin note (optional)">
+
+                <div class="actions">
+
+                    <button
+                        class="btn approve"
+                        onclick="approveRequest('${escapeAttr(r.id)}')">
+                        ✓ Confirm Approval
+                    </button>
+
+                    <button
+                        class="btn"
+                        onclick="hideKeyArea('${escapeAttr(r.id)}')">
+                        Cancel
+                    </button>
+
+                </div>
+
+            </div>
+            `
+            :
+            ""
+        }
+
+
+        ${
+            r.admin_key
+            ?
+            `
+            <div class="box" style="margin-top:16px">
+                <label>Delivered Key</label>
+                <div>${escapeHtml(r.admin_key)}</div>
+            </div>
+            `
+            :
+            ""
+        }
+
+
+        ${
+            r.admin_note
+            ?
+            `
+            <div class="box" style="margin-top:10px">
+                <label>Admin Note</label>
+                <div>${escapeHtml(r.admin_note)}</div>
+            </div>
+            `
+            :
+            ""
+        }
+
+    </article>
+    `;
+}
+
+
+/* ==========================================
+   APPROVAL UI
+========================================== */
+
+function showKeyArea(id){
+
+    const el =
+        document.getElementById("key-"+id);
+
+    if(el)
+        el.classList.add("show");
+}
+
+
+function hideKeyArea(id){
+
+    const el =
+        document.getElementById("key-"+id);
+
+    if(el)
+        el.classList.remove("show");
+}
+
+
+/* ==========================================
+   APPROVE
+========================================== */
+
+async function approveRequest(id){
+
+    const keyInput =
+        document.getElementById(
+            "key-input-"+id
+        );
+
+    const noteInput =
+        document.getElementById(
+            "note-input-"+id
+        );
+
+    const key =
+        keyInput
+        ? keyInput.value.trim()
+        : "";
+
+    const note =
+        noteInput
+        ? noteInput.value.trim()
+        : "";
+
+    if(!key){
+
+        alert(
+            "Please enter the key."
+        );
+
+        return;
+    }
+
+    const {
+        error
+    } =
+    await db
+        .from("mads_requests")
+        .update({
+            status:"approved",
+            admin_key:key,
+            admin_note:note,
+            updated_at:new Date().toISOString()
+        })
+        .eq("id",id);
+
+    if(error){
+
+        alert(
+            "Approval failed: "+
+            error.message
+        );
+
+        return;
+    }
+
+    toast(
+        "Request approved successfully."
     );
 
+    await loadRequests();
+}
 
-  if(loggedIn !== "true"){
+
+/* ==========================================
+   REJECT
+========================================== */
+
+async function rejectRequest(id){
+
+    const note =
+        prompt(
+            "Reason / admin note (optional):"
+        );
+
+    if(note === null)
+        return;
+
+    const {
+        error
+    } =
+    await db
+        .from("mads_requests")
+        .update({
+            status:"rejected",
+            admin_note:note,
+            updated_at:new Date().toISOString()
+        })
+        .eq("id",id);
+
+    if(error){
+
+        alert(
+            "Reject failed: "+
+            error.message
+        );
+
+        return;
+    }
+
+    toast(
+        "Request rejected."
+    );
+
+    await loadRequests();
+}
+
+
+/* ==========================================
+   PAYMENT SCREENSHOT
+========================================== */
+
+async function viewScreenshot(path){
+
+    if(!path){
+
+        alert(
+            "Payment screenshot not found."
+        );
+
+        return;
+    }
+
+    const {
+        data,
+        error
+    } =
+    await db
+        .storage
+        .from(BUCKET)
+        .createSignedUrl(
+            path,
+            300
+        );
+
+    if(error){
+
+        alert(
+            "Screenshot access failed: "+
+            error.message
+        );
+
+        return;
+    }
+
+    window.open(
+        data.signedUrl,
+        "_blank"
+    );
+}
+
+
+/* ==========================================
+   LOGOUT
+========================================== */
+
+async function logout(){
+
+    await db.auth.signOut();
+
+    sessionStorage.removeItem(
+        "rishi_x_admin_logged_in"
+    );
 
     window.location.href =
-      "admin.html";
-
-    return false;
-
-  }
-
-
-  return true;
-
+        "admin.html";
 }
 
 
-/* =================================
-   USER DASHBOARD
-================================= */
+/* ==========================================
+   SECURITY HELPERS
+========================================== */
 
-function goUserDashboard(){
+function escapeHtml(value){
 
-  window.location.href =
-    "dashboard-new.html";
-
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 }
 
 
-/* =================================
-   ADMIN LOGOUT
-================================= */
+function escapeAttr(value){
 
-function logoutAdmin(){
-
-  sessionStorage.removeItem(
-    ADMIN_SESSION_KEY
-  );
-
-
-  window.location.href =
-    "admin.html";
-
+    return String(value ?? "")
+        .replace(/\\/g,"\\\\")
+        .replace(/'/g,"\\'");
 }
 
 
-/* =================================
+/* ==========================================
    START
-================================= */
+========================================== */
 
-checkAdminLogin();
-
+loadRequests();
 
 </script>
 
 </body>
-
-</html>
+  </html>
