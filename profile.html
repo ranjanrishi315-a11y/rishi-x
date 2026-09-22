@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>RECX • Login</title>
+<title>RECX • Profile</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -19,254 +19,259 @@ body{
   font-family:Arial,sans-serif;
   background:#f5f7fb;
   color:#111827;
+}
+
+header{
+  height:70px;
+  padding:0 6%;
   display:flex;
   align-items:center;
-  justify-content:center;
-}
-
-.container{
-  width:100%;
-  max-width:420px;
-  padding:20px;
-}
-
-.menu{
-  position:fixed;
-  top:18px;
-  right:18px;
-}
-
-.dots{
-  width:38px;
-  height:38px;
-  border:1px solid #ddd;
-  border-radius:10px;
-  background:white;
-  font-size:24px;
-  cursor:pointer;
-}
-
-.dropdown{
-  display:none;
-  position:absolute;
-  right:0;
-  top:45px;
-  width:150px;
-  background:white;
-  border:1px solid #ddd;
-  border-radius:10px;
-  box-shadow:0 8px 25px rgba(0,0,0,.12);
-  overflow:hidden;
-}
-
-.dropdown.show{
-  display:block;
-}
-
-.dropdown a{
-  display:block;
-  padding:12px;
-  text-decoration:none;
-  color:#111;
-  font-size:14px;
-}
-
-.dropdown a:hover{
-  background:#f1f5f9;
+  justify-content:space-between;
+  background:#fff;
+  border-bottom:1px solid #e5e7eb;
 }
 
 .logo{
-  text-align:center;
-  font-size:34px;
+  font-size:25px;
   font-weight:900;
-  margin-bottom:8px;
-  color:#111827;
 }
 
-.subtitle{
-  text-align:center;
+.logo span{
+  color:#2563eb;
+}
+
+.header-buttons{
+  display:flex;
+  gap:8px;
+}
+
+.header-buttons button{
+  border:1px solid #ddd;
+  background:#fff;
+  padding:9px 13px;
+  border-radius:9px;
+  cursor:pointer;
+}
+
+.container{
+  width:92%;
+  max-width:700px;
+  margin:45px auto;
+}
+
+.title{
+  margin-bottom:20px;
+}
+
+.title h1{
+  font-size:30px;
+}
+
+.title p{
   color:#6b7280;
-  font-size:14px;
-  margin-bottom:28px;
+  margin-top:6px;
 }
 
-.card{
-  background:white;
+.profile-card{
+  background:#fff;
   border:1px solid #e5e7eb;
-  border-radius:18px;
+  border-radius:20px;
   padding:28px;
-  box-shadow:0 10px 35px rgba(0,0,0,.07);
+  box-shadow:0 10px 30px rgba(0,0,0,.06);
 }
 
-.card h2{
+.avatar{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#2563eb;
+  color:#fff;
+  font-size:30px;
+  font-weight:bold;
+}
+
+.email{
   text-align:center;
-  margin-bottom:8px;
+  margin-top:15px;
+  font-weight:bold;
 }
 
-.card p{
-  text-align:center;
-  color:#6b7280;
-  font-size:13px;
-  margin-bottom:22px;
-}
-
-label{
-  display:block;
+.status{
+  width:max-content;
+  margin:9px auto 25px;
+  padding:6px 12px;
+  border-radius:20px;
+  background:#dcfce7;
+  color:#15803d;
   font-size:12px;
   font-weight:bold;
+}
+
+.info{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.box{
+  padding:16px;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  background:#fafafa;
+}
+
+.box small{
+  display:block;
+  color:#6b7280;
+  font-size:11px;
   margin-bottom:7px;
 }
 
-input{
-  width:100%;
-  height:50px;
-  border:1px solid #d1d5db;
-  border-radius:10px;
-  padding:0 14px;
+.box b{
   font-size:14px;
-  outline:none;
+  word-break:break-word;
 }
 
-input:focus{
-  border-color:#2563eb;
+.actions{
+  display:flex;
+  gap:10px;
+  margin-top:22px;
 }
 
-button.login{
-  width:100%;
-  height:50px;
-  margin-top:15px;
+.actions button{
+  flex:1;
+  height:48px;
   border:0;
   border-radius:10px;
-  background:#2563eb;
-  color:white;
   font-weight:bold;
   cursor:pointer;
 }
 
-button.login:disabled{
-  opacity:.6;
+.dashboard{
+  background:#2563eb;
+  color:#fff;
 }
 
-#message{
-  text-align:center;
-  margin-top:15px;
-  font-size:13px;
-  color:#2563eb;
-  min-height:18px;
-}
-
-.social{
-  display:flex;
-  gap:8px;
-  margin-top:20px;
-}
-
-.social a{
-  flex:1;
-  text-align:center;
-  text-decoration:none;
-  color:white;
-  padding:11px 5px;
-  border-radius:9px;
-  font-size:11px;
-  font-weight:bold;
-}
-
-.telegram{
-  background:#229ed9;
-}
-
-.whatsapp{
-  background:#25d366;
-}
-
-.youtube{
-  background:#ff0000;
+.logout{
+  background:#fee2e2;
+  color:#b91c1c;
 }
 
 footer{
   text-align:center;
-  margin-top:22px;
+  margin:35px 0;
   color:#777;
   font-size:11px;
+}
+
+@media(max-width:550px){
+  .info{
+    grid-template-columns:1fr;
+  }
+
+  header{
+    padding:0 4%;
+  }
+
+  .container{
+    width:94%;
+    margin:30px auto;
+  }
+
+  .profile-card{
+    padding:22px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="menu">
-  <button class="dots" onclick="toggleMenu()">⋮</button>
+<header>
 
-  <div class="dropdown" id="dropdown">
-    <a href="admin.html">👑 Admin Login</a>
+  <div class="logo">
+    ⚡ <span>RECX</span>
   </div>
-</div>
+
+  <div class="header-buttons">
+    <button onclick="goDashboard()">Dashboard</button>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+</header>
 
 <div class="container">
 
-  <div class="logo">⚡ RECX</div>
-
-  <div class="subtitle">
-    Secure • Private • Verified
+  <div class="title">
+    <h1>My Profile</h1>
+    <p>Manage your RECX account</p>
   </div>
 
-  <div class="card">
+  <div class="profile-card">
 
-    <h2>Welcome Back</h2>
+    <div class="avatar" id="avatar">
+      R
+    </div>
 
-    <p>Login with your email</p>
+    <div class="email" id="email">
+      Loading...
+    </div>
 
-    <label>Email Address</label>
+    <div class="status">
+      ● ACCOUNT ACTIVE
+    </div>
 
-    <input
-      id="email"
-      type="email"
-      placeholder="Enter your email"
-      autocomplete="email"
-    >
+    <div class="info">
 
-    <button
-      class="login"
-      id="loginButton"
-      onclick="sendOTP()">
-      SEND LOGIN LINK
-    </button>
+      <div class="box">
+        <small>Email</small>
+        <b id="emailInfo">Loading...</b>
+      </div>
 
-    <div id="message"></div>
+      <div class="box">
+        <small>User ID</small>
+        <b id="userId">Loading...</b>
+      </div>
+
+      <div class="box">
+        <small>Account Created</small>
+        <b id="createdAt">Loading...</b>
+      </div>
+
+      <div class="box">
+        <small>Files</small>
+        <b id="fileCount">Loading...</b>
+      </div>
+
+    </div>
+
+    <div class="actions">
+
+      <button
+        class="dashboard"
+        onclick="goDashboard()">
+        Dashboard
+      </button>
+
+      <button
+        class="logout"
+        onclick="logout()">
+        Logout
+      </button>
+
+    </div>
 
   </div>
-
-  <div class="social">
-
-    <a
-      class="telegram"
-      href="https://t.me/panalstoreff"
-      target="_blank">
-      Telegram
-    </a>
-
-    <a
-      class="whatsapp"
-      href="https://whatsapp.com/channel/0029VbDyKyj0VycFxIRkAf2p"
-      target="_blank">
-      WhatsApp
-    </a>
-
-    <a
-      class="youtube"
-      href="https://youtube.com/@recxpanal-te6os?si=wEXVJ6vGkDRTCCRt"
-      target="_blank">
-      YouTube
-    </a>
-
-  </div>
-
-  <footer>
-    Powered by Rishi X & Shiva
-  </footer>
 
 </div>
+
+<footer>
+  Powered by Rishi X & Shiva
+</footer>
 
 <script>
 
@@ -276,101 +281,81 @@ const SUPABASE_URL =
 const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_GIzm11dFWDJmu9cQGAJy_w_432UbSU5";
 
-const REDIRECT_URL =
-"https://ranjanrishi315-a11y.github.io/rishi-x/";
-
 const supabaseClient =
 window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_PUBLISHABLE_KEY
 );
 
-async function sendOTP(){
+async function loadProfile(){
+
+  const {data,error} =
+    await supabaseClient.auth.getUser();
+
+  if(error || !data.user){
+
+    window.location.href="index.html";
+    return;
+
+  }
+
+  const user=data.user;
 
   const email =
-    document.getElementById("email").value.trim();
+    user.email || "No email";
 
-  const button =
-    document.getElementById("loginButton");
+  document.getElementById("email")
+    .textContent=email;
 
-  const message =
-    document.getElementById("message");
+  document.getElementById("emailInfo")
+    .textContent=email;
 
-  if(!email){
-    message.textContent="Enter your email.";
-    return;
-  }
+  document.getElementById("userId")
+    .textContent=user.id;
 
-  button.disabled=true;
-  button.textContent="SENDING...";
-  message.textContent="";
+  document.getElementById("avatar")
+    .textContent=
+    email.charAt(0).toUpperCase();
 
-  const {error} =
-    await supabaseClient.auth.signInWithOtp({
-      email:email,
-      options:{
-        emailRedirectTo:REDIRECT_URL
-      }
-    });
+  if(user.created_at){
 
-  if(error){
-
-    button.disabled=false;
-    button.textContent="SEND LOGIN LINK";
-    message.textContent=error.message;
-    return;
+    document.getElementById("createdAt")
+      .textContent=
+      new Date(user.created_at)
+      .toLocaleDateString(
+        "en-IN",
+        {
+          day:"2-digit",
+          month:"short",
+          year:"numeric"
+        }
+      );
 
   }
 
-  button.textContent="LINK SENT ✓";
-  message.textContent=
-    "Check your email for the login link.";
+  const {count} =
+    await supabaseClient
+      .from("mads_requests")
+      .select("*",{count:"exact",head:true})
+      .eq("user_id",user.id);
 
+  document.getElementById("fileCount")
+    .textContent =
+    count ?? 0;
 }
 
-async function checkSession(){
-
-  const {data} =
-    await supabaseClient.auth.getSession();
-
-  if(data.session){
-    window.location.href="dashboard-new.html";
-  }
-
+function goDashboard(){
+  window.location.href="dashboard-new.html";
 }
 
-function toggleMenu(){
+async function logout(){
 
-  document
-    .getElementById("dropdown")
-    .classList.toggle("show");
+  await supabaseClient.auth.signOut();
 
+  window.location.href="index.html";
 }
 
-document.addEventListener("click",function(e){
-
-  const menu =
-    document.querySelector(".menu");
-
-  if(!menu.contains(e.target)){
-    document
-      .getElementById("dropdown")
-      .classList.remove("show");
-  }
-
-});
-
-document
-  .getElementById("email")
-  .addEventListener("keydown",function(e){
-
-    if(e.key==="Enter"){
-      sendOTP();
-    }
-
-  });
-
-checkSession();
+loadProfile();
 
 </script>
 
