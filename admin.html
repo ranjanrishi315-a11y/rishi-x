@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -7,12 +8,14 @@
 
 <title>RECX • Admin Login</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 
 *{
-  box-sizing:border-box;
   margin:0;
   padding:0;
+  box-sizing:border-box;
 }
 
 body{
@@ -20,262 +23,267 @@ body{
   min-height:100vh;
 
   display:flex;
-
   align-items:center;
-
   justify-content:center;
 
+  padding:20px;
+
   font-family:
+    Inter,
     Arial,
     sans-serif;
 
-  color:#fff;
+  color:#171717;
 
   background:
-
     radial-gradient(
-      circle at 20% 10%,
-      #24105a,
-      transparent 35%
+      circle at 15% 15%,
+      rgba(255,90,0,.18),
+      transparent 30%
     ),
-
     radial-gradient(
-      circle at 80% 90%,
-      #071f55,
-      transparent 40%
+      circle at 85% 20%,
+      rgba(0,150,255,.12),
+      transparent 28%
     ),
-
-    #03040a;
+    linear-gradient(
+      135deg,
+      #fafcff,
+      #edf1f6
+    );
 
 }
 
+.container{
 
-/* ================================
-   CARD
-================================ */
+  width:100%;
+  max-width:430px;
+
+  perspective:1200px;
+
+}
 
 .card{
 
-  width:92%;
+  padding:30px 25px;
 
-  max-width:430px;
-
-  padding:32px;
+  border-radius:27px;
 
   background:
     linear-gradient(
       145deg,
-      rgba(20,22,45,.95),
-      rgba(7,8,18,.96)
+      rgba(255,255,255,.94),
+      rgba(255,255,255,.68)
     );
 
-  border:1px solid
-    rgba(120,100,255,.45);
-
-  border-radius:24px;
+  border:
+    1px solid rgba(255,255,255,.95);
 
   box-shadow:
 
-    0 0 35px
-      rgba(75,65,255,.20),
+    0 30px 70px
+    rgba(30,40,60,.16),
 
-    inset 0 0 25px
-      rgba(100,80,255,.04);
+    0 8px 25px
+    rgba(255,80,0,.06);
 
-  backdrop-filter:
-    blur(15px);
+  backdrop-filter:blur(20px);
+
+  transform-style:preserve-3d;
+
+  transition:.18s ease-out;
 
 }
-
-
-/* ================================
-   LOGO
-================================ */
 
 .logo{
 
   text-align:center;
 
-  font-size:38px;
+  font-size:31px;
 
-  font-weight:900;
+  font-weight:950;
 
   letter-spacing:3px;
 
   background:
     linear-gradient(
       90deg,
-      #8b5cff,
-      #39a7ff
+      #ff3d00,
+      #ff9200
     );
 
   -webkit-background-clip:text;
-
-  background-clip:text;
-
-  color:transparent;
-
-  text-shadow:
-    0 0 25px
-      rgba(90,100,255,.35);
-
-  margin-bottom:8px;
+  -webkit-text-fill-color:transparent;
 
 }
-
 
 .subtitle{
 
   text-align:center;
 
-  color:#8f93ad;
+  color:#777;
 
-  font-size:14px;
+  font-size:12px;
 
-  margin-bottom:30px;
+  font-weight:700;
+
+  margin-top:7px;
+
+  margin-bottom:25px;
+
+}
+
+.badge{
+
+  width:max-content;
+
+  margin:0 auto 18px;
+
+  padding:7px 12px;
+
+  border-radius:50px;
+
+  background:
+    rgba(255,90,0,.08);
+
+  border:
+    1px solid rgba(255,90,0,.16);
+
+  color:#e64d00;
+
+  font-size:10px;
+
+  font-weight:900;
 
   letter-spacing:1px;
 
 }
 
-
-/* ================================
-   LABEL
-================================ */
-
 label{
 
   display:block;
 
-  color:#bfc3dc;
+  margin-bottom:8px;
 
-  font-size:13px;
+  color:#555;
 
-  margin-bottom:9px;
+  font-size:12px;
+
+  font-weight:800;
 
 }
-
-
-/* ================================
-   INPUT
-================================ */
 
 input{
 
   width:100%;
 
-  padding:15px;
+  height:52px;
 
-  border-radius:12px;
+  padding:0 15px;
 
-  border:1px solid
-    #292d4a;
+  border-radius:14px;
 
-  background:#060711;
-
-  color:#fff;
+  border:1px solid #dfe3e8;
 
   outline:none;
 
+  background:rgba(255,255,255,.9);
+
+  color:#111;
+
   font-size:14px;
 
-  transition:.25s;
+  font-weight:600;
 
 }
-
-
-input::placeholder{
-
-  color:#5f637b;
-
-}
-
 
 input:focus{
 
-  border-color:#6d63ff;
+  border-color:#ff6a00;
 
   box-shadow:
-    0 0 18px
-    rgba(90,90,255,.20);
+    0 0 0 4px
+    rgba(255,90,0,.09);
 
 }
-
-
-/* ================================
-   LOGIN BUTTON
-================================ */
 
 button{
 
   width:100%;
 
-  padding:15px;
+  height:53px;
 
-  margin-top:18px;
+  margin-top:16px;
 
   border:0;
 
-  border-radius:12px;
-
-  color:white;
-
-  font-weight:800;
-
-  letter-spacing:.5px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #704cff,
-      #258cff
-    );
-
-  box-shadow:
-    0 8px 25px
-    rgba(65,75,255,.22);
+  border-radius:15px;
 
   cursor:pointer;
 
-  transition:.25s;
+  font-size:12px;
+
+  font-weight:950;
+
+  letter-spacing:1px;
+
+  transition:.23s;
 
 }
 
+.login{
 
-button:hover{
+  color:white;
 
-  transform:
-    translateY(-2px);
+  background:
+    linear-gradient(
+      135deg,
+      #ff3d00,
+      #ff7900,
+      #ff9a3d
+    );
 
   box-shadow:
-    0 12px 30px
-    rgba(65,75,255,.35);
+    0 12px 25px
+    rgba(255,70,0,.23);
 
 }
 
+.login:hover{
 
-button:active{
+  transform:translateY(-3px);
 
-  transform:
-    translateY(0);
+  box-shadow:
+    0 17px 30px
+    rgba(255,70,0,.29);
 
 }
 
+.back{
+
+  color:#444;
+
+  background:#f0f1f3;
+
+  border:1px solid #e0e2e6;
+
+}
+
+.back:hover{
+
+  transform:translateY(-2px);
+
+}
 
 button:disabled{
 
-  opacity:.55;
+  opacity:.6;
 
   cursor:not-allowed;
 
   transform:none;
 
 }
-
-
-/* ================================
-   MESSAGE
-================================ */
 
 #message{
 
@@ -285,78 +293,25 @@ button:disabled{
 
   margin-top:16px;
 
-  color:#7faaff;
+  color:#e65a15;
 
-  font-size:13px;
+  font-size:12px;
 
-}
-
-
-/* ================================
-   BACK BUTTON
-================================ */
-
-.back{
-
-  margin-top:12px;
-
-  background:transparent;
-
-  border:1px solid
-    #292d4a;
-
-  box-shadow:none;
-
-  color:#9da2bd;
+  font-weight:700;
 
 }
 
-
-.back:hover{
-
-  background:#101225;
-
-  border-color:#464c70;
-
-}
-
-
-/* ================================
-   SECURITY TEXT
-================================ */
-
-.security{
-
-  margin-top:22px;
+.footer{
 
   text-align:center;
 
-  color:#555a72;
+  margin-top:20px;
 
-  font-size:11px;
+  color:#777;
 
-  letter-spacing:.4px;
+  font-size:10px;
 
-}
-
-
-/* ================================
-   MOBILE
-================================ */
-
-@media(max-width:500px){
-
-  .card{
-
-    padding:25px;
-
-  }
-
-  .logo{
-
-    font-size:32px;
-
-  }
+  font-weight:700;
 
 }
 
@@ -368,71 +323,68 @@ button:disabled{
 <body>
 
 
-<div class="card">
+<div class="container">
 
 
-  <div class="logo">
+  <div class="card" id="card">
 
-    ◈ RECX
+
+    <div class="logo">
+      ⚡ RECX
+    </div>
+
+
+    <div class="subtitle">
+      SECURE ADMIN CONTROL
+    </div>
+
+
+    <div class="badge">
+      🔐 AUTHORIZED ACCESS ONLY
+    </div>
+
+
+    <label for="email">
+      Admin Email
+    </label>
+
+
+    <input
+      id="email"
+      type="email"
+      placeholder="Enter admin email"
+      autocomplete="email"
+    >
+
+
+    <button
+      class="login"
+      id="loginButton"
+      onclick="sendAdminLogin()">
+
+      SEND ADMIN LOGIN LINK
+
+    </button>
+
+
+    <button
+      class="back"
+      onclick="goBack()">
+
+      ← BACK TO WEBSITE
+
+    </button>
+
+
+    <p id="message"></p>
+
 
   </div>
 
 
-  <p class="subtitle">
+  <div class="footer">
 
-    SECURE ADMIN ACCESS
-
-  </p>
-
-
-  <label for="adminId">
-
-    Admin ID
-
-  </label>
-
-
-  <input
-
-    id="adminId"
-
-    type="text"
-
-    placeholder="Enter Admin ID"
-
-    autocomplete="off"
-
-  >
-
-
-  <button
-
-    id="loginButton"
-
-    onclick="login()">
-
-    ADMIN LOGIN
-
-  </button>
-
-
-  <button
-
-    class="back"
-
-    onclick="goBack()">
-
-    ← Back to Website
-
-  </button>
-
-
-  <p id="message"></p>
-
-
-  <div class="security">
-
-    🔒 AUTHORIZED ACCESS ONLY
+    Powered by Rishi X &amp; Shiva
 
   </div>
 
@@ -440,162 +392,308 @@ button:disabled{
 </div>
 
 
-
 <script>
 
+/* =========================
+   SUPABASE
+========================= */
 
-/* =================================
-   ADMIN ID
-================================= */
+const SUPABASE_URL =
+  "https://asdbxlnttlsuhhnqeywa.supabase.co";
 
-const ADMIN_ID =
-
-  "f3ffeb51-70a6-4a44-99fb-f4ff1fa2aedf";
-
-
-/* =================================
-   SESSION KEY
-================================= */
-
-const ADMIN_SESSION_KEY =
-
-  "rishi_x_admin_logged_in";
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_GIzm11dFWDJmu9cQGAJy_w_432UbSU5";
 
 
-/* =================================
-   LOGIN
-================================= */
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
 
-function login(){
 
-  const input =
+/* =========================
+   ADMIN REDIRECT
+========================= */
 
+const ADMIN_REDIRECT_URL =
+  "https://ranjanrishi315-a11y.github.io/rishi-x/admin.html";
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+function showMessage(text){
+
+  document.getElementById(
+    "message"
+  ).textContent = text;
+
+}
+
+
+/* =========================
+   SEND ADMIN LOGIN
+========================= */
+
+async function sendAdminLogin(){
+
+  const email =
     document
-
-      .getElementById("adminId")
-
+      .getElementById("email")
       .value
-
       .trim();
 
 
-  const message =
-
-    document.getElementById(
-      "message"
-    );
-
-
   const button =
-
     document.getElementById(
       "loginButton"
     );
 
 
-  /* Empty ID */
+  if(!email){
 
-  if(!input){
-
-    message.textContent =
-
-      "Please enter Admin ID.";
+    showMessage(
+      "Please enter your admin email."
+    );
 
     return;
 
   }
 
-
-  /* Wrong ID */
-
-  if(input !== ADMIN_ID){
-
-    message.textContent =
-
-      "❌ Invalid Admin ID.";
-
-    return;
-
-  }
-
-
-  /* Correct ID */
 
   button.disabled = true;
 
   button.textContent =
-
-    "VERIFYING...";
-
-
-  message.textContent =
-
-    "✅ Admin ID verified.";
+    "SENDING...";
 
 
-  /* Save admin login */
-
-  sessionStorage.setItem(
-
-    ADMIN_SESSION_KEY,
-
-    "true"
-
+  showMessage(
+    "Sending secure admin login link..."
   );
 
 
-  /* Open Admin Dashboard */
+  const {error} =
+    await supabaseClient.auth
+      .signInWithOtp({
 
-  setTimeout(function(){
+        email:email,
 
-    window.location.href =
+        options:{
+          emailRedirectTo:
+            ADMIN_REDIRECT_URL
+        }
 
-      "admin-dashboard.html";
+      });
 
-  },500);
+
+  if(error){
+
+    button.disabled = false;
+
+    button.textContent =
+      "SEND ADMIN LOGIN LINK";
+
+    showMessage(
+      "Error: " +
+      error.message
+    );
+
+    return;
+
+  }
+
+
+  button.textContent =
+    "LINK SENT ✓";
+
+
+  showMessage(
+    "Admin login link sent. Check your email."
+  );
 
 }
 
 
-/* =================================
-   BACK TO WEBSITE
-================================= */
+/* =========================
+   CHECK ADMIN SESSION
+========================= */
+
+async function checkAdminSession(){
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient.auth
+      .getSession();
+
+
+  if(error){
+
+    console.error(error);
+
+    return;
+
+  }
+
+
+  if(!data.session){
+
+    return;
+
+  }
+
+
+  showMessage(
+    "Checking admin authorization..."
+  );
+
+
+  const {
+    data:isAdmin,
+    error:adminError
+  } =
+    await supabaseClient.rpc(
+      "is_admin"
+    );
+
+
+  if(adminError){
+
+    console.error(adminError);
+
+    showMessage(
+      "Admin verification failed."
+    );
+
+    return;
+
+  }
+
+
+  if(!isAdmin){
+
+    await supabaseClient.auth.signOut();
+
+    showMessage(
+      "❌ This account is not authorized as admin."
+    );
+
+    return;
+
+  }
+
+
+  showMessage(
+    "✅ Admin verified. Opening dashboard..."
+  );
+
+
+  setTimeout(function(){
+
+    window.location.href =
+      "admin-dashboard.html";
+
+  },700);
+
+}
+
+
+/* =========================
+   BACK
+========================= */
 
 function goBack(){
 
   window.location.href =
-
     "index.html";
 
 }
 
 
-/* =================================
-   ENTER KEY LOGIN
-================================= */
+/* =========================
+   ENTER KEY
+========================= */
 
 document
-
-  .getElementById("adminId")
-
+  .getElementById("email")
   .addEventListener(
-
     "keydown",
-
     function(event){
 
       if(event.key === "Enter"){
 
-        login();
+        sendAdminLogin();
 
       }
 
     }
-
   );
 
 
+/* =========================
+   START
+========================= */
+
+checkAdminSession();
+
+
+/* =========================
+   3D EFFECT
+========================= */
+
+const card =
+  document.getElementById("card");
+
+
+document.addEventListener(
+  "mousemove",
+  function(event){
+
+    const rect =
+      card.getBoundingClientRect();
+
+
+    const centerX =
+      rect.left +
+      rect.width / 2;
+
+    const centerY =
+      rect.top +
+      rect.height / 2;
+
+
+    const rotateY =
+      (event.clientX - centerX) /
+      rect.width * 5;
+
+
+    const rotateX =
+      -(event.clientY - centerY) /
+      rect.height * 5;
+
+
+    card.style.transform =
+      `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+  }
+);
+
+
+document.addEventListener(
+  "mouseleave",
+  function(){
+
+    card.style.transform =
+      "rotateX(0deg) rotateY(0deg)";
+
+  }
+);
+
 </script>
+
 
 </body>
 
