@@ -1,722 +1,466 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>RECX • Login</title>
+<title>RECX • Secure Login</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#648ff0">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
-html,body{
-    width:100%;
-    min-height:100%;
-}
-
 body{
     min-height:100vh;
+    font-family:Arial,Helvetica,sans-serif;
     display:flex;
     justify-content:center;
     align-items:center;
     overflow:hidden;
-
-    font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Arial,
-        sans-serif;
-
-    color:#172033;
-
     background:
-        radial-gradient(
-            circle at 15% 15%,
-            rgba(92,145,255,.16),
-            transparent 32%
-        ),
-        radial-gradient(
-            circle at 85% 80%,
-            rgba(142,103,255,.13),
-            transparent 34%
-        ),
-        linear-gradient(
-            135deg,
-            #f9fbff 0%,
-            #eef4fb 48%,
-            #f8faff 100%
-        );
+        radial-gradient(circle at 15% 20%,rgba(100,143,240,.20),transparent 30%),
+        radial-gradient(circle at 85% 80%,rgba(170,120,255,.18),transparent 30%),
+        linear-gradient(135deg,#f8fbff,#eef3fa);
+    color:#172033;
 }
 
-/* BACKGROUND DECORATION */
+/* BACKGROUND */
 
 .bg-shape{
     position:fixed;
     border-radius:50%;
+    filter:blur(2px);
     pointer-events:none;
-    filter:blur(1px);
-    opacity:.55;
 }
 
-.shape-one{
-    width:260px;
-    height:260px;
-    top:-120px;
-    left:-90px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(115,157,255,.16),
-            transparent 70%
-        );
+.shape1{
+    width:280px;
+    height:280px;
+    top:-100px;
+    left:-100px;
+    background:rgba(100,143,240,.08);
 }
 
-.shape-two{
-    width:330px;
-    height:330px;
-    right:-130px;
-    bottom:-130px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(158,122,255,.14),
-            transparent 70%
-        );
+.shape2{
+    width:350px;
+    height:350px;
+    right:-150px;
+    bottom:-150px;
+    background:rgba(135,90,255,.08);
 }
 
-/* THREE DOT MENU */
+/* ADMIN MENU */
 
-.menu-container{
+.menu{
     position:fixed;
-    top:20px;
-    right:20px;
-    z-index:1000;
+    top:22px;
+    right:22px;
+    z-index:20;
 }
 
-.menu-button{
+.menu-btn{
     width:44px;
     height:44px;
-
     border:none;
-    outline:none;
-
     border-radius:14px;
-
-    background:rgba(255,255,255,.78);
-
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
-
-    color:#344158;
-
-    font-size:25px;
-    font-weight:800;
-
+    background:rgba(255,255,255,.75);
+    box-shadow:
+        0 8px 20px rgba(35,50,80,.12),
+        inset 0 1px 0 rgba(255,255,255,.9);
     cursor:pointer;
-
-    box-shadow:
-        0 10px 30px rgba(45,66,105,.12),
-        inset 0 1px 0 rgba(255,255,255,.95);
-
-    transition:.25s ease;
+    font-size:25px;
+    color:#26344d;
 }
 
-.menu-button:hover{
-    transform:translateY(-2px);
-    box-shadow:
-        0 14px 34px rgba(45,66,105,.18),
-        inset 0 1px 0 rgba(255,255,255,.95);
-}
-
-.menu-dropdown{
+.menu-content{
+    display:none;
     position:absolute;
-    top:52px;
     right:0;
-
-    width:175px;
-
-    padding:7px;
-
+    top:52px;
+    width:160px;
+    padding:8px;
     border-radius:16px;
-
-    background:rgba(255,255,255,.94);
-
-    backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
-
-    box-shadow:
-        0 20px 45px rgba(35,52,88,.16),
-        inset 0 1px 0 rgba(255,255,255,1);
-
-    opacity:0;
-    visibility:hidden;
-
-    transform:
-        translateY(-8px)
-        scale(.96);
-
-    transition:.2s ease;
+    background:rgba(255,255,255,.96);
+    box-shadow:0 15px 35px rgba(30,40,70,.18);
 }
 
-.menu-dropdown.active{
-    opacity:1;
-    visibility:visible;
-
-    transform:
-        translateY(0)
-        scale(1);
-}
-
-.menu-dropdown a{
+.menu-content a{
     display:block;
-
-    padding:12px 13px;
-
-    border-radius:11px;
-
     text-decoration:none;
-
-    color:#27334a;
-
-    font-size:13px;
-    font-weight:750;
-
-    transition:.2s ease;
+    color:#182238;
+    padding:12px;
+    border-radius:10px;
+    font-size:14px;
+    font-weight:700;
 }
 
-.menu-dropdown a:hover{
+.menu-content a:hover{
     background:#edf3ff;
-    color:#557fe2;
+}
+
+.menu:hover .menu-content{
+    display:block;
 }
 
 /* MAIN */
 
 .main{
     width:100%;
-    max-width:440px;
-
-    padding:24px;
-
+    max-width:470px;
+    padding:25px;
     text-align:center;
-
     position:relative;
     z-index:2;
 }
 
 /* RECX */
 
-.recx{
-    display:inline-block;
+.logo{
+    font-size:72px;
+    font-weight:1000;
+    letter-spacing:8px;
+    margin-bottom:5px;
 
-    font-size:64px;
-
-    line-height:1;
-
-    font-weight:950;
-
-    letter-spacing:7px;
-
-    color:#dbe5f5;
-
-    position:relative;
+    color:#ffffff;
 
     text-shadow:
-        0 2px 0 #c4d0e1,
-        0 4px 0 #b6c4d7,
-        0 7px 13px rgba(67,87,124,.22),
-        0 16px 30px rgba(76,111,183,.13);
+        0 2px 0 #c5d0e0,
+        0 4px 0 #aab7cb,
+        0 7px 0 #8e9db5,
+        0 12px 18px rgba(30,45,75,.28);
 }
 
-.recx::after{
-    content:"";
-
-    position:absolute;
-
-    left:9%;
-    right:9%;
-
-    bottom:-11px;
-
-    height:5px;
-
-    border-radius:100px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #79a9ff,
-            #9c8cff,
-            #76d9ef
-        );
-
-    box-shadow:
-        0 4px 16px rgba(92,132,230,.22);
-}
-
-.small-label{
-    margin-top:25px;
-
-    color:#8d98aa;
-
-    font-size:10px;
-
+.subtitle{
+    font-size:11px;
     font-weight:800;
-
-    letter-spacing:3px;
+    letter-spacing:4px;
+    color:#73809a;
+    margin-bottom:30px;
 }
 
-/* LOGIN CARD */
+/* CARD */
 
 .login-card{
-    width:100%;
+    background:rgba(255,255,255,.78);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
 
-    margin-top:28px;
-
-    padding:30px 26px 27px;
-
+    border:1px solid rgba(255,255,255,.95);
     border-radius:28px;
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.96),
-            rgba(240,245,252,.88)
-        );
-
-    border:1px solid rgba(255,255,255,.98);
+    padding:35px 30px;
 
     box-shadow:
-        0 28px 65px rgba(47,68,108,.15),
-        0 8px 20px rgba(47,68,108,.07),
-        inset 0 1px 0 rgba(255,255,255,1);
+        0 25px 60px rgba(50,70,110,.16),
+        0 8px 18px rgba(50,70,110,.08),
+        inset 0 1px 0 rgba(255,255,255,.95);
 
-    transition:
-        transform .35s ease,
-        box-shadow .35s ease;
+    transform:perspective(900px) rotateX(1deg);
 }
 
-.login-card:hover{
-    transform:
-        translateY(-4px)
-        perspective(1000px)
-        rotateX(1deg);
-
-    box-shadow:
-        0 34px 75px rgba(47,68,108,.19),
-        0 10px 25px rgba(47,68,108,.09),
-        inset 0 1px 0 rgba(255,255,255,1);
+.title{
+    font-size:27px;
+    font-weight:900;
+    margin-bottom:8px;
+    color:#182238;
 }
 
-/* CARD TEXT */
-
-.welcome{
-    font-size:22px;
-
-    font-weight:850;
-
-    color:#263249;
-
-    margin-bottom:7px;
-}
-
-.description{
-    font-size:13px;
-
-    color:#8b96a8;
-
-    margin-bottom:23px;
+.desc{
+    color:#7b879d;
+    font-size:14px;
+    margin-bottom:25px;
 }
 
 /* INPUT */
 
-.email-input{
+.input-box{
+    position:relative;
+    margin-bottom:16px;
+}
+
+input{
     width:100%;
-
-    height:54px;
-
-    border:none;
-    outline:none;
-
+    height:55px;
+    border:1px solid #dce3ee;
     border-radius:15px;
-
-    padding:
-        0 16px;
-
-    background:#f5f8fc;
-
-    color:#1e293b;
-
-    font-size:14px;
-
-    box-shadow:
-        inset 0 2px 8px rgba(38,58,94,.06),
-        0 1px 0 rgba(255,255,255,.9);
-
-    transition:.25s ease;
+    outline:none;
+    padding:0 17px;
+    font-size:15px;
+    color:#182238;
+    background:rgba(248,250,253,.9);
+    transition:.25s;
 }
 
-.email-input::placeholder{
-    color:#a0a9b7;
-}
-
-.email-input:focus{
-    background:#fff;
-
-    box-shadow:
-        0 0 0 3px rgba(91,132,226,.12),
-        inset 0 2px 7px rgba(38,58,94,.04);
+input:focus{
+    border-color:#648ff0;
+    box-shadow:0 0 0 4px rgba(100,143,240,.10);
 }
 
 /* BUTTON */
 
-.login-button{
+.login-btn{
     width:100%;
-
-    height:54px;
-
-    margin-top:15px;
-
-    border:none;
-    outline:none;
-
+    height:55px;
+    border:0;
     border-radius:15px;
+
+    background:linear-gradient(135deg,#648ff0,#5276d8);
+
+    color:white;
+    font-size:14px;
+    font-weight:900;
+    letter-spacing:1px;
 
     cursor:pointer;
 
-    color:#fff;
-
-    font-size:13px;
-
-    font-weight:850;
-
-    letter-spacing:1.1px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #648ff0,
-            #7c73e7
-        );
-
     box-shadow:
-        0 11px 24px rgba(92,119,220,.26),
+        0 10px 22px rgba(82,118,216,.28),
         inset 0 1px 0 rgba(255,255,255,.25);
 
-    transition:.25s ease;
+    transition:.25s;
 }
 
-.login-button:hover{
+.login-btn:hover{
     transform:translateY(-2px);
-
     box-shadow:
-        0 15px 30px rgba(92,119,220,.34),
-        inset 0 1px 0 rgba(255,255,255,.28);
+        0 14px 28px rgba(82,118,216,.35);
 }
 
-.login-button:active{
+.login-btn:active{
     transform:translateY(1px);
 }
 
-.login-button:disabled{
-    opacity:.65;
-    cursor:not-allowed;
-    transform:none;
-}
-
-/* MESSAGE */
-
-.message{
+#msg{
     min-height:20px;
-
-    margin-top:14px;
-
-    font-size:12px;
-
+    margin-top:15px;
+    font-size:13px;
     font-weight:700;
+    color:#64708a;
 }
 
-.success{
-    color:#13a56a;
-}
-
-.error{
-    color:#e15d6b;
-}
-
-/* SOCIAL ICONS */
-
-.socials{
-    display:flex;
-
-    justify-content:center;
-    align-items:center;
-
-    gap:12px;
-
-    margin-top:22px;
-}
+/* SOCIAL */
 
 .social{
-    width:43px;
-    height:43px;
-
     display:flex;
-
-    align-items:center;
     justify-content:center;
-
-    border-radius:14px;
-
-    background:rgba(255,255,255,.82);
-
-    box-shadow:
-        0 8px 20px rgba(44,63,99,.10),
-        inset 0 1px 0 rgba(255,255,255,.95);
-
-    transition:.25s ease;
+    gap:12px;
+    margin-top:25px;
 }
 
-.social:hover{
-    transform:
-        translateY(-3px)
-        scale(1.04);
+.social a{
+    width:47px;
+    height:47px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:14px;
+    text-decoration:none;
+
+    background:white;
+    box-shadow:
+        0 8px 18px rgba(40,55,85,.12);
+
+    transition:.25s;
+}
+
+.social a:hover{
+    transform:translateY(-3px);
 }
 
 .social svg{
-    width:21px;
-    height:21px;
-}
-
-.telegram{
-    color:#229ED9;
-}
-
-.whatsapp{
-    color:#20c96b;
-}
-
-.youtube{
-    color:#ff3030;
+    width:23px;
+    height:23px;
 }
 
 /* FOOTER */
 
 .footer{
-    margin-top:18px;
-
-    color:#9aa4b4;
-
-    font-size:11px;
-
-    font-weight:600;
-
-    letter-spacing:.5px;
+    margin-top:22px;
+    font-size:12px;
+    color:#8a95a8;
+    font-weight:700;
 }
 
 /* MOBILE */
 
-@media(max-width:500px){
+@media(max-width:480px){
 
     .main{
         padding:20px;
     }
 
-    .recx{
-        font-size:52px;
-        letter-spacing:5px;
+    .logo{
+        font-size:58px;
+        letter-spacing:6px;
     }
 
     .login-card{
-        padding:27px 20px 24px;
-        border-radius:24px;
+        padding:30px 22px;
     }
 
-    .menu-container{
-        top:15px;
-        right:15px;
+    .title{
+        font-size:24px;
     }
 
-    .menu-button{
-        width:42px;
-        height:42px;
-    }
 }
 
-@media(max-height:650px){
-
-    .recx{
-        font-size:46px;
-    }
-
-    .small-label{
-        margin-top:20px;
-    }
-
-    .login-card{
-        margin-top:20px;
-        padding:23px;
-    }
-
-    .socials{
-        margin-top:15px;
-    }
-
-    .footer{
-        margin-top:11px;
-    }
-}
 </style>
 </head>
 
 <body>
 
-<div class="bg-shape shape-one"></div>
-<div class="bg-shape shape-two"></div>
+<div class="bg-shape shape1"></div>
+<div class="bg-shape shape2"></div>
 
+<!-- ADMIN MENU -->
 
-<!-- THREE DOT ADMIN MENU -->
+<div class="menu">
 
-<div class="menu-container">
+    <button class="menu-btn">⋮</button>
 
-    <button
-        class="menu-button"
-        id="menuButton"
-        aria-label="Menu">
-        ⋮
-    </button>
-
-    <div
-        class="menu-dropdown"
-        id="menuDropdown">
-
-        <a href="admin.html">
-            Admin Login
-        </a>
-
+    <div class="menu-content">
+        <a href="admin.html">Admin Login</a>
     </div>
 
 </div>
-
 
 <!-- MAIN -->
 
 <main class="main">
 
-    <!-- RECX BRAND -->
+    <div class="logo">RECX</div>
 
-    <h1 class="recx">
-        RECX
-    </h1>
-
-    <div class="small-label">
+    <div class="subtitle">
         SECURE LOGIN
     </div>
 
-
-    <!-- LOGIN CARD -->
-
     <section class="login-card">
 
-        <div class="welcome">
+        <h1 class="title">
             Welcome Back
-        </div>
+        </h1>
 
-        <div class="description">
+        <p class="desc">
             Login securely with your email
-        </div>
+        </p>
 
-        <input
-            type="email"
-            id="email"
-            class="email-input"
-            placeholder="Enter your email"
-            autocomplete="email"
-        >
+        <div class="input-box">
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                autocomplete="email"
+            >
+
+        </div>
 
         <button
-            class="login-button"
-            id="loginButton"
-            type="button"
-            onclick="sendLoginLink()">
-
+            class="login-btn"
+            id="loginBtn"
+            onclick="sendLogin()"
+        >
             SEND LOGIN LINK
-
         </button>
 
-        <div
-            class="message"
-            id="message">
-        </div>
+        <div id="msg"></div>
 
     </section>
 
+    <!-- SOCIAL -->
 
-    <!-- SOCIAL ICONS -->
+    <div class="social">
 
-    <div class="socials">
-
-        <!-- Telegram -->
+        <!-- TELEGRAM -->
 
         <a
-            class="social telegram"
             href="https://t.me/panalstoreff"
             target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Telegram">
+            aria-label="Telegram"
+        >
 
             <svg
                 viewBox="0 0 24 24"
-                fill="currentColor">
-
-                <path d="M21.7 3.2 18.5 20c-.2 1.2-.9 1.5-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L5.9 13.7.9 12.1c-1.1-.3-1.1-1 .2-1.5L20.6 3c.9-.3 1.7.2 1.1.2z"/>
-
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M21.7 3.4L18.5 20.1C18.3 21.3 17.6 21.6 16.6 21L11.1 16.9L8.45 19.45C8.15 19.75 7.9 20 7.3 20L7.7 14.3L18.1 4.9C18.55 4.5 18 4.25 17.4 4.65L4.55 12.75L0.95 11.62C0.17 11.37 0.15 10.83 1.12 10.45L20.3 3C21.2 2.67 21.98 3.2 21.7 3.4Z"
+                    fill="#229ED9"
+                />
             </svg>
 
         </a>
 
-
-        <!-- WhatsApp -->
+        <!-- WHATSAPP -->
 
         <a
-            class="social whatsapp"
             href="https://whatsapp.com/channel/0029VbDyKyj0VycFxIRkAf2p"
             target="_blank"
-            rel="noopener noreferrer"
-            aria-label="WhatsApp">
+            aria-label="WhatsApp"
+        >
 
             <svg
                 viewBox="0 0 24 24"
-                fill="currentColor">
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M12 2C6.48 2 2 6.25 2 11.5C2 13.35 2.57 15.08 3.55 16.55L2.3 20.4L6.35 19.2C7.98 20.1 9.87 20.6 12 20.6C17.52 20.6 22 16.35 22 11.5C22 6.25 17.52 2 12 2Z"
+                    fill="#25D366"
+                />
 
-                <path d="M20 3.9A10 10 0 0 0 3.7 16.1L2 22l6-1.6A10 10 0 1 0 20 3.9Zm-8 16.3a8.3 8.3 0 0 1-4.2-1.1l-.3-.2-3.5.9.9-3.4-.2-.3A8.3 8.3 0 1 1 12 20.2Zm4.6-6.2c-.3-.2-1.7-.8-1.9-.9-.3-.1-.5-.2-.7.2-.2.3-.7.9-.8 1.1-.2.2-.3.2-.6.1-1.6-.8-2.6-1.4-3.6-3.2-.3-.5.3-.5.8-1.6.1-.2 0-.4-.1-.6-.1-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1-1.1 2.4s1.1 2.8 1.2 3c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.7.9 3.7.8.6-.1 1.7-.7 1.9-1.3.2-.6.2-1.2.1-1.3-.1-.1-.3-.2-.6-.3Z"/>
+                <path
+                    d="M8.4 7.2C8.7 6.9 9.1 6.9 9.4 7.25L10.5 8.65C10.75 8.95 10.75 9.25 10.5 9.55L9.9 10.2C10.65 11.55 11.75 12.65 13.1 13.35L13.8 12.7C14.05 12.45 14.4 12.45 14.7 12.65L16.2 13.65C16.55 13.9 16.6 14.25 16.35 14.6L15.65 15.55C15.35 15.95 14.8 16.15 14.3 16.05C10.9 15.25 8.1 12.45 7.3 9.05C7.2 8.55 7.4 7.95 7.8 7.65L8.4 7.2Z"
+                    fill="white"
+                />
 
             </svg>
 
         </a>
 
-
-        <!-- YouTube -->
+        <!-- YOUTUBE -->
 
         <a
-            class="social youtube"
             href="https://youtube.com/@recxpanal-te6os?si=wEXVJ6vGkDRTCCRt"
             target="_blank"
-            rel="noopener noreferrer"
-            aria-label="YouTube">
+            aria-label="YouTube"
+        >
 
             <svg
                 viewBox="0 0 24 24"
-                fill="currentColor">
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
 
-                <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.7V8.3l6.3 3.7-6.3 3.7Z"/>
+                <rect
+                    x="2"
+                    y="5"
+                    width="20"
+                    height="14"
+                    rx="4"
+                    fill="#FF0000"
+                />
+
+                <path
+                    d="M10 9L16 12L10 15V9Z"
+                    fill="white"
+                />
 
             </svg>
 
@@ -724,234 +468,123 @@ body{
 
     </div>
 
-
-    <!-- FOOTER -->
-
-    <footer class="footer">
-        Powered by Rishi X &amp; Shiva
-    </footer>
+    <div class="footer">
+        Powered by Rishi X & Shiva
+    </div>
 
 </main>
 
-
-<!-- SUPABASE -->
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
+
+/* SUPABASE */
 
 const SUPABASE_URL =
     "https://asdbxlnttlsuhhnqeywa.supabase.co";
 
-const SUPABASE_PUBLISHABLE_KEY =
+const SUPABASE_KEY =
     "sb_publishable_GIzm11dFWDJmu9cQGAJy_w_432UbSU5";
 
 const REDIRECT_URL =
-    "https://ranjanrishi315-a11y.github.io/rishi-x/";
-
+    window.location.origin +
+    "/rishi-x/dashboard-new.html";
 
 const supabaseClient =
     window.supabase.createClient(
         SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
+        SUPABASE_KEY
     );
 
 
-/* =========================
-   THREE DOT MENU
-========================= */
+/* LOGIN */
 
-const menuButton =
-    document.getElementById("menuButton");
-
-const menuDropdown =
-    document.getElementById("menuDropdown");
-
-
-menuButton.addEventListener(
-    "click",
-    function(event){
-
-        event.stopPropagation();
-
-        menuDropdown.classList.toggle(
-            "active"
-        );
-
-    }
-);
-
-
-document.addEventListener(
-    "click",
-    function(event){
-
-        if(
-            !menuDropdown.contains(event.target) &&
-            !menuButton.contains(event.target)
-        ){
-
-            menuDropdown.classList.remove(
-                "active"
-            );
-
-        }
-
-    }
-);
-
-
-/* =========================
-   LOGIN LINK
-========================= */
-
-async function sendLoginLink(){
+async function sendLogin(){
 
     const email =
-        document
-        .getElementById("email")
-        .value
-        .trim();
+        document.getElementById("email").value.trim();
 
-    const button =
-        document.getElementById(
-            "loginButton"
-        );
+    const msg =
+        document.getElementById("msg");
 
-    const message =
-        document.getElementById(
-            "message"
-        );
-
-
-    message.textContent = "";
-    message.className = "message";
-
+    const btn =
+        document.getElementById("loginBtn");
 
     if(!email){
 
-        message.textContent =
+        msg.textContent =
             "Please enter your email.";
 
-        message.classList.add(
-            "error"
-        );
-
         return;
     }
 
+    btn.disabled = true;
 
-    if(!email.includes("@")){
-
-        message.textContent =
-            "Please enter a valid email.";
-
-        message.classList.add(
-            "error"
-        );
-
-        return;
-    }
-
-
-    button.disabled = true;
-
-    button.textContent =
+    btn.textContent =
         "SENDING...";
 
+    msg.textContent =
+        "";
 
-    const { error } =
-        await supabaseClient.auth.signInWithOtp({
+    try{
 
-            email: email,
+        const { error } =
+            await supabaseClient.auth.signInWithOtp({
 
-            options:{
-                emailRedirectTo:
-                    REDIRECT_URL,
+                email:email,
 
-                shouldCreateUser:
-                    true
-            }
+                options:{
+                    emailRedirectTo:REDIRECT_URL
+                }
 
-        });
+            });
 
+        if(error){
 
-    if(error){
+            msg.textContent =
+                error.message;
 
-        message.textContent =
-            error.message;
+            btn.disabled = false;
 
-        message.classList.add(
-            "error"
-        );
-
-        button.disabled = false;
-
-        button.textContent =
-            "SEND LOGIN LINK";
-
-        return;
-    }
-
-
-    message.textContent =
-        "Login link sent to your email.";
-
-    message.classList.add(
-        "success"
-    );
-
-
-    button.textContent =
-        "LINK SENT ✓";
-
-
-    setTimeout(
-        function(){
-
-            button.disabled = false;
-
-            button.textContent =
+            btn.textContent =
                 "SEND LOGIN LINK";
 
-        },
-        5000
-    );
+            return;
+        }
+
+        msg.textContent =
+            "Login link sent. Check your email.";
+
+        btn.textContent =
+            "LINK SENT";
+
+    }
+
+    catch(error){
+
+        msg.textContent =
+            "Something went wrong.";
+
+        btn.disabled = false;
+
+        btn.textContent =
+            "SEND LOGIN LINK";
+
+    }
 
 }
 
 
-/* =========================
-   ENTER KEY
-========================= */
-
-document
-    .getElementById("email")
-    .addEventListener(
-        "keydown",
-        function(event){
-
-            if(event.key === "Enter"){
-
-                sendLoginLink();
-
-            }
-
-        }
-    );
-
-
-/* =========================
-   EXISTING SESSION
-========================= */
+/* SESSION CHECK */
 
 async function checkSession(){
 
     const { data } =
         await supabaseClient.auth.getSession();
 
-
-    if(data.session){
+    if(
+        data &&
+        data.session &&
+        window.location.pathname.endsWith("index.html")
+    ){
 
         window.location.href =
             "dashboard-new.html";
@@ -960,6 +593,35 @@ async function checkSession(){
 
 }
 
+
+/* SERVICE WORKER / PWA */
+
+if("serviceWorker" in navigator){
+
+    window.addEventListener("load",()=>{
+
+        navigator.serviceWorker
+            .register("./sw.js")
+            .then(()=>{
+                console.log(
+                    "RECX Service Worker registered."
+                );
+            })
+            .catch(error=>{
+
+                console.log(
+                    "Service Worker Error:",
+                    error
+                );
+
+            });
+
+    });
+
+}
+
+
+/* RUN */
 
 checkSession();
 
