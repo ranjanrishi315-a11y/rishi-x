@@ -1,1066 +1,378 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>RECX • Profile</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>RECX • Login</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
 *{
+  box-sizing:border-box;
   margin:0;
   padding:0;
-  box-sizing:border-box;
 }
 
 body{
-
   min-height:100vh;
-
-  font-family:
-    Inter,
-    Arial,
-    sans-serif;
-
-  color:#181818;
-
-  background:
-    radial-gradient(
-      circle at 10% 10%,
-      rgba(255,100,20,.16),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at 90% 20%,
-      rgba(0,150,255,.13),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 50% 100%,
-      rgba(150,70,255,.10),
-      transparent 32%
-    ),
-    linear-gradient(
-      135deg,
-      #fafcff,
-      #edf1f6
-    );
-
+  font-family:Arial,sans-serif;
+  background:#f5f7fb;
+  color:#111827;
   display:flex;
+  align-items:center;
   justify-content:center;
-
-  padding:25px 16px;
-
 }
-
-
-/* =========================
-   CONTAINER
-========================= */
 
 .container{
-
   width:100%;
-  max-width:500px;
-
-  perspective:1200px;
-
+  max-width:420px;
+  padding:20px;
 }
 
+.menu{
+  position:fixed;
+  top:18px;
+  right:18px;
+}
 
-/* =========================
-   HEADER
-========================= */
+.dots{
+  width:38px;
+  height:38px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  background:white;
+  font-size:24px;
+  cursor:pointer;
+}
 
-.header{
+.dropdown{
+  display:none;
+  position:absolute;
+  right:0;
+  top:45px;
+  width:150px;
+  background:white;
+  border:1px solid #ddd;
+  border-radius:10px;
+  box-shadow:0 8px 25px rgba(0,0,0,.12);
+  overflow:hidden;
+}
 
-  display:flex;
+.dropdown.show{
+  display:block;
+}
 
-  align-items:center;
-  justify-content:space-between;
+.dropdown a{
+  display:block;
+  padding:12px;
+  text-decoration:none;
+  color:#111;
+  font-size:14px;
+}
 
-  margin-bottom:20px;
-
+.dropdown a:hover{
+  background:#f1f5f9;
 }
 
 .logo{
-
-  font-size:25px;
-
-  font-weight:950;
-
-  letter-spacing:2px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #ff3d00,
-      #ff8b2c
-    );
-
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-
+  text-align:center;
+  font-size:34px;
+  font-weight:900;
+  margin-bottom:8px;
+  color:#111827;
 }
 
-.back{
+.subtitle{
+  text-align:center;
+  color:#6b7280;
+  font-size:14px;
+  margin-bottom:28px;
+}
 
-  border:0;
-
+.card{
   background:white;
-
-  color:#444;
-
-  padding:10px 14px;
-
-  border-radius:12px;
-
-  font-size:11px;
-
-  font-weight:900;
-
-  cursor:pointer;
-
-  box-shadow:
-    0 6px 18px rgba(0,0,0,.08);
-
-  transition:.2s;
-
+  border:1px solid #e5e7eb;
+  border-radius:18px;
+  padding:28px;
+  box-shadow:0 10px 35px rgba(0,0,0,.07);
 }
 
-.back:hover{
-
-  transform:translateY(-2px);
-
-}
-
-
-/* =========================
-   PROFILE CARD
-========================= */
-
-.profile-card{
-
-  position:relative;
-
-  padding:30px 24px;
-
-  border-radius:28px;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,.92),
-      rgba(255,255,255,.65)
-    );
-
-  border:
-    1px solid rgba(255,255,255,.95);
-
-  box-shadow:
-
-    0 30px 70px
-    rgba(30,40,60,.15),
-
-    0 8px 25px
-    rgba(255,80,0,.06);
-
-  backdrop-filter:blur(20px);
-
-  transform-style:preserve-3d;
-
-  transition:
-    transform .18s ease-out;
-
-}
-
-
-/* =========================
-   PROFILE TOP
-========================= */
-
-.profile-top{
-
+.card h2{
   text-align:center;
-
-  padding-bottom:25px;
-
-  border-bottom:
-    1px solid #ececec;
-
+  margin-bottom:8px;
 }
 
-.avatar{
-
-  width:95px;
-  height:95px;
-
-  margin:0 auto 15px;
-
-  border-radius:50%;
-
-  display:flex;
-
-  align-items:center;
-  justify-content:center;
-
-  color:white;
-
-  font-size:35px;
-
-  font-weight:950;
-
-  background:
-    linear-gradient(
-      135deg,
-      #ff3d00,
-      #ff9a3d
-    );
-
-  box-shadow:
-
-    0 15px 30px
-    rgba(255,80,0,.25),
-
-    inset 0 2px 5px
-    rgba(255,255,255,.35);
-
+.card p{
+  text-align:center;
+  color:#6b7280;
+  font-size:13px;
+  margin-bottom:22px;
 }
 
-.profile-top h1{
-
-  font-size:25px;
-
-  font-weight:950;
-
-  margin-bottom:5px;
-
-}
-
-.profile-top p{
-
-  color:#777;
-
+label{
+  display:block;
   font-size:12px;
-
+  font-weight:bold;
+  margin-bottom:7px;
 }
 
-
-/* =========================
-   STATUS
-========================= */
-
-.status{
-
-  display:inline-flex;
-
-  align-items:center;
-
-  gap:7px;
-
-  margin-top:12px;
-
-  padding:7px 12px;
-
-  border-radius:50px;
-
-  background:#ecfdf3;
-
-  color:#16834b;
-
-  font-size:10px;
-
-  font-weight:900;
-
-}
-
-.status-dot{
-
-  width:7px;
-  height:7px;
-
-  border-radius:50%;
-
-  background:#20c76a;
-
-  box-shadow:
-    0 0 8px rgba(32,199,106,.7);
-
-}
-
-
-/* =========================
-   INFO
-========================= */
-
-.info{
-
-  margin-top:22px;
-
-  display:grid;
-
-  gap:11px;
-
-}
-
-.info-box{
-
-  display:flex;
-
-  align-items:center;
-
-  gap:13px;
-
-  padding:15px;
-
-  border-radius:17px;
-
-  background:
-    rgba(248,249,251,.85);
-
-  border:
-    1px solid #e9ebef;
-
-  transition:.22s;
-
-}
-
-.info-box:hover{
-
-  transform:
-    translateX(4px);
-
-  border-color:
-    rgba(255,90,0,.22);
-
-}
-
-.info-icon{
-
-  width:40px;
-  height:40px;
-
-  flex-shrink:0;
-
-  border-radius:12px;
-
-  display:flex;
-
-  align-items:center;
-  justify-content:center;
-
-  background:
-    rgba(255,90,0,.09);
-
-  font-size:18px;
-
-}
-
-.info-content{
-
-  min-width:0;
-
-}
-
-.info-label{
-
-  color:#888;
-
-  font-size:10px;
-
-  font-weight:800;
-
-  margin-bottom:4px;
-
-  text-transform:uppercase;
-
-  letter-spacing:.6px;
-
-}
-
-.info-value{
-
-  color:#222;
-
-  font-size:13px;
-
-  font-weight:800;
-
-  word-break:break-word;
-
-}
-
-
-/* =========================
-   ACTIONS
-========================= */
-
-.actions{
-
-  display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap:10px;
-
-  margin-top:22px;
-
-}
-
-.action{
-
+input{
+  width:100%;
   height:50px;
+  border:1px solid #d1d5db;
+  border-radius:10px;
+  padding:0 14px;
+  font-size:14px;
+  outline:none;
+}
 
+input:focus{
+  border-color:#2563eb;
+}
+
+button.login{
+  width:100%;
+  height:50px;
+  margin-top:15px;
   border:0;
-
-  border-radius:15px;
-
-  font-size:11px;
-
-  font-weight:950;
-
-  cursor:pointer;
-
-  transition:.23s;
-
-}
-
-.dashboard{
-
+  border-radius:10px;
+  background:#2563eb;
   color:white;
-
-  background:
-    linear-gradient(
-      135deg,
-      #ff3d00,
-      #ff8500
-    );
-
-  box-shadow:
-    0 10px 22px
-    rgba(255,70,0,.20);
-
+  font-weight:bold;
+  cursor:pointer;
 }
 
-.logout{
-
-  color:#333;
-
-  background:#f1f2f4;
-
-  border:
-    1px solid #e0e2e6;
-
+button.login:disabled{
+  opacity:.6;
 }
 
-.action:hover{
-
-  transform:translateY(-3px);
-
-}
-
-
-/* =========================
-   FOOTER
-========================= */
-
-.footer{
-
+#message{
   text-align:center;
-
-  margin-top:20px;
-
-  color:#777;
-
-  font-size:10px;
-
-  font-weight:700;
-
-}
-
-
-/* =========================
-   LOADING
-========================= */
-
-.loading{
-
-  text-align:center;
-
-  padding:70px 20px;
-
-  color:#777;
-
+  margin-top:15px;
   font-size:13px;
-
+  color:#2563eb;
+  min-height:18px;
 }
 
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:500px){
-
-  body{
-
-    padding:
-      18px 12px;
-
-  }
-
-  .profile-card{
-
-    padding:
-      25px 17px;
-
-    border-radius:24px;
-
-  }
-
-  .logo{
-
-    font-size:22px;
-
-  }
-
+.social{
+  display:flex;
+  gap:8px;
+  margin-top:20px;
 }
 
+.social a{
+  flex:1;
+  text-align:center;
+  text-decoration:none;
+  color:white;
+  padding:11px 5px;
+  border-radius:9px;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.telegram{
+  background:#229ed9;
+}
+
+.whatsapp{
+  background:#25d366;
+}
+
+.youtube{
+  background:#ff0000;
+}
+
+footer{
+  text-align:center;
+  margin-top:22px;
+  color:#777;
+  font-size:11px;
+}
 </style>
-
 </head>
-
 
 <body>
 
+<div class="menu">
+  <button class="dots" onclick="toggleMenu()">⋮</button>
+
+  <div class="dropdown" id="dropdown">
+    <a href="admin.html">👑 Admin Login</a>
+  </div>
+</div>
 
 <div class="container">
 
+  <div class="logo">⚡ RECX</div>
 
-  <div class="header">
+  <div class="subtitle">
+    Secure • Private • Verified
+  </div>
 
-    <div class="logo">
-      ⚡ RECX
-    </div>
+  <div class="card">
+
+    <h2>Welcome Back</h2>
+
+    <p>Login with your email</p>
+
+    <label>Email Address</label>
+
+    <input
+      id="email"
+      type="email"
+      placeholder="Enter your email"
+      autocomplete="email"
+    >
 
     <button
-      class="back"
-      onclick="goDashboard()">
-
-      ← Dashboard
-
+      class="login"
+      id="loginButton"
+      onclick="sendOTP()">
+      SEND LOGIN LINK
     </button>
 
-  </div>
-
-
-  <div
-    class="profile-card"
-    id="profileCard">
-
-
-    <div class="profile-top">
-
-
-      <div
-        class="avatar"
-        id="avatar">
-
-        R
-
-      </div>
-
-
-      <h1>
-        My Profile
-      </h1>
-
-
-      <p id="profileEmail">
-        Loading account...
-      </p>
-
-
-      <div class="status">
-
-        <span class="status-dot"></span>
-
-        ACCOUNT ACTIVE
-
-      </div>
-
-
-    </div>
-
-
-    <div class="info">
-
-
-      <div class="info-box">
-
-        <div class="info-icon">
-          📧
-        </div>
-
-        <div class="info-content">
-
-          <div class="info-label">
-            Email Address
-          </div>
-
-          <div
-            class="info-value"
-            id="email">
-
-            Loading...
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="info-box">
-
-        <div class="info-icon">
-          🆔
-        </div>
-
-        <div class="info-content">
-
-          <div class="info-label">
-            User ID
-          </div>
-
-          <div
-            class="info-value"
-            id="userId">
-
-            Loading...
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="info-box">
-
-        <div class="info-icon">
-          📅
-        </div>
-
-        <div class="info-content">
-
-          <div class="info-label">
-            Joined
-          </div>
-
-          <div
-            class="info-value"
-            id="joined">
-
-            Loading...
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="info-box">
-
-        <div class="info-icon">
-          📁
-        </div>
-
-        <div class="info-content">
-
-          <div class="info-label">
-            Private Files
-          </div>
-
-          <div
-            class="info-value"
-            id="fileCount">
-
-            Checking...
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-    </div>
-
-
-    <div class="actions">
-
-
-      <button
-        class="action dashboard"
-        onclick="goDashboard()">
-
-        🏠 DASHBOARD
-
-      </button>
-
-
-      <button
-        class="action logout"
-        onclick="logout()">
-
-        🚪 LOGOUT
-
-      </button>
-
-
-    </div>
-
+    <div id="message"></div>
 
   </div>
 
+  <div class="social">
 
-  <div class="footer">
+    <a
+      class="telegram"
+      href="https://t.me/panalstoreff"
+      target="_blank">
+      Telegram
+    </a>
 
-    Powered by Rishi X &amp; Shiva
+    <a
+      class="whatsapp"
+      href="https://whatsapp.com/channel/0029VbDyKyj0VycFxIRkAf2p"
+      target="_blank">
+      WhatsApp
+    </a>
+
+    <a
+      class="youtube"
+      href="https://youtube.com/@recxpanal-te6os?si=wEXVJ6vGkDRTCCRt"
+      target="_blank">
+      YouTube
+    </a>
 
   </div>
 
+  <footer>
+    Powered by Rishi X & Shiva
+  </footer>
 
 </div>
 
-
 <script>
 
-/* =========================
-   SUPABASE CONFIG
-========================= */
-
 const SUPABASE_URL =
-  "https://asdbxlnttlsuhhnqeywa.supabase.co";
+"https://asdbxlnttlsuhhnqeywa.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-  "sb_publishable_GIzm11dFWDJmu9cQGAJy_w_432UbSU5";
+"sb_publishable_GIzm11dFWDJmu9cQGAJy_w_432UbSU5";
 
-const BUCKET_NAME =
-  "user-files";
-
+const REDIRECT_URL =
+"https://ranjanrishi315-a11y.github.io/rishi-x/";
 
 const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
 
-
-let currentUser = null;
-
-
-/* =========================
-   LOAD PROFILE
-========================= */
-
-async function loadProfile(){
-
-  const {
-    data,
-    error
-  } =
-    await supabaseClient.auth.getSession();
-
-
-  if(error || !data.session){
-
-    window.location.href =
-      "index.html";
-
-    return;
-
-  }
-
-
-  currentUser =
-    data.session.user;
-
+async function sendOTP(){
 
   const email =
-    currentUser.email ||
-    "No email";
+    document.getElementById("email").value.trim();
 
+  const button =
+    document.getElementById("loginButton");
 
-  /* Email */
+  const message =
+    document.getElementById("message");
 
-  document.getElementById(
-    "email"
-  ).textContent =
-    email;
-
-
-  document.getElementById(
-    "profileEmail"
-  ).textContent =
-    email;
-
-
-  /* Avatar */
-
-  const firstLetter =
-    email.charAt(0)
-      .toUpperCase();
-
-
-  document.getElementById(
-    "avatar"
-  ).textContent =
-    firstLetter;
-
-
-  /* User ID */
-
-  document.getElementById(
-    "userId"
-  ).textContent =
-    currentUser.id;
-
-
-  /* Joined date */
-
-  if(currentUser.created_at){
-
-    const date =
-      new Date(
-        currentUser.created_at
-      );
-
-    document.getElementById(
-      "joined"
-    ).textContent =
-      date.toLocaleDateString(
-        "en-IN",
-        {
-          day:"2-digit",
-          month:"short",
-          year:"numeric"
-        }
-      );
-
-  }
-
-
-  await countFiles();
-
-}
-
-
-/* =========================
-   FILE COUNT
-========================= */
-
-async function countFiles(){
-
-  if(!currentUser){
-
+  if(!email){
+    message.textContent="Enter your email.";
     return;
-
   }
 
+  button.disabled=true;
+  button.textContent="SENDING...";
+  message.textContent="";
 
-  const {
-    data,
-    error
-  } =
-    await supabaseClient.storage
-      .from(BUCKET_NAME)
-      .list(
-        currentUser.id,
-        {
-          limit:1000,
-          offset:0
-        }
-      );
-
+  const {error} =
+    await supabaseClient.auth.signInWithOtp({
+      email:email,
+      options:{
+        emailRedirectTo:REDIRECT_URL
+      }
+    });
 
   if(error){
 
-    document.getElementById(
-      "fileCount"
-    ).textContent =
-      "Unavailable";
-
+    button.disabled=false;
+    button.textContent="SEND LOGIN LINK";
+    message.textContent=error.message;
     return;
 
   }
 
-
-  document.getElementById(
-    "fileCount"
-  ).textContent =
-    `${data.length} file${data.length === 1 ? "" : "s"}`;
+  button.textContent="LINK SENT ✓";
+  message.textContent=
+    "Check your email for the login link.";
 
 }
 
+async function checkSession(){
 
-/* =========================
-   DASHBOARD
-========================= */
+  const {data} =
+    await supabaseClient.auth.getSession();
 
-function goDashboard(){
-
-  window.location.href =
-    "dashboard-new.html";
+  if(data.session){
+    window.location.href="dashboard-new.html";
+  }
 
 }
 
+function toggleMenu(){
 
-/* =========================
-   LOGOUT
-========================= */
-
-async function logout(){
-
-  await supabaseClient.auth.signOut();
-
-  window.location.href =
-    "index.html";
+  document
+    .getElementById("dropdown")
+    .classList.toggle("show");
 
 }
 
+document.addEventListener("click",function(e){
 
-/* =========================
-   3D MOUSE EFFECT
-========================= */
+  const menu =
+    document.querySelector(".menu");
 
-const card =
-  document.getElementById(
-    "profileCard"
-  );
-
-
-document.addEventListener(
-  "mousemove",
-  function(event){
-
-    const rect =
-      card.getBoundingClientRect();
-
-
-    const centerX =
-      rect.left +
-      rect.width / 2;
-
-    const centerY =
-      rect.top +
-      rect.height / 2;
-
-
-    const rotateY =
-      (event.clientX - centerX) /
-      rect.width * 5;
-
-
-    const rotateX =
-      -(event.clientY - centerY) /
-      rect.height * 5;
-
-
-    card.style.transform =
-      `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-
+  if(!menu.contains(e.target)){
+    document
+      .getElementById("dropdown")
+      .classList.remove("show");
   }
-);
 
+});
 
-document.addEventListener(
-  "mouseleave",
-  function(){
+document
+  .getElementById("email")
+  .addEventListener("keydown",function(e){
 
-    card.style.transform =
-      "rotateX(0deg) rotateY(0deg)";
+    if(e.key==="Enter"){
+      sendOTP();
+    }
 
-  }
-);
+  });
 
-
-/* =========================
-   TOUCH EFFECT
-========================= */
-
-document.addEventListener(
-  "touchmove",
-  function(event){
-
-    if(!event.touches[0])
-      return;
-
-
-    const touch =
-      event.touches[0];
-
-    const rect =
-      card.getBoundingClientRect();
-
-
-    const centerX =
-      rect.left +
-      rect.width / 2;
-
-    const centerY =
-      rect.top +
-      rect.height / 2;
-
-
-    const rotateY =
-      (touch.clientX - centerX) /
-      rect.width * 4;
-
-
-    const rotateX =
-      -(touch.clientY - centerY) /
-      rect.height * 4;
-
-
-    card.style.transform =
-      `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-
-  },
-  {
-    passive:true
-  }
-);
-
-
-document.addEventListener(
-  "touchend",
-  function(){
-
-    card.style.transform =
-      "rotateX(0deg) rotateY(0deg)";
-
-  }
-);
-
-
-/* =========================
-   START
-========================= */
-
-loadProfile();
+checkSession();
 
 </script>
 
-
 </body>
-
 </html>
