@@ -1,1257 +1,1120 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>RECX • Secure Login</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-:root{
-  --orange:#ff5a00;
-  --orange2:#ff9a3d;
-  --text:#171717;
-  --muted:#707070;
-  --glass:rgba(255,255,255,.72);
-}
-
-body{
-
-  min-height:100vh;
-
-  font-family:
-    Inter,
-    Arial,
-    sans-serif;
-
-  color:var(--text);
-
-  background:
-    radial-gradient(circle at 15% 15%,rgba(255,120,30,.22),transparent 30%),
-    radial-gradient(circle at 85% 25%,rgba(0,174,255,.16),transparent 28%),
-    radial-gradient(circle at 50% 90%,rgba(155,80,255,.13),transparent 32%),
-    linear-gradient(135deg,#f9fbff,#eef2f7);
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  padding:25px;
-
-  overflow-x:hidden;
-
-}
-
-
-/* =========================
-   FLOATING BACKGROUND
-========================= */
-
-.orb{
-
-  position:fixed;
-
-  border-radius:50%;
-
-  filter:blur(2px);
-
-  pointer-events:none;
-
-  opacity:.55;
-
-  animation:float 7s ease-in-out infinite;
-
-}
-
-.orb.one{
-
-  width:180px;
-  height:180px;
-
-  background:rgba(255,103,20,.16);
-
-  top:8%;
-  left:4%;
-
-}
-
-.orb.two{
-
-  width:130px;
-  height:130px;
-
-  background:rgba(0,153,255,.15);
-
-  right:7%;
-  bottom:12%;
-
-  animation-delay:1.5s;
-
-}
-
-.orb.three{
-
-  width:90px;
-  height:90px;
-
-  background:rgba(150,60,255,.13);
-
-  right:25%;
-  top:10%;
-
-  animation-delay:3s;
-
-}
-
-@keyframes float{
-
-  0%,100%{
-    transform:translateY(0) translateX(0);
-  }
-
-  50%{
-    transform:translateY(-22px) translateX(12px);
-  }
-
-}
-
-
-/* =========================
-   MAIN
-========================= */
-
-.container{
-
-  width:100%;
-  max-width:440px;
-
-  position:relative;
-
-  perspective:1200px;
-
-}
-
-
-/* =========================
-   BRAND
-========================= */
-
-.brand{
-
-  text-align:center;
-
-  margin-bottom:22px;
-
-  animation:brandIn .8s ease;
-
-}
-
-.brand h1{
-
-  font-size:34px;
-
-  font-weight:950;
-
-  letter-spacing:3px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #ff3d00,
-      #ff8a00,
-      #ff3d00
-    );
-
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-
-  filter:
-    drop-shadow(
-      0 5px 14px
-      rgba(255,90,0,.20)
-    );
-
-}
-
-.brand p{
-
-  margin-top:5px;
-
-  color:#777;
-
-  font-size:11px;
-
-  font-weight:800;
-
-  letter-spacing:3px;
-
-}
-
-@keyframes brandIn{
-
-  from{
-    opacity:0;
-    transform:translateY(-20px);
-  }
-
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-
-}
-
-
-/* =========================
-   3D CARD
-========================= */
-
-.card-wrap{
-
-  perspective:1200px;
-
-}
-
-.card{
-
-  position:relative;
-
-  padding:32px 27px 25px;
-
-  border-radius:28px;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,.88),
-      rgba(255,255,255,.58)
-    );
-
-  border:1px solid rgba(255,255,255,.9);
-
-  box-shadow:
-
-    0 28px 65px rgba(35,45,65,.16),
-
-    0 8px 20px rgba(255,90,0,.08),
-
-    inset 0 1px 0 rgba(255,255,255,.95);
-
-  backdrop-filter:blur(20px);
-
-  transform-style:preserve-3d;
-
-  transition:
-    transform .18s ease-out,
-    box-shadow .25s ease;
-
-  animation:
-    cardIn .9s cubic-bezier(.2,.8,.2,1);
-
-}
-
-.card:hover{
-
-  box-shadow:
-
-    0 38px 80px rgba(35,45,65,.20),
-
-    0 10px 28px rgba(255,90,0,.12),
-
-    inset 0 1px 0 white;
-
-}
-
-@keyframes cardIn{
-
-  from{
-
-    opacity:0;
-
-    transform:
-      translateY(45px)
-      rotateX(12deg)
-      scale(.94);
-
-  }
-
-  to{
-
-    opacity:1;
-
-    transform:
-      translateY(0)
-      rotateX(0)
-      scale(1);
-
-  }
-
-}
-
-
-/* =========================
-   CARD GLOW
-========================= */
-
-.card::before{
-
-  content:"";
-
-  position:absolute;
-
-  width:180px;
-  height:180px;
-
-  top:-80px;
-  right:-80px;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(255,110,20,.18),
-      transparent 70%
-    );
-
-  pointer-events:none;
-
-}
-
-.card::after{
-
-  content:"";
-
-  position:absolute;
-
-  width:130px;
-  height:130px;
-
-  bottom:-60px;
-  left:-50px;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(40,150,255,.10),
-      transparent 70%
-    );
-
-  pointer-events:none;
-
-}
-
-
-/* =========================
-   BADGE
-========================= */
-
-.badge{
-
-  display:inline-flex;
-
-  align-items:center;
-
-  gap:7px;
-
-  padding:7px 12px;
-
-  border-radius:50px;
-
-  background:
-    rgba(255,90,0,.08);
-
-  border:
-    1px solid rgba(255,90,0,.15);
-
-  color:#e74b00;
-
-  font-size:10px;
-
-  font-weight:900;
-
-  letter-spacing:1px;
-
-  margin-bottom:19px;
-
-}
-
-.dot{
-
-  width:7px;
-  height:7px;
-
-  border-radius:50%;
-
-  background:#22c55e;
-
-  box-shadow:
-    0 0 9px rgba(34,197,94,.7);
-
-}
-
-
-/* =========================
-   TITLE
-========================= */
-
-.card h2{
-
-  font-size:28px;
-
-  font-weight:950;
-
-  letter-spacing:-.7px;
-
-  margin-bottom:7px;
-
-}
-
-.subtitle{
-
-  color:var(--muted);
-
-  font-size:13px;
-
-  margin-bottom:25px;
-
-}
-
-
-/* =========================
-   INPUT
-========================= */
-
-label{
-
-  display:block;
-
-  font-size:12px;
-
-  font-weight:800;
-
-  color:#555;
-
-  margin-bottom:8px;
-
-}
-
-.input-box{
-
-  position:relative;
-
-}
-
-input{
-
-  width:100%;
-
-  height:52px;
-
-  padding:0 16px;
-
-  border-radius:15px;
-
-  border:1px solid #dfe3e8;
-
-  outline:none;
-
-  background:
-    rgba(255,255,255,.86);
-
-  color:#111;
-
-  font-size:14px;
-
-  font-weight:600;
-
-  transition:.25s;
-
-  box-shadow:
-    inset 0 2px 5px rgba(0,0,0,.025);
-
-}
-
-input::placeholder{
-
-  color:#a0a0a0;
-
-}
-
-input:focus{
-
-  border-color:#ff7a2a;
-
-  box-shadow:
-
-    0 0 0 4px
-    rgba(255,90,0,.09),
-
-    0 8px 20px
-    rgba(255,90,0,.08);
-
-  transform:translateY(-1px);
-
-}
-
-
-/* =========================
-   LOGIN BUTTON
-========================= */
-
-.login-btn{
-
-  width:100%;
-
-  height:54px;
-
-  margin-top:17px;
-
-  border:0;
-
-  border-radius:16px;
-
-  cursor:pointer;
-
-  color:white;
-
-  font-size:13px;
-
-  font-weight:950;
-
-  letter-spacing:1px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #ff3d00,
-      #ff7600,
-      #ff9a3d
-    );
-
-  box-shadow:
-
-    0 12px 25px
-    rgba(255,76,0,.24),
-
-    inset 0 1px 0
-    rgba(255,255,255,.35);
-
-  transition:.25s;
-
-}
-
-.login-btn:hover{
-
-  transform:
-    translateY(-3px)
-    scale(1.01);
-
-  box-shadow:
-
-    0 18px 32px
-    rgba(255,76,0,.30);
-
-}
-
-.login-btn:active{
-
-  transform:translateY(1px) scale(.99);
-
-}
-
-.login-btn:disabled{
-
-  opacity:.65;
-
-  cursor:not-allowed;
-
-  transform:none;
-
-}
-
-
-/* =========================
-   MESSAGE
-========================= */
-
-#message{
-
-  min-height:20px;
-
-  text-align:center;
-
-  margin-top:15px;
-
-  color:#e75a15;
-
-  font-size:12px;
-
-  font-weight:700;
-
-}
-
-
-/* =========================
-   SOCIAL SECTION
-========================= */
-
-.community{
-
-  margin-top:23px;
-
-  text-align:center;
-
-}
-
-.community-title{
-
-  font-size:11px;
-
-  color:#777;
-
-  font-weight:800;
-
-  letter-spacing:1.5px;
-
-  margin-bottom:12px;
-
-}
-
-.socials{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
-  gap:9px;
-
-}
-
-.social{
-
-  text-decoration:none;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  gap:6px;
-
-  height:43px;
-
-  border-radius:13px;
-
-  color:white;
-
-  font-size:10px;
-
-  font-weight:900;
-
-  transition:.25s;
-
-  box-shadow:
-    0 7px 15px rgba(0,0,0,.10);
-
-}
-
-.social svg{
-
-  width:17px;
-  height:17px;
-
-  fill:currentColor;
-
-}
-
-.social:hover{
-
-  transform:
-    translateY(-4px);
-
-  box-shadow:
-    0 12px 22px rgba(0,0,0,.16);
-
-}
-
-.telegram{
-
-  background:#2AABEE;
-
-}
-
-.whatsapp{
-
-  background:#25D366;
-
-}
-
-.youtube{
-
-  background:#FF0000;
-
-}
-
-
-/* =========================
-   FOOTER
-========================= */
-
-.footer{
-
-  text-align:center;
-
-  margin-top:21px;
-
-  color:#777;
-
-  font-size:10px;
-
-  font-weight:700;
-
-  letter-spacing:.5px;
-
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:520px){
-
-  body{
-
-    padding:18px;
-
-  }
-
-  .brand h1{
-
-    font-size:29px;
-
-  }
-
-  .card{
-
-    padding:27px 20px 22px;
-
-    border-radius:24px;
-
-  }
-
-  .card h2{
-
-    font-size:25px;
-
-  }
-
-  .social{
-
-    font-size:9px;
-
-  }
-
-}
-
-
-/* =========================
-   SMALL HEIGHT
-========================= */
-
-@media(max-height:700px){
-
-  body{
-
-    align-items:flex-start;
-
-    padding-top:20px;
-
-  }
-
-}
-
-</style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#05070d">
+  <meta name="description" content="RECX — Premium panels, keys and exclusive services.">
+  <title>RECX • Login</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    :root{
+      --bg:#03050a;
+      --card:rgba(9,14,25,.78);
+      --line:rgba(83,157,255,.18);
+      --blue:#19a7ff;
+      --cyan:#00e5ff;
+      --purple:#8b5cff;
+      --text:#f5f8ff;
+      --muted:#7f8da3;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      min-height:100vh;
+      color:var(--text);
+      font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;
+      background:
+        radial-gradient(
+          circle at 15% 10%,
+          rgba(0,174,255,.16),
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 85% 20%,
+          rgba(122,73,255,.16),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 50% 100%,
+          rgba(0,229,255,.08),
+          transparent 35%
+        ),
+        var(--bg);
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.32;
+      background-image:
+        linear-gradient(
+          rgba(255,255,255,.025) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,.025) 1px,
+          transparent 1px
+        );
+      background-size:44px 44px;
+      mask-image:linear-gradient(
+        to bottom,
+        black,
+        transparent 90%
+      );
+    }
+
+    .glow{
+      position:fixed;
+      width:360px;
+      height:360px;
+      border-radius:50%;
+      filter:blur(100px);
+      opacity:.12;
+      pointer-events:none;
+    }
+
+    .glow.one{
+      background:#008cff;
+      left:-160px;
+      top:20%;
+    }
+
+    .glow.two{
+      background:#7b2cff;
+      right:-180px;
+      bottom:5%;
+    }
+
+    /* =========================
+       HEADER
+       ========================= */
+
+    header{
+      width:100%;
+      padding:22px 5%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      position:relative;
+      z-index:20;
+    }
+
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:25px;
+      font-weight:900;
+      letter-spacing:1px;
+    }
+
+    .logo-mark{
+      width:38px;
+      height:38px;
+      display:grid;
+      place-items:center;
+      border-radius:12px;
+      background:
+        linear-gradient(
+          135deg,
+          #079dff,
+          #744cff
+        );
+      box-shadow:
+        0 0 28px
+        rgba(25,167,255,.35);
+    }
+
+    .logo span{
+      background:
+        linear-gradient(
+          90deg,
+          #fff,
+          #50c7ff,
+          #9b72ff
+        );
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .header-right{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .status{
+      padding:8px 12px;
+      border:1px solid rgba(0,229,255,.2);
+      border-radius:999px;
+      color:#8ddfff;
+      background:rgba(0,229,255,.05);
+      font-size:11px;
+      letter-spacing:1px;
+    }
+
+    /* =========================
+       THREE DOT ADMIN MENU
+       ========================= */
+
+    .admin-menu{
+      position:relative;
+      z-index:9999;
+    }
+
+    .dots-btn{
+      width:42px;
+      height:42px;
+      border-radius:13px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      color:#fff;
+      font-size:28px;
+      line-height:1;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      transition:.2s ease;
+    }
+
+    .dots-btn:hover{
+      background:rgba(25,167,255,.12);
+      border-color:rgba(25,167,255,.35);
+      transform:translateY(-1px);
+    }
+
+    .admin-dropdown{
+      position:absolute;
+      top:50px;
+      right:0;
+      min-width:175px;
+      padding:7px;
+      border:1px solid rgba(83,157,255,.20);
+      border-radius:14px;
+      background:rgba(8,13,24,.97);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+      box-shadow:
+        0 15px 40px rgba(0,0,0,.4);
+
+      opacity:0;
+      visibility:hidden;
+      transform:translateY(-6px);
+      transition:.2s ease;
+    }
+
+    .admin-dropdown.show{
+      opacity:1;
+      visibility:visible;
+      transform:translateY(0);
+    }
+
+    .admin-dropdown a{
+      display:block;
+      padding:12px 13px;
+      border-radius:10px;
+      color:#fff;
+      text-decoration:none;
+      font-size:13px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .admin-dropdown a:hover{
+      background:rgba(25,167,255,.12);
+      color:#67d3ff;
+    }
+
+    /* =========================
+       MAIN
+       ========================= */
+
+    main{
+      width:92%;
+      max-width:1180px;
+      margin:20px auto 55px;
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:26px;
+      align-items:stretch;
+    }
+
+    .hero,
+    .login-card{
+      border:1px solid var(--line);
+      background:
+        linear-gradient(
+          145deg,
+          rgba(11,18,32,.82),
+          rgba(5,8,15,.72)
+        );
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+      border-radius:28px;
+      box-shadow:
+        0 25px 80px rgba(0,0,0,.45),
+        inset 0 1px rgba(255,255,255,.04);
+    }
+
+    /* =========================
+       HERO
+       ========================= */
+
+    .hero{
+      min-height:610px;
+      padding:54px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      width:500px;
+      height:500px;
+      right:-230px;
+      top:-210px;
+      border-radius:50%;
+      border:1px solid rgba(40,174,255,.12);
+      box-shadow:
+        0 0 0 50px rgba(40,174,255,.025),
+        0 0 0 100px rgba(40,174,255,.018);
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      color:#79d7ff;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:2px;
+      margin-bottom:22px;
+    }
+
+    .dot{
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:#00e5ff;
+      box-shadow:0 0 14px #00e5ff;
+    }
+
+    h1{
+      max-width:680px;
+      font-size:clamp(45px,6vw,78px);
+      line-height:.96;
+      letter-spacing:-3px;
+    }
+
+    h1 .gradient{
+      display:block;
+      background:
+        linear-gradient(
+          90deg,
+          #16b7ff,
+          #5e8dff,
+          #a565ff
+        );
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      filter:
+        drop-shadow(
+          0 0 24px
+          rgba(25,167,255,.15)
+        );
+    }
+
+    .hero-text{
+      max-width:610px;
+      margin-top:25px;
+      color:#8e9caf;
+      font-size:16px;
+      line-height:1.7;
+    }
+
+    .feature-grid{
+      margin-top:38px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+    }
+
+    .feature{
+      padding:18px;
+      min-height:105px;
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:17px;
+      background:rgba(255,255,255,.025);
+    }
+
+    .feature-icon{
+      font-size:22px;
+      margin-bottom:10px;
+    }
+
+    .feature b{
+      display:block;
+      font-size:13px;
+    }
+
+    .feature small{
+      display:block;
+      margin-top:6px;
+      color:#68768b;
+      line-height:1.4;
+    }
+
+    .panel-preview{
+      margin-top:28px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .chip{
+      padding:10px 14px;
+      border-radius:10px;
+      color:#a9dfff;
+      border:1px solid rgba(25,167,255,.16);
+      background:rgba(25,167,255,.045);
+      font-size:12px;
+    }
+
+    /* =========================
+       LOGIN
+       ========================= */
+
+    .login-wrap{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:25px;
+    }
+
+    .login-card{
+      width:100%;
+      max-width:440px;
+      padding:35px;
+    }
+
+    .login-logo{
+      width:62px;
+      height:62px;
+      display:grid;
+      place-items:center;
+      margin:0 auto 18px;
+      border-radius:19px;
+      font-size:27px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(0,174,255,.16),
+          rgba(139,92,255,.18)
+        );
+      border:1px solid rgba(50,173,255,.2);
+      box-shadow:
+        0 0 35px
+        rgba(25,167,255,.12);
+    }
+
+    .login-card h2{
+      text-align:center;
+      font-size:27px;
+      margin-bottom:8px;
+    }
+
+    .subtitle{
+      text-align:center;
+      color:#738096;
+      font-size:13px;
+      line-height:1.6;
+      margin-bottom:27px;
+    }
+
+    label{
+      display:block;
+      color:#9aa8bc;
+      font-size:12px;
+      font-weight:700;
+      margin:0 0 8px 2px;
+    }
+
+    .input-box{
+      position:relative;
+    }
+
+    .input-box span{
+      position:absolute;
+      left:15px;
+      top:50%;
+      transform:translateY(-50%);
+      color:#55718e;
+      pointer-events:none;
+    }
+
+    input{
+      width:100%;
+      height:52px;
+      padding:0 15px 0 43px;
+      border-radius:13px;
+      border:1px solid rgba(255,255,255,.09);
+      outline:none;
+      color:#fff;
+      background:rgba(0,0,0,.24);
+      transition:.25s ease;
+      font-size:14px;
+    }
+
+    input:focus{
+      border-color:rgba(25,167,255,.7);
+      box-shadow:
+        0 0 0 4px rgba(25,167,255,.08),
+        0 0 25px rgba(25,167,255,.08);
+    }
+
+    .primary{
+      width:100%;
+      height:53px;
+      margin-top:18px;
+      border:0;
+      border-radius:13px;
+      color:#fff;
+      font-weight:900;
+      letter-spacing:.4px;
+      cursor:pointer;
+      background:
+        linear-gradient(
+          100deg,
+          #008dff,
+          #625dff,
+          #9a4dff
+        );
+      box-shadow:
+        0 12px 35px
+        rgba(71,93,255,.24);
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        opacity .2s ease;
+    }
+
+    .primary:hover{
+      transform:translateY(-2px);
+      box-shadow:
+        0 16px 42px
+        rgba(71,93,255,.34);
+    }
+
+    .primary:disabled{
+      opacity:.55;
+      cursor:not-allowed;
+      transform:none;
+    }
+
+    #message{
+      min-height:21px;
+      margin-top:15px;
+      text-align:center;
+      color:#77d9ff;
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    .secure-note{
+      margin-top:23px;
+      padding:13px;
+      border-radius:12px;
+      text-align:center;
+      color:#65758b;
+      font-size:11px;
+      border:1px solid rgba(255,255,255,.06);
+      background:rgba(255,255,255,.02);
+    }
+
+    .secure-note strong{
+      color:#91a7c1;
+    }
+
+    /* =========================
+       FOOTER
+       ========================= */
+
+    footer{
+      width:92%;
+      max-width:1180px;
+      margin:0 auto 28px;
+      padding-top:20px;
+      border-top:1px solid rgba(255,255,255,.06);
+      display:flex;
+      justify-content:space-between;
+      gap:15px;
+      color:#536074;
+      font-size:11px;
+    }
+
+    .footer-right{
+      color:#6c7b90;
+    }
+
+    /* =========================
+       RESPONSIVE
+       ========================= */
+
+    @media(max-width:900px){
+
+      main{
+        grid-template-columns:1fr;
+      }
+
+      .hero{
+        min-height:auto;
+      }
+
+      .login-wrap{
+        padding:0;
+      }
+    }
+
+    @media(max-width:600px){
+
+      header{
+        padding:18px 4%;
+      }
+
+      .status{
+        display:none;
+      }
+
+      main{
+        width:94%;
+        margin-top:5px;
+      }
+
+      .hero{
+        padding:30px 22px;
+        border-radius:22px;
+      }
+
+      h1{
+        font-size:46px;
+        letter-spacing:-2px;
+      }
+
+      .hero-text{
+        font-size:14px;
+      }
+
+      .feature-grid{
+        grid-template-columns:1fr;
+      }
+
+      .feature{
+        min-height:auto;
+      }
+
+      .login-card{
+        padding:27px 21px;
+        border-radius:22px;
+      }
+
+      footer{
+        width:94%;
+        flex-direction:column;
+        text-align:center;
+      }
+    }
+  </style>
 </head>
-
 
 <body>
 
+  <div class="glow one"></div>
+  <div class="glow two"></div>
 
-<div class="orb one"></div>
-<div class="orb two"></div>
-<div class="orb three"></div>
+  <!-- =========================
+       HEADER
+       ========================= -->
 
+  <header>
 
-<div class="container">
+    <div class="logo">
+      <div class="logo-mark">⚡</div>
+      <span>RECX</span>
+    </div>
 
+    <div class="header-right">
 
-  <div class="brand">
+      <div class="status">
+        ● SYSTEM ONLINE
+      </div>
 
-    <h1>⚡ RECX</h1>
+      <!-- THREE DOT MENU -->
 
-    <p>PRIVATE • SECURE • VERIFIED</p>
+      <div class="admin-menu">
 
-  </div>
+        <button
+          class="dots-btn"
+          id="dotsButton"
+          onclick="toggleAdminMenu()"
+          aria-label="Menu">
+          ⋮
+        </button>
 
+        <div
+          id="adminDropdown"
+          class="admin-dropdown">
 
-  <div class="card-wrap">
+          <a href="admin.html">
+            👑 Admin Login
+          </a>
 
-
-    <div class="card" id="tiltCard">
-
-
-      <div class="badge">
-
-        <span class="dot"></span>
-
-        SECURE ACCESS
+        </div>
 
       </div>
 
+    </div>
 
-      <h2>
-        Welcome Back
-      </h2>
+  </header>
 
 
-      <p class="subtitle">
+  <!-- =========================
+       MAIN
+       ========================= -->
 
-        Login to continue to your private RECX space.
+  <main>
 
+    <section class="hero">
+
+      <div class="eyebrow">
+        <span class="dot"></span>
+        PREMIUM ACCESS PLATFORM
+      </div>
+
+      <h1>
+        Welcome to
+        <span class="gradient">
+          RECX.
+        </span>
+      </h1>
+
+      <p class="hero-text">
+        Your private destination for premium panels,
+        keys and exclusive services. Sign in securely
+        to access your dashboard and manage your
+        RECX account.
       </p>
 
 
-      <label for="email">
+      <div class="feature-grid">
 
-        Email Address
+        <div class="feature">
 
-      </label>
+          <div class="feature-icon">
+            🔐
+          </div>
+
+          <b>
+            Secure Access
+          </b>
+
+          <small>
+            Protected authentication through your
+            RECX account.
+          </small>
+
+        </div>
 
 
-      <div class="input-box">
+        <div class="feature">
 
-        <input
+          <div class="feature-icon">
+            ⚡
+          </div>
 
-          id="email"
+          <b>
+            Fast Delivery
+          </b>
 
-          type="email"
+          <small>
+            Access your purchased services from
+            one dashboard.
+          </small>
 
-          placeholder="Enter your email"
+        </div>
 
-          autocomplete="email"
 
-        >
+        <div class="feature">
+
+          <div class="feature-icon">
+            🛡️
+          </div>
+
+          <b>
+            Verified
+          </b>
+
+          <small>
+            Built around a simple and transparent
+            purchase flow.
+          </small>
+
+        </div>
 
       </div>
 
 
-      <button
-        class="login-btn"
-        id="loginButton"
-        onclick="sendOTP()">
+      <div class="panel-preview">
 
-        SEND LOGIN LINK
+        <div class="chip">
+          ⚡ RECX BASIC
+        </div>
 
-      </button>
+        <div class="chip">
+          👑 RECX PRO
+        </div>
+
+        <div class="chip">
+          💎 RECX ULTRA
+        </div>
+
+      </div>
+
+    </section>
 
 
-      <p id="message"></p>
+    <!-- LOGIN -->
+
+    <section class="login-wrap">
+
+      <div class="login-card">
+
+        <div class="login-logo">
+          ⚡
+        </div>
+
+        <h2>
+          Sign in to RECX
+        </h2>
+
+        <p class="subtitle">
+          Enter your email and we'll send you
+          a secure login link.
+        </p>
 
 
+        <label for="email">
+          EMAIL ADDRESS
+        </label>
+
+
+        <div class="input-box">
+
+          <span>
+            ✉
+          </span>
+
+          <input
+            id="email"
+            type="email"
+            placeholder="you@example.com"
+            autocomplete="email"
+            inputmode="email"
+          >
+
+        </div>
+
+
+        <button
+          class="primary"
+          id="loginButton"
+          onclick="sendOTP()">
+
+          SEND SECURE LOGIN LINK
+
+        </button>
+
+
+        <p id="message"></p>
+
+
+        <div class="secure-note">
+
+          🔒
+          <strong>
+            Secure & Private
+          </strong>
+
+          <br>
+
+          Your login is handled by
+          Supabase authentication.
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+       ========================= -->
+
+  <footer>
+
+    <div>
+      © 2026 RECX • Premium Access Platform
     </div>
 
-  </div>
-
-
-  <div class="community">
-
-
-    <div class="community-title">
-
-      JOIN OUR COMMUNITY
-
+    <div class="footer-right">
+      SECURE • PRIVATE • VERIFIED
     </div>
 
+  </footer>
 
-    <div class="socials">
 
+  <script>
 
-      <a
-        class="social telegram"
-        href="https://t.me/panalstoreff"
-        target="_blank"
-        rel="noopener">
+    /* =========================================
+       SUPABASE CONFIGURATION
+       ========================================= */
 
-        <svg viewBox="0 0 24 24">
+    const SUPABASE_URL =
+      "https://asdbxlnttlsuhhnqeywa.supabase.co";
 
-          <path d="M21.9 3.2 18.6 20c-.25 1.18-.91 1.47-1.85.92l-5.08-3.74-2.45 2.36c-.27.27-.5.5-1.02.5l.37-5.18 9.43-8.52c.41-.37-.09-.58-.64-.21L5.7 13.44.67 11.87c-1.1-.34-1.12-1.1.23-1.63L20.55 2.7c.91-.34 1.7.21 1.35.5z"/>
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_GIzm11dFWDJmu9cQGAJy_w_432UbSU5";
 
-        </svg>
+    const REDIRECT_URL =
+      "https://ranjanrishi315-a11y.github.io/rishi-x/";
 
-        Telegram
 
-      </a>
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
 
 
-      <a
-        class="social whatsapp"
-        href="https://whatsapp.com/channel/0029VbDyKyj0VycFxIRkAf2p"
-        target="_blank"
-        rel="noopener">
+    /* =========================================
+       MESSAGE
+       ========================================= */
 
-        <svg viewBox="0 0 24 24">
+    function showMessage(text){
 
-          <path d="M12.04 2A9.94 9.94 0 0 0 2.1 11.94c0 1.75.46 3.46 1.33 4.96L2 22l5.25-1.38a9.94 9.94 0 0 0 4.79 1.22h.01A9.94 9.94 0 1 0 12.04 2zm0 18.18a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.11.82.83-3.03-.2-.31a8.2 8.2 0 1 1 6.96 3.85zm4.5-6.15c-.25-.13-1.48-.73-1.71-.81-.23-.08-.4-.13-.57.13-.17.25-.65.81-.8.98-.15.17-.29.19-.54.06-.25-.13-1.04-.38-1.98-1.22-.73-.65-1.22-1.45-1.36-1.69-.14-.25-.01-.38.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.57-1.37-.78-1.88-.2-.49-.41-.42-.57-.43h-.49c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.08s.89 2.41 1.02 2.58c.13.17 1.75 2.68 4.24 3.75.59.25 1.05.4 1.41.51.59.19 1.13.16 1.56.1.48-.07 1.48-.61 1.69-1.19.21-.59.21-1.09.15-1.19-.06-.1-.23-.15-.48-.27z"/>
+      document.getElementById(
+        "message"
+      ).textContent = text;
 
-        </svg>
+    }
 
-        WhatsApp
 
-      </a>
+    /* =========================================
+       USER LOGIN
+       ========================================= */
 
+    async function sendOTP(){
 
-      <a
-        class="social youtube"
-        href="https://youtube.com/@recxpanal-te6os?si=wEXVJ6vGkDRTCCRt"
-        target="_blank"
-        rel="noopener">
+      const email =
+        document
+          .getElementById("email")
+          .value
+          .trim();
 
-        <svg viewBox="0 0 24 24">
+      const button =
+        document.getElementById(
+          "loginButton"
+        );
 
-          <path d="M23.5 6.2a3 3 0 0 0-2.1-2.12C19.55 3.5 12 3.5 12 3.5s-7.55 0-9.4.58A3 3 0 0 0 .5 6.2 31.7 31.7 0 0 0 0 12a31.7 31.7 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.12c1.85.58 9.4.58 9.4.58s7.55 0 9.4-.58a3 3 0 0 0 2.1-2.12A31.7 31.7 0 0 0 24 12a31.7 31.7 0 0 0-.5-5.8zM9.6 15.5v-7l6.3 3.5-6.3 3.5z"/>
 
-        </svg>
+      if(!email){
 
-        YouTube
+        showMessage(
+          "Please enter your email address."
+        );
 
-      </a>
+        return;
+      }
 
 
-    </div>
+      if(!email.includes("@")){
 
-  </div>
+        showMessage(
+          "Please enter a valid email address."
+        );
 
+        return;
+      }
 
-  <div class="footer">
 
-    Powered by Rishi X &amp; Shiva
+      button.disabled = true;
 
-  </div>
+      button.textContent =
+        "SENDING LOGIN LINK...";
 
+      showMessage(
+        "Connecting securely..."
+      );
 
-</div>
 
+      const { error } =
+        await supabaseClient.auth.signInWithOtp({
 
-<script>
+          email:email,
 
-/* =========================
-   SUPABASE
-========================= */
+          options:{
+            emailRedirectTo:REDIRECT_URL
+          }
 
-const SUPABASE_URL =
-  "https://asdbxlnttlsuhhnqeywa.supabase.co";
+        });
 
-const SUPABASE_PUBLISHABLE_KEY =
-  "sb_publishable_GIzm11dFWDJmu9cQGAJy_w_432UbSU5";
 
-const REDIRECT_URL =
-  "https://ranjanrishi315-a11y.github.io/rishi-x/";
+      if(error){
 
+        button.disabled = false;
 
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-  );
+        button.textContent =
+          "SEND SECURE LOGIN LINK";
 
+        showMessage(
+          "Error: " + error.message
+        );
 
-/* =========================
-   MESSAGE
-========================= */
+        return;
+      }
 
-function showMessage(text){
 
-  document.getElementById(
-    "message"
-  ).textContent = text;
+      button.textContent =
+        "LOGIN LINK SENT ✓";
 
-}
+      showMessage(
+        "Check your email for the secure login link."
+      );
 
+    }
 
-/* =========================
-   SEND LOGIN LINK
-========================= */
 
-async function sendOTP(){
+    /* =========================================
+       CHECK USER SESSION
+       ========================================= */
 
-  const email =
-    document
-      .getElementById("email")
-      .value
-      .trim();
+    async function checkSession(){
 
-  const button =
-    document.getElementById(
-      "loginButton"
-    );
+      const { data } =
+        await supabaseClient.auth.getSession();
 
 
-  if(!email){
+      if(data.session){
 
-    showMessage(
-      "Please enter your email."
-    );
-
-    return;
-
-  }
-
-
-  button.disabled = true;
-
-  button.textContent =
-    "SENDING...";
-
-  showMessage(
-    "Sending secure login link..."
-  );
-
-
-  const {error} =
-    await supabaseClient.auth
-      .signInWithOtp({
-
-        email:email,
-
-        options:{
-          emailRedirectTo:
-            REDIRECT_URL
-        }
-
-      });
-
-
-  if(error){
-
-    button.disabled = false;
-
-    button.textContent =
-      "SEND LOGIN LINK";
-
-    showMessage(
-      "Error: " +
-      error.message
-    );
-
-    return;
-
-  }
-
-
-  button.textContent =
-    "LINK SENT ✓";
-
-  showMessage(
-    "Login link sent! Check your email."
-  );
-
-
-  setTimeout(()=>{
-
-    button.disabled = false;
-
-    button.textContent =
-      "SEND LOGIN LINK";
-
-  },5000);
-
-}
-
-
-/* =========================
-   CHECK SESSION
-========================= */
-
-async function checkSession(){
-
-  const {data,error} =
-    await supabaseClient.auth
-      .getSession();
-
-
-  if(error){
-
-    console.error(error);
-
-    return;
-
-  }
-
-
-  if(data.session){
-
-    window.location.href =
-      "dashboard-new.html";
-
-  }
-
-}
-
-
-checkSession();
-
-
-/* =========================
-   3D CARD — MOUSE
-========================= */
-
-const card =
-  document.getElementById(
-    "tiltCard"
-  );
-
-
-function tilt(x,y){
-
-  card.style.transform =
-    `rotateX(${y}deg) rotateY(${x}deg)`;
-
-}
-
-
-document.addEventListener(
-  "mousemove",
-  function(e){
-
-    const rect =
-      card.getBoundingClientRect();
-
-    const centerX =
-      rect.left +
-      rect.width / 2;
-
-    const centerY =
-      rect.top +
-      rect.height / 2;
-
-    const rotateY =
-      (e.clientX-centerX) /
-      rect.width * 10;
-
-    const rotateX =
-      -(e.clientY-centerY) /
-      rect.height * 10;
-
-    tilt(
-      rotateY,
-      rotateX
-    );
-
-  }
-);
-
-
-document.addEventListener(
-  "mouseleave",
-  function(){
-
-    card.style.transform =
-      "rotateX(0deg) rotateY(0deg)";
-
-  }
-);
-
-
-/* =========================
-   3D CARD — TOUCH
-========================= */
-
-document.addEventListener(
-  "touchmove",
-  function(e){
-
-    if(!e.touches[0])
-      return;
-
-    const touch =
-      e.touches[0];
-
-    const rect =
-      card.getBoundingClientRect();
-
-    const centerX =
-      rect.left +
-      rect.width/2;
-
-    const centerY =
-      rect.top +
-      rect.height/2;
-
-    const rotateY =
-      (touch.clientX-centerX) /
-      rect.width * 8;
-
-    const rotateX =
-      -(touch.clientY-centerY) /
-      rect.height * 8;
-
-    tilt(
-      rotateY,
-      rotateX
-    );
-
-  },
-  {passive:true}
-);
-
-
-document.addEventListener(
-  "touchend",
-  function(){
-
-    card.style.transform =
-      "rotateX(0deg) rotateY(0deg)";
-
-  }
-);
-
-
-/* =========================
-   ENTER KEY
-========================= */
-
-document
-  .getElementById("email")
-  .addEventListener(
-    "keydown",
-    function(event){
-
-      if(event.key === "Enter"){
-
-        sendOTP();
+        window.location.href =
+          "dashboard-new.html";
 
       }
 
     }
-  );
 
-</script>
 
+    /* =========================================
+       ENTER KEY LOGIN
+       ========================================= */
+
+    document
+      .getElementById("email")
+      .addEventListener(
+        "keydown",
+        function(event){
+
+          if(event.key === "Enter"){
+
+            sendOTP();
+
+          }
+
+        }
+      );
+
+
+    /* =========================================
+       THREE DOT MENU
+       ========================================= */
+
+    function toggleAdminMenu(){
+
+      const dropdown =
+        document.getElementById(
+          "adminDropdown"
+        );
+
+      dropdown.classList.toggle(
+        "show"
+      );
+
+    }
+
+
+    /* =========================================
+       CLOSE MENU WHEN CLICKING OUTSIDE
+       ========================================= */
+
+    document.addEventListener(
+      "click",
+      function(event){
+
+        const menu =
+          document.querySelector(
+            ".admin-menu"
+          );
+
+        const dropdown =
+          document.getElementById(
+            "adminDropdown"
+          );
+
+
+        if(
+          menu &&
+          !menu.contains(event.target)
+        ){
+
+          dropdown.classList.remove(
+            "show"
+          );
+
+        }
+
+      }
+    );
+
+
+    /* =========================================
+       START
+       ========================================= */
+
+    checkSession();
+
+  </script>
 
 </body>
-
 </html>
