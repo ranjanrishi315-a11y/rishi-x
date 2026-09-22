@@ -16,47 +16,112 @@
 
 body{
   min-height:100vh;
-  font-family:Arial,sans-serif;
-  background:#f5f7fb;
+  font-family:Arial, sans-serif;
+  background:
+    radial-gradient(circle at 50% 20%,#dcecff 0%,#f5f8fc 35%,#eef2f7 100%);
   color:#111827;
   display:flex;
   align-items:center;
   justify-content:center;
+  overflow:hidden;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  width:500px;
+  height:500px;
+  border-radius:50%;
+  background:#ffffff;
+  filter:blur(80px);
+  opacity:.75;
+  top:-180px;
+  left:-150px;
+}
+
+body:after{
+  content:"";
+  position:fixed;
+  width:450px;
+  height:450px;
+  border-radius:50%;
+  background:#c8e3ff;
+  filter:blur(100px);
+  opacity:.6;
+  right:-180px;
+  bottom:-180px;
 }
 
 .container{
   width:100%;
-  max-width:420px;
+  max-width:430px;
   padding:20px;
+  position:relative;
+  z-index:2;
 }
+
+/* 3D LOGO */
+
+.brand{
+  text-align:center;
+  margin-bottom:28px;
+  perspective:700px;
+}
+
+.brand h1{
+  font-size:58px;
+  font-weight:1000;
+  letter-spacing:8px;
+  color:#ffffff;
+  text-shadow:
+    0 2px 0 #d7dce4,
+    0 4px 0 #bcc4cf,
+    0 7px 12px rgba(0,0,0,.22),
+    0 12px 28px rgba(37,99,235,.20);
+  transform:rotateX(8deg);
+}
+
+.brand-line{
+  width:80px;
+  height:4px;
+  margin:10px auto 0;
+  border-radius:10px;
+  background:linear-gradient(90deg,#2563eb,#60a5fa);
+  box-shadow:0 4px 12px rgba(37,99,235,.25);
+}
+
+/* MENU */
 
 .menu{
   position:fixed;
   top:18px;
   right:18px;
+  z-index:20;
 }
 
 .dots{
   width:38px;
   height:38px;
-  border:1px solid #ddd;
-  border-radius:10px;
-  background:white;
+  border:1px solid #d7dde7;
+  border-radius:11px;
+  background:rgba(255,255,255,.8);
+  color:#111827;
   font-size:24px;
   cursor:pointer;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
 }
 
 .dropdown{
   display:none;
   position:absolute;
   right:0;
-  top:45px;
-  width:150px;
+  top:46px;
+  width:155px;
   background:white;
-  border:1px solid #ddd;
-  border-radius:10px;
-  box-shadow:0 8px 25px rgba(0,0,0,.12);
-  overflow:hidden;
+  border:1px solid #e1e6ee;
+  border-radius:12px;
+  padding:5px;
+  box-shadow:0 12px 30px rgba(0,0,0,.15);
 }
 
 .dropdown.show{
@@ -66,99 +131,132 @@ body{
 .dropdown a{
   display:block;
   padding:12px;
+  border-radius:8px;
   text-decoration:none;
-  color:#111;
-  font-size:14px;
+  color:#111827;
+  font-size:13px;
+  font-weight:bold;
 }
 
 .dropdown a:hover{
   background:#f1f5f9;
 }
 
-.logo{
-  text-align:center;
-  font-size:34px;
-  font-weight:900;
-  margin-bottom:8px;
-  color:#111827;
-}
-
-.subtitle{
-  text-align:center;
-  color:#6b7280;
-  font-size:14px;
-  margin-bottom:28px;
-}
+/* CARD */
 
 .card{
-  background:white;
-  border:1px solid #e5e7eb;
-  border-radius:18px;
-  padding:28px;
-  box-shadow:0 10px 35px rgba(0,0,0,.07);
+  background:rgba(255,255,255,.88);
+  border:1px solid rgba(255,255,255,.95);
+  border-radius:24px;
+  padding:32px;
+  box-shadow:
+    0 25px 60px rgba(30,55,90,.16),
+    0 8px 18px rgba(30,55,90,.08),
+    inset 0 1px 0 white;
+  transform:perspective(1000px) rotateX(1deg);
 }
 
 .card h2{
   text-align:center;
-  margin-bottom:8px;
+  font-size:25px;
+  font-weight:900;
+  color:#111827;
+  margin-bottom:7px;
 }
 
 .card p{
   text-align:center;
   color:#6b7280;
   font-size:13px;
-  margin-bottom:22px;
+  margin-bottom:25px;
 }
 
 label{
   display:block;
-  font-size:12px;
-  font-weight:bold;
-  margin-bottom:7px;
+  font-size:11px;
+  font-weight:900;
+  color:#374151;
+  margin-bottom:8px;
+  letter-spacing:.5px;
 }
 
 input{
   width:100%;
-  height:50px;
-  border:1px solid #d1d5db;
-  border-radius:10px;
-  padding:0 14px;
+  height:52px;
+  border:1px solid #d7dde6;
+  border-radius:12px;
+  padding:0 15px;
   font-size:14px;
+  color:#111827;
+  background:#fff;
   outline:none;
+  box-shadow:
+    inset 0 2px 5px rgba(0,0,0,.04);
+  transition:.2s;
 }
 
 input:focus{
-  border-color:#2563eb;
+  border-color:#60a5fa;
+  box-shadow:
+    0 0 0 4px rgba(37,99,235,.08),
+    inset 0 2px 5px rgba(0,0,0,.04);
 }
 
-button.login{
+/* LOGIN BUTTON */
+
+.login{
   width:100%;
-  height:50px;
-  margin-top:15px;
+  height:52px;
+  margin-top:16px;
   border:0;
-  border-radius:10px;
-  background:#2563eb;
+  border-radius:12px;
   color:white;
-  font-weight:bold;
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.4px;
   cursor:pointer;
+  background:linear-gradient(
+    135deg,
+    #2563eb,
+    #3b82f6,
+    #60a5fa
+  );
+  box-shadow:
+    0 8px 0 #1747a3,
+    0 14px 25px rgba(37,99,235,.28);
+  transition:.15s;
 }
 
-button.login:disabled{
+.login:hover{
+  transform:translateY(-2px);
+}
+
+.login:active{
+  transform:translateY(5px);
+  box-shadow:
+    0 3px 0 #1747a3,
+    0 7px 15px rgba(37,99,235,.2);
+}
+
+.login:disabled{
   opacity:.6;
+  cursor:not-allowed;
 }
 
 #message{
+  min-height:20px;
   text-align:center;
   margin-top:15px;
-  font-size:13px;
+  font-size:12px;
   color:#2563eb;
-  min-height:18px;
 }
+
+/* SOCIAL */
 
 .social{
   display:flex;
   gap:8px;
-  margin-top:20px;
+  margin-top:18px;
 }
 
 .social a{
@@ -166,10 +264,12 @@ button.login:disabled{
   text-align:center;
   text-decoration:none;
   color:white;
-  padding:11px 5px;
-  border-radius:9px;
+  padding:11px 4px;
+  border-radius:10px;
   font-size:11px;
   font-weight:bold;
+  box-shadow:
+    0 5px 12px rgba(0,0,0,.12);
 }
 
 .telegram{
@@ -186,9 +286,21 @@ button.login:disabled{
 
 footer{
   text-align:center;
-  margin-top:22px;
-  color:#777;
+  margin-top:20px;
+  color:#7b8491;
   font-size:11px;
+}
+
+@media(max-width:500px){
+
+  .brand h1{
+    font-size:48px;
+    letter-spacing:6px;
+  }
+
+  .card{
+    padding:26px 21px;
+  }
 }
 </style>
 </head>
@@ -196,28 +308,48 @@ footer{
 <body>
 
 <div class="menu">
-  <button class="dots" onclick="toggleMenu()">⋮</button>
 
-  <div class="dropdown" id="dropdown">
-    <a href="admin.html">👑 Admin Login</a>
+  <button
+    class="dots"
+    onclick="toggleMenu()">
+    ⋮
+  </button>
+
+  <div
+    class="dropdown"
+    id="dropdown">
+
+    <a href="admin.html">
+      Admin Login
+    </a>
+
   </div>
+
 </div>
+
 
 <div class="container">
 
-  <div class="logo">⚡ RECX</div>
+  <div class="brand">
 
-  <div class="subtitle">
-    Secure • Private • Verified
+    <h1>RECX</h1>
+
+    <div class="brand-line"></div>
+
   </div>
+
 
   <div class="card">
 
     <h2>Welcome Back</h2>
 
-    <p>Login with your email</p>
+    <p>
+      Login securely using your email
+    </p>
 
-    <label>Email Address</label>
+    <label>
+      EMAIL ADDRESS
+    </label>
 
     <input
       id="email"
@@ -229,13 +361,16 @@ footer{
     <button
       class="login"
       id="loginButton"
-      onclick="sendOTP()">
+      onclick="sendLoginLink()">
+
       SEND LOGIN LINK
+
     </button>
 
     <div id="message"></div>
 
   </div>
+
 
   <div class="social">
 
@@ -262,11 +397,13 @@ footer{
 
   </div>
 
+
   <footer>
     Powered by Rishi X & Shiva
   </footer>
 
 </div>
+
 
 <script>
 
@@ -285,10 +422,13 @@ window.supabase.createClient(
   SUPABASE_PUBLISHABLE_KEY
 );
 
-async function sendOTP(){
+
+async function sendLoginLink(){
 
   const email =
-    document.getElementById("email").value.trim();
+    document.getElementById("email")
+    .value
+    .trim();
 
   const button =
     document.getElementById("loginButton");
@@ -296,37 +436,58 @@ async function sendOTP(){
   const message =
     document.getElementById("message");
 
+
   if(!email){
-    message.textContent="Enter your email.";
+
+    message.textContent =
+      "Please enter your email.";
+
     return;
   }
 
+
   button.disabled=true;
-  button.textContent="SENDING...";
+
+  button.textContent=
+    "SENDING...";
+
   message.textContent="";
+
 
   const {error} =
     await supabaseClient.auth.signInWithOtp({
+
       email:email,
+
       options:{
         emailRedirectTo:REDIRECT_URL
       }
+
     });
+
 
   if(error){
 
     button.disabled=false;
-    button.textContent="SEND LOGIN LINK";
-    message.textContent=error.message;
-    return;
 
+    button.textContent=
+      "SEND LOGIN LINK";
+
+    message.textContent=
+      error.message;
+
+    return;
   }
 
-  button.textContent="LINK SENT ✓";
+
+  button.textContent=
+    "LOGIN LINK SENT ✓";
+
   message.textContent=
     "Check your email for the login link.";
 
 }
+
 
 async function checkSession(){
 
@@ -334,10 +495,14 @@ async function checkSession(){
     await supabaseClient.auth.getSession();
 
   if(data.session){
-    window.location.href="dashboard-new.html";
+
+    window.location.href=
+      "dashboard-new.html";
+
   }
 
 }
+
 
 function toggleMenu(){
 
@@ -347,28 +512,39 @@ function toggleMenu(){
 
 }
 
-document.addEventListener("click",function(e){
 
-  const menu =
-    document.querySelector(".menu");
+document.addEventListener(
+  "click",
+  function(e){
 
-  if(!menu.contains(e.target)){
-    document
-      .getElementById("dropdown")
-      .classList.remove("show");
+    const menu =
+      document.querySelector(".menu");
+
+    if(!menu.contains(e.target)){
+
+      document
+        .getElementById("dropdown")
+        .classList.remove("show");
+
+    }
+
   }
+);
 
-});
 
 document
   .getElementById("email")
-  .addEventListener("keydown",function(e){
+  .addEventListener(
+    "keydown",
+    function(e){
 
-    if(e.key==="Enter"){
-      sendOTP();
+      if(e.key==="Enter"){
+        sendLoginLink();
+      }
+
     }
+  );
 
-  });
 
 checkSession();
 
