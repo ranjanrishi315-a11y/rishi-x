@@ -2,548 +2,803 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>RECX • Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>RECX • Login</title>
 
 <style>
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
 body{
-  min-height:100vh;
-  font-family:Arial, sans-serif;
-  background:
-    radial-gradient(circle at 50% 20%,#dcecff 0%,#f5f8fc 35%,#eef2f7 100%);
-  color:#111827;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
+    min-height:100vh;
+    font-family:Arial, Helvetica, sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(91,141,255,.18), transparent 32%),
+        radial-gradient(circle at 80% 75%, rgba(167,92,255,.15), transparent 32%),
+        linear-gradient(135deg,#f8fbff,#eef3fa);
+    color:#172033;
 }
 
-body:before{
-  content:"";
-  position:fixed;
-  width:500px;
-  height:500px;
-  border-radius:50%;
-  background:#ffffff;
-  filter:blur(80px);
-  opacity:.75;
-  top:-180px;
-  left:-150px;
+/* =========================
+   3 DOT ADMIN MENU
+========================= */
+
+.menu-box{
+    position:fixed;
+    top:22px;
+    right:22px;
+    z-index:1000;
 }
 
-body:after{
-  content:"";
-  position:fixed;
-  width:450px;
-  height:450px;
-  border-radius:50%;
-  background:#c8e3ff;
-  filter:blur(100px);
-  opacity:.6;
-  right:-180px;
-  bottom:-180px;
+.menu-btn{
+    width:44px;
+    height:44px;
+    border:none;
+    border-radius:14px;
+    background:rgba(255,255,255,.75);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    box-shadow:
+        0 8px 25px rgba(30,50,90,.12),
+        inset 0 1px 0 rgba(255,255,255,.9);
+    font-size:25px;
+    font-weight:bold;
+    color:#27334a;
+    cursor:pointer;
+    transition:.25s ease;
 }
 
-.container{
-  width:100%;
-  max-width:430px;
-  padding:20px;
-  position:relative;
-  z-index:2;
+.menu-btn:hover{
+    transform:translateY(-2px) scale(1.04);
+    box-shadow:0 12px 30px rgba(60,90,150,.20);
 }
 
-/* 3D LOGO */
-
-.brand{
-  text-align:center;
-  margin-bottom:28px;
-  perspective:700px;
+.menu-dropdown{
+    position:absolute;
+    top:53px;
+    right:0;
+    width:175px;
+    padding:8px;
+    border-radius:16px;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    box-shadow:
+        0 18px 45px rgba(25,40,80,.18),
+        inset 0 1px 0 rgba(255,255,255,.95);
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(-8px) scale(.96);
+    transition:.22s ease;
 }
 
-.brand h1{
-  font-size:58px;
-  font-weight:1000;
-  letter-spacing:8px;
-  color:#ffffff;
-  text-shadow:
-    0 2px 0 #d7dce4,
-    0 4px 0 #bcc4cf,
-    0 7px 12px rgba(0,0,0,.22),
-    0 12px 28px rgba(37,99,235,.20);
-  transform:rotateX(8deg);
+.menu-dropdown.show{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0) scale(1);
 }
 
-.brand-line{
-  width:80px;
-  height:4px;
-  margin:10px auto 0;
-  border-radius:10px;
-  background:linear-gradient(90deg,#2563eb,#60a5fa);
-  box-shadow:0 4px 12px rgba(37,99,235,.25);
+.menu-dropdown a{
+    display:block;
+    text-decoration:none;
+    color:#202b40;
+    font-size:14px;
+    font-weight:700;
+    padding:12px 13px;
+    border-radius:11px;
+    transition:.2s ease;
 }
 
-/* MENU */
-
-.menu{
-  position:fixed;
-  top:18px;
-  right:18px;
-  z-index:20;
+.menu-dropdown a:hover{
+    background:#edf3ff;
+    color:#4778e8;
 }
 
-.dots{
-  width:38px;
-  height:38px;
-  border:1px solid #d7dde7;
-  border-radius:11px;
-  background:rgba(255,255,255,.8);
-  color:#111827;
-  font-size:24px;
-  cursor:pointer;
-  box-shadow:0 6px 18px rgba(0,0,0,.08);
+/* =========================
+   MAIN
+========================= */
+
+.wrapper{
+    width:100%;
+    max-width:440px;
+    padding:24px;
+    text-align:center;
 }
 
-.dropdown{
-  display:none;
-  position:absolute;
-  right:0;
-  top:46px;
-  width:155px;
-  background:white;
-  border:1px solid #e1e6ee;
-  border-radius:12px;
-  padding:5px;
-  box-shadow:0 12px 30px rgba(0,0,0,.15);
+/* =========================
+   RECX 3D HEADING
+========================= */
+
+.logo-title{
+    font-size:64px;
+    line-height:1;
+    font-weight:1000;
+    letter-spacing:7px;
+    color:#dce7f8;
+
+    text-shadow:
+        0 2px 0 #c3d0e3,
+        0 4px 0 #b5c3d8,
+        0 7px 12px rgba(70,90,130,.25),
+        0 15px 28px rgba(90,120,190,.14);
+
+    position:relative;
+    display:inline-block;
+    margin-bottom:12px;
 }
 
-.dropdown.show{
-  display:block;
+.logo-title::after{
+    content:"";
+    position:absolute;
+    left:8%;
+    right:8%;
+    bottom:-10px;
+    height:5px;
+    border-radius:50px;
+
+    background:linear-gradient(
+        90deg,
+        #79a7ff,
+        #a98cff,
+        #76d7ff
+    );
+
+    box-shadow:
+        0 4px 15px rgba(90,130,255,.25);
 }
 
-.dropdown a{
-  display:block;
-  padding:12px;
-  border-radius:8px;
-  text-decoration:none;
-  color:#111827;
-  font-size:13px;
-  font-weight:bold;
+.subtitle{
+    margin-top:20px;
+    font-size:12px;
+    letter-spacing:3px;
+    font-weight:700;
+    color:#8a96aa;
 }
 
-.dropdown a:hover{
-  background:#f1f5f9;
+/* =========================
+   3D LOGIN CARD
+========================= */
+
+.login-card{
+    margin-top:28px;
+    padding:30px 26px 27px;
+
+    border-radius:28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.94),
+            rgba(239,244,252,.82)
+        );
+
+    border:1px solid rgba(255,255,255,.95);
+
+    box-shadow:
+        0 25px 60px rgba(44,66,105,.14),
+        0 8px 18px rgba(44,66,105,.08),
+        inset 0 1px 1px rgba(255,255,255,1);
+
+    transform:perspective(900px) rotateX(0deg);
+    transition:.35s ease;
 }
 
-/* CARD */
+.login-card:hover{
+    transform:
+        perspective(900px)
+        rotateX(1deg)
+        translateY(-3px);
 
-.card{
-  background:rgba(255,255,255,.88);
-  border:1px solid rgba(255,255,255,.95);
-  border-radius:24px;
-  padding:32px;
-  box-shadow:
-    0 25px 60px rgba(30,55,90,.16),
-    0 8px 18px rgba(30,55,90,.08),
-    inset 0 1px 0 white;
-  transform:perspective(1000px) rotateX(1deg);
+    box-shadow:
+        0 30px 70px rgba(44,66,105,.18),
+        0 10px 25px rgba(44,66,105,.10),
+        inset 0 1px 1px rgba(255,255,255,1);
 }
 
-.card h2{
-  text-align:center;
-  font-size:25px;
-  font-weight:900;
-  color:#111827;
-  margin-bottom:7px;
+.card-title{
+    font-size:21px;
+    font-weight:850;
+    color:#263149;
+    margin-bottom:7px;
 }
 
-.card p{
-  text-align:center;
-  color:#6b7280;
-  font-size:13px;
-  margin-bottom:25px;
+.card-subtitle{
+    font-size:13px;
+    color:#8b96a9;
+    margin-bottom:23px;
 }
 
-label{
-  display:block;
-  font-size:11px;
-  font-weight:900;
-  color:#374151;
-  margin-bottom:8px;
-  letter-spacing:.5px;
+/* =========================
+   INPUT
+========================= */
+
+.input-box{
+    position:relative;
 }
 
-input{
-  width:100%;
-  height:52px;
-  border:1px solid #d7dde6;
-  border-radius:12px;
-  padding:0 15px;
-  font-size:14px;
-  color:#111827;
-  background:#fff;
-  outline:none;
-  box-shadow:
-    inset 0 2px 5px rgba(0,0,0,.04);
-  transition:.2s;
+.input-box input{
+    width:100%;
+    height:54px;
+    border:none;
+    outline:none;
+
+    padding:0 16px;
+
+    border-radius:15px;
+
+    background:#f5f8fc;
+    color:#1e293b;
+
+    font-size:14px;
+
+    box-shadow:
+        inset 0 2px 7px rgba(40,60,100,.07),
+        0 1px 0 rgba(255,255,255,.9);
+
+    transition:.25s ease;
 }
 
-input:focus{
-  border-color:#60a5fa;
-  box-shadow:
-    0 0 0 4px rgba(37,99,235,.08),
-    inset 0 2px 5px rgba(0,0,0,.04);
+.input-box input::placeholder{
+    color:#a0a9b8;
 }
 
-/* LOGIN BUTTON */
+.input-box input:focus{
+    background:#fff;
 
-.login{
-  width:100%;
-  height:52px;
-  margin-top:16px;
-  border:0;
-  border-radius:12px;
-  color:white;
-  font-size:13px;
-  font-weight:900;
-  letter-spacing:.4px;
-  cursor:pointer;
-  background:linear-gradient(
-    135deg,
-    #2563eb,
-    #3b82f6,
-    #60a5fa
-  );
-  box-shadow:
-    0 8px 0 #1747a3,
-    0 14px 25px rgba(37,99,235,.28);
-  transition:.15s;
+    box-shadow:
+        0 0 0 3px rgba(102,143,235,.12),
+        inset 0 2px 7px rgba(40,60,100,.05);
 }
 
-.login:hover{
-  transform:translateY(-2px);
+/* =========================
+   LOGIN BUTTON
+========================= */
+
+.login-btn{
+    width:100%;
+    height:54px;
+    margin-top:15px;
+
+    border:none;
+    border-radius:15px;
+
+    cursor:pointer;
+
+    color:white;
+    font-size:13px;
+    font-weight:850;
+    letter-spacing:1.2px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #648ff0,
+            #7e73e8
+        );
+
+    box-shadow:
+        0 10px 22px rgba(92,119,220,.25),
+        inset 0 1px 0 rgba(255,255,255,.25);
+
+    transition:.25s ease;
 }
 
-.login:active{
-  transform:translateY(5px);
-  box-shadow:
-    0 3px 0 #1747a3,
-    0 7px 15px rgba(37,99,235,.2);
+.login-btn:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 14px 28px rgba(92,119,220,.32),
+        inset 0 1px 0 rgba(255,255,255,.28);
 }
 
-.login:disabled{
-  opacity:.6;
-  cursor:not-allowed;
+.login-btn:active{
+    transform:translateY(1px);
 }
 
-#message{
-  min-height:20px;
-  text-align:center;
-  margin-top:15px;
-  font-size:12px;
-  color:#2563eb;
+.login-btn:disabled{
+    opacity:.65;
+    cursor:not-allowed;
+    transform:none;
 }
 
-/* SOCIAL */
+/* =========================
+   MESSAGE
+========================= */
+
+.message{
+    min-height:20px;
+    margin-top:14px;
+    font-size:13px;
+    font-weight:650;
+}
+
+.success{
+    color:#18a66b;
+}
+
+.error{
+    color:#e35d6a;
+}
+
+/* =========================
+   SOCIAL
+========================= */
+
+.socials{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-top:22px;
+}
 
 .social{
-  display:flex;
-  gap:8px;
-  margin-top:18px;
+    width:42px;
+    height:42px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:13px;
+
+    text-decoration:none;
+
+    background:rgba(255,255,255,.75);
+
+    box-shadow:
+        0 7px 18px rgba(40,60,100,.10);
+
+    transition:.25s ease;
 }
 
-.social a{
-  flex:1;
-  text-align:center;
-  text-decoration:none;
-  color:white;
-  padding:11px 4px;
-  border-radius:10px;
-  font-size:11px;
-  font-weight:bold;
-  box-shadow:
-    0 5px 12px rgba(0,0,0,.12);
+.social:hover{
+    transform:translateY(-3px);
+}
+
+.social svg{
+    width:21px;
+    height:21px;
 }
 
 .telegram{
-  background:#229ed9;
+    color:#229ED9;
 }
 
 .whatsapp{
-  background:#25d366;
+    color:#20c96b;
 }
 
 .youtube{
-  background:#ff0000;
+    color:#ff3030;
 }
 
-footer{
-  text-align:center;
-  margin-top:20px;
-  color:#7b8491;
-  font-size:11px;
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    margin-top:20px;
+    font-size:11px;
+    letter-spacing:.7px;
+    color:#9aa4b5;
 }
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:500px){
 
-  .brand h1{
-    font-size:48px;
-    letter-spacing:6px;
-  }
+    .wrapper{
+        padding:20px;
+    }
 
-  .card{
-    padding:26px 21px;
-  }
+    .logo-title{
+        font-size:52px;
+        letter-spacing:5px;
+    }
+
+    .login-card{
+        padding:27px 20px 24px;
+        border-radius:24px;
+    }
+
+    .menu-box{
+        top:16px;
+        right:16px;
+    }
+}
+
+@media(max-height:650px){
+
+    .logo-title{
+        font-size:45px;
+    }
+
+    .login-card{
+        margin-top:20px;
+        padding:22px;
+    }
+
+    .subtitle{
+        margin-top:15px;
+    }
+
+    .socials{
+        margin-top:15px;
+    }
+
+    .footer{
+        margin-top:12px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="menu">
+<!-- =========================
+     ADMIN MENU
+========================= -->
 
-  <button
-    class="dots"
-    onclick="toggleMenu()">
-    ⋮
-  </button>
-
-  <div
-    class="dropdown"
-    id="dropdown">
-
-    <a href="admin.html">
-      Admin Login
-    </a>
-
-  </div>
-
-</div>
-
-
-<div class="container">
-
-  <div class="brand">
-
-    <h1>RECX</h1>
-
-    <div class="brand-line"></div>
-
-  </div>
-
-
-  <div class="card">
-
-    <h2>Welcome Back</h2>
-
-    <p>
-      Login securely using your email
-    </p>
-
-    <label>
-      EMAIL ADDRESS
-    </label>
-
-    <input
-      id="email"
-      type="email"
-      placeholder="Enter your email"
-      autocomplete="email"
-    >
+<div class="menu-box">
 
     <button
-      class="login"
-      id="loginButton"
-      onclick="sendLoginLink()">
-
-      SEND LOGIN LINK
-
+        class="menu-btn"
+        id="menuBtn"
+        aria-label="Open menu">
+        ⋮
     </button>
 
-    <div id="message"></div>
+    <div
+        class="menu-dropdown"
+        id="menuDropdown">
 
-  </div>
+        <a href="admin.html">
+            👑 Admin Login
+        </a>
 
-
-  <div class="social">
-
-    <a
-      class="telegram"
-      href="https://t.me/panalstoreff"
-      target="_blank">
-      Telegram
-    </a>
-
-    <a
-      class="whatsapp"
-      href="https://whatsapp.com/channel/0029VbDyKyj0VycFxIRkAf2p"
-      target="_blank">
-      WhatsApp
-    </a>
-
-    <a
-      class="youtube"
-      href="https://youtube.com/@recxpanal-te6os?si=wEXVJ6vGkDRTCCRt"
-      target="_blank">
-      YouTube
-    </a>
-
-  </div>
-
-
-  <footer>
-    Powered by Rishi X & Shiva
-  </footer>
+    </div>
 
 </div>
 
+
+<div class="wrapper">
+
+    <!-- RECX HEADING -->
+
+    <h1 class="logo-title">
+        RECX
+    </h1>
+
+    <div class="subtitle">
+        SECURE LOGIN
+    </div>
+
+
+    <!-- LOGIN CARD -->
+
+    <div class="login-card">
+
+        <div class="card-title">
+            Welcome Back
+        </div>
+
+        <div class="card-subtitle">
+            Login securely with your email
+        </div>
+
+
+        <div class="input-box">
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                autocomplete="email">
+
+        </div>
+
+
+        <button
+            class="login-btn"
+            id="loginBtn"
+            onclick="sendLoginLink()">
+
+            SEND LOGIN LINK
+
+        </button>
+
+
+        <div
+            id="message"
+            class="message">
+        </div>
+
+    </div>
+
+
+    <!-- SOCIAL -->
+
+    <div class="socials">
+
+        <!-- Telegram -->
+
+        <a
+            class="social telegram"
+            href="https://t.me/panalstoreff"
+            target="_blank"
+            aria-label="Telegram">
+
+            <svg
+                viewBox="0 0 24 24"
+                fill="currentColor">
+
+                <path d="M21.7 3.2 18.5 20c-.2 1.2-.9 1.5-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L5.9 13.7.9 12.1c-1.1-.3-1.1-1 .2-1.5L20.6 3c.9-.3 1.7.2 1.1.2z"/>
+
+            </svg>
+
+        </a>
+
+
+        <!-- WhatsApp -->
+
+        <a
+            class="social whatsapp"
+            href="https://whatsapp.com/channel/0029VbDyKyj0VycFxIRkAf2p"
+            target="_blank"
+            aria-label="WhatsApp">
+
+            <svg
+                viewBox="0 0 24 24"
+                fill="currentColor">
+
+                <path d="M20 3.9A10 10 0 0 0 3.7 16.1L2 22l6-1.6A10 10 0 1 0 20 3.9Zm-8 16.3a8.3 8.3 0 0 1-4.2-1.1l-.3-.2-3.5.9.9-3.4-.2-.3A8.3 8.3 0 1 1 12 20.2Zm4.6-6.2c-.3-.2-1.7-.8-1.9-.9-.3-.1-.5-.2-.7.2-.2.3-.7.9-.8 1.1-.2.2-.3.2-.6.1-1.6-.8-2.6-1.4-3.6-3.2-.3-.5.3-.5.8-1.6.1-.2 0-.4-.1-.6-.1-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1-1.1 2.4s1.1 2.8 1.2 3c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.7.9 3.7.8.6-.1 1.7-.7 1.9-1.3.2-.6.2-1.2.1-1.3-.1-.1-.3-.2-.6-.3Z"/>
+
+            </svg>
+
+        </a>
+
+
+        <!-- YouTube -->
+
+        <a
+            class="social youtube"
+            href="https://youtube.com/@recxpanal-te6os?si=wEXVJ6vGkDRTCCRt"
+            target="_blank"
+            aria-label="YouTube">
+
+            <svg
+                viewBox="0 0 24 24"
+                fill="currentColor">
+
+                <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.7V8.3l6.3 3.7-6.3 3.7Z"/>
+
+            </svg>
+
+        </a>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+        Powered by Rishi X &amp; Shiva
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
+/* =========================
+   SUPABASE CONFIG
+========================= */
+
 const SUPABASE_URL =
-"https://asdbxlnttlsuhhnqeywa.supabase.co";
+    "https://asdbxlnttlsuhhnqeywa.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-"sb_publishable_GIzm11dFWDJmu9cQGAJy_w_432UbSU5";
+    "sb_publishable_GIzm11dFWDJmu9cQGAJy_w_432UbSU5";
 
 const REDIRECT_URL =
-"https://ranjanrishi315-a11y.github.io/rishi-x/";
+    "https://ranjanrishi315-a11y.github.io/rishi-x/";
+
 
 const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-);
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
 
+
+/* =========================
+   ADMIN MENU
+========================= */
+
+const menuBtn =
+    document.getElementById("menuBtn");
+
+const menuDropdown =
+    document.getElementById("menuDropdown");
+
+
+menuBtn.addEventListener("click", function(event){
+
+    event.stopPropagation();
+
+    menuDropdown.classList.toggle("show");
+
+});
+
+
+document.addEventListener("click", function(event){
+
+    if(
+        !menuDropdown.contains(event.target) &&
+        !menuBtn.contains(event.target)
+    ){
+
+        menuDropdown.classList.remove("show");
+
+    }
+
+});
+
+
+/* =========================
+   LOGIN
+========================= */
 
 async function sendLoginLink(){
 
-  const email =
-    document.getElementById("email")
-    .value
-    .trim();
+    const emailInput =
+        document.getElementById("email");
 
-  const button =
-    document.getElementById("loginButton");
+    const loginBtn =
+        document.getElementById("loginBtn");
 
-  const message =
-    document.getElementById("message");
+    const message =
+        document.getElementById("message");
 
 
-  if(!email){
+    const email =
+        emailInput.value.trim();
+
+
+    message.textContent = "";
+    message.className = "message";
+
+
+    if(!email){
+
+        message.textContent =
+            "Please enter your email.";
+
+        message.classList.add("error");
+
+        return;
+    }
+
+
+    if(!email.includes("@")){
+
+        message.textContent =
+            "Please enter a valid email.";
+
+        message.classList.add("error");
+
+        return;
+    }
+
+
+    loginBtn.disabled = true;
+
+    loginBtn.textContent =
+        "SENDING...";
+
+
+    const { error } =
+        await supabaseClient.auth.signInWithOtp({
+
+            email: email,
+
+            options: {
+
+                emailRedirectTo:
+                    REDIRECT_URL,
+
+                shouldCreateUser:
+                    true
+            }
+
+        });
+
+
+    if(error){
+
+        message.textContent =
+            error.message;
+
+        message.classList.add("error");
+
+        loginBtn.disabled = false;
+
+        loginBtn.textContent =
+            "SEND LOGIN LINK";
+
+        return;
+    }
+
 
     message.textContent =
-      "Please enter your email.";
+        "Login link sent to your email.";
 
-    return;
-  }
-
-
-  button.disabled=true;
-
-  button.textContent=
-    "SENDING...";
-
-  message.textContent="";
+    message.classList.add("success");
 
 
-  const {error} =
-    await supabaseClient.auth.signInWithOtp({
+    loginBtn.textContent =
+        "LINK SENT ✓";
 
-      email:email,
 
-      options:{
-        emailRedirectTo:REDIRECT_URL
-      }
+    setTimeout(() => {
+
+        loginBtn.disabled = false;
+
+        loginBtn.textContent =
+            "SEND LOGIN LINK";
+
+    }, 5000);
+
+}
+
+
+/* =========================
+   ENTER KEY LOGIN
+========================= */
+
+document
+    .getElementById("email")
+    .addEventListener("keydown", function(event){
+
+        if(event.key === "Enter"){
+
+            sendLoginLink();
+
+        }
 
     });
 
 
-  if(error){
-
-    button.disabled=false;
-
-    button.textContent=
-      "SEND LOGIN LINK";
-
-    message.textContent=
-      error.message;
-
-    return;
-  }
-
-
-  button.textContent=
-    "LOGIN LINK SENT ✓";
-
-  message.textContent=
-    "Check your email for the login link.";
-
-}
-
+/* =========================
+   CHECK EXISTING SESSION
+========================= */
 
 async function checkSession(){
 
-  const {data} =
-    await supabaseClient.auth.getSession();
-
-  if(data.session){
-
-    window.location.href=
-      "dashboard-new.html";
-
-  }
-
-}
+    const { data } =
+        await supabaseClient.auth.getSession();
 
 
-function toggleMenu(){
+    if(data.session){
 
-  document
-    .getElementById("dropdown")
-    .classList.toggle("show");
-
-}
-
-
-document.addEventListener(
-  "click",
-  function(e){
-
-    const menu =
-      document.querySelector(".menu");
-
-    if(!menu.contains(e.target)){
-
-      document
-        .getElementById("dropdown")
-        .classList.remove("show");
+        window.location.href =
+            "dashboard-new.html";
 
     }
 
-  }
-);
-
-
-document
-  .getElementById("email")
-  .addEventListener(
-    "keydown",
-    function(e){
-
-      if(e.key==="Enter"){
-        sendLoginLink();
-      }
-
-    }
-  );
+}
 
 
 checkSession();
