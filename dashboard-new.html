@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>RECX • MADS Store</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
-
-/* =========================
-   RESET
-========================= */
-
 *{
+    box-sizing:border-box;
     margin:0;
     padding:0;
-    box-sizing:border-box;
 }
 
-html{
-    scroll-behavior:smooth;
+:root{
+    --bg:#f4f6fa;
+    --card:rgba(255,255,255,.78);
+    --card-solid:#ffffff;
+    --text:#101218;
+    --muted:#687080;
+    --line:rgba(15,20,30,.09);
+    --orange:#ff4b00;
+    --orange2:#ff741f;
+    --blue:#2aabee;
+    --green:#25d366;
+    --red:#ff3b30;
+    --shadow:0 18px 55px rgba(25,30,45,.10);
 }
 
 body{
     min-height:100vh;
-    color:#fff;
+    color:var(--text);
     font-family:
         Inter,
         Arial,
@@ -36,982 +39,840 @@ body{
 
     background:
         radial-gradient(
-            circle at 10% 10%,
-            rgba(0,180,255,.13),
+            circle at 5% 0%,
+            rgba(255,120,40,.20),
             transparent 30%
         ),
         radial-gradient(
-            circle at 90% 80%,
-            rgba(145,0,255,.13),
-            transparent 32%
+            circle at 100% 15%,
+            rgba(42,171,238,.16),
+            transparent 30%
         ),
-        #05070c;
-
-    overflow-x:hidden;
-}
-
-
-/* =========================
-   BACKGROUND
-========================= */
-
-.bg{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    overflow:hidden;
-    z-index:-5;
-}
-
-.grid{
-    position:absolute;
-    inset:0;
-
-    background-image:
-        linear-gradient(
-            rgba(255,255,255,.018) 1px,
-            transparent 1px
+        radial-gradient(
+            circle at 70% 100%,
+            rgba(255,75,0,.10),
+            transparent 28%
         ),
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.018) 1px,
-            transparent 1px
-        );
-
-    background-size:45px 45px;
-
-    mask-image:
-        linear-gradient(
-            to bottom,
-            black,
-            transparent
-        );
-}
-
-.orb{
-    position:absolute;
-    border-radius:50%;
-    filter:blur(100px);
-    opacity:.16;
-}
-
-.orb-one{
-    width:330px;
-    height:330px;
-    background:#00bfff;
-    top:-150px;
-    left:-130px;
-}
-
-.orb-two{
-    width:360px;
-    height:360px;
-    background:#8d00ff;
-    right:-170px;
-    bottom:-160px;
-}
-
-.orb-three{
-    width:220px;
-    height:220px;
-    background:#0066ff;
-    left:40%;
-    top:45%;
-    opacity:.07;
+        var(--bg);
 }
 
 
-/* =========================
+/* =========================================
    HEADER
-========================= */
+========================================= */
 
 header{
     position:sticky;
     top:0;
     z-index:100;
 
-    width:100%;
-
     display:flex;
     align-items:center;
     justify-content:space-between;
 
-    padding:17px 5%;
+    padding:15px 5%;
 
-    background:
-        rgba(3,5,10,.78);
-
+    background:rgba(255,255,255,.76);
     backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
 
-    border-bottom:
-        1px solid rgba(255,255,255,.07);
-
-    box-shadow:
-        0 10px 40px rgba(0,0,0,.2);
+    border-bottom:1px solid rgba(0,0,0,.07);
 }
 
 .logo{
-    display:flex;
-    align-items:center;
-    gap:9px;
-
-    font-size:21px;
+    font-size:25px;
     font-weight:950;
+    letter-spacing:2px;
+}
 
+.logo span{
+    color:var(--orange);
+}
+
+.admin-label{
+    margin-left:7px;
+    padding:4px 8px;
+
+    border-radius:7px;
+
+    font-size:9px;
+    font-weight:800;
     letter-spacing:1px;
+
+    color:#fff;
+    background:#111;
 }
 
-.logo-symbol{
-    color:#00d9ff;
-    text-shadow:
-        0 0 10px rgba(0,217,255,.7),
-        0 0 25px rgba(0,217,255,.3);
-}
-
-.logo-name{
-    background:
-        linear-gradient(
-            90deg,
-            #ffffff,
-            #73e8ff
-        );
-
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-}
-
-.header-right{
+.header-actions{
     display:flex;
     align-items:center;
     gap:9px;
 }
 
 .header-btn{
-    display:flex;
+    display:inline-flex;
     align-items:center;
     justify-content:center;
 
-    min-height:38px;
+    min-width:42px;
+    height:40px;
 
-    padding:0 14px;
+    padding:0 13px;
 
     border-radius:12px;
 
-    border:
-        1px solid rgba(255,255,255,.09);
-
-    background:
-        rgba(255,255,255,.035);
-
-    color:#dce4f1;
-
     text-decoration:none;
+    color:var(--text);
 
-    font-size:12px;
-    font-weight:700;
+    background:rgba(255,255,255,.72);
+    border:1px solid rgba(0,0,0,.08);
+
+    box-shadow:0 7px 20px rgba(0,0,0,.05);
+
+    font-weight:800;
+    font-size:13px;
 
     cursor:pointer;
-
-    transition:.25s;
+    transition:.2s ease;
 }
 
 .header-btn:hover{
-    border-color:
-        rgba(0,210,255,.4);
-
-    color:#00d5ff;
-
-    background:
-        rgba(0,210,255,.06);
-
     transform:translateY(-2px);
+    box-shadow:0 10px 25px rgba(0,0,0,.09);
+}
 
-    box-shadow:
-        0 8px 25px rgba(0,210,255,.08);
+.profile-btn{
+    background:#111;
+    color:#fff;
+    border-color:#111;
 }
 
 
-/* =========================
+/* =========================================
    MAIN
-========================= */
+========================================= */
 
 .container{
-    width:min(900px,92%);
-
+    width:min(1120px,92%);
     margin:0 auto;
-
-    padding:
-        58px 0
-        80px;
+    padding:34px 0 55px;
 }
 
 
-/* =========================
+/* =========================================
    HERO
-========================= */
+========================================= */
 
 .hero{
-    text-align:center;
+    position:relative;
+    overflow:hidden;
 
-    margin-bottom:38px;
+    padding:36px;
+
+    border-radius:30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.95),
+            rgba(255,247,241,.82)
+        );
+
+    border:1px solid rgba(255,255,255,.95);
+
+    box-shadow:var(--shadow);
+}
+
+.hero:before{
+    content:"";
+    position:absolute;
+
+    width:260px;
+    height:260px;
+
+    right:-100px;
+    top:-110px;
+
+    border-radius:50%;
+
+    background:rgba(255,95,25,.12);
+    filter:blur(5px);
+}
+
+.hero:after{
+    content:"";
+    position:absolute;
+
+    width:190px;
+    height:190px;
+
+    left:-90px;
+    bottom:-100px;
+
+    border-radius:50%;
+
+    background:rgba(42,171,238,.10);
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
 }
 
 .badge{
     display:inline-flex;
     align-items:center;
-    justify-content:center;
+    gap:7px;
 
-    padding:7px 13px;
+    padding:7px 11px;
 
-    border-radius:50px;
+    border-radius:999px;
 
-    border:
-        1px solid rgba(0,210,255,.22);
+    background:rgba(255,75,0,.08);
+    color:var(--orange);
 
-    background:
-        rgba(0,210,255,.055);
+    border:1px solid rgba(255,75,0,.14);
 
-    color:#69ddff;
-
-    font-size:10px;
-    font-weight:800;
-
-    letter-spacing:2px;
-
-    box-shadow:
-        0 0 25px rgba(0,210,255,.05);
-
-    margin-bottom:16px;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:1px;
 }
 
-.hero h1{
-    font-size:
-        clamp(35px,8vw,62px);
-
-    line-height:1;
-
-    font-weight:950;
-
-    letter-spacing:-2.5px;
-}
-
-.hero h1 span{
-    background:
-        linear-gradient(
-            90deg,
-            #00d9ff,
-            #7366ff,
-            #c34dff
-        );
-
-    -webkit-background-clip:text;
-    background-clip:text;
-
-    color:transparent;
-}
-
-.hero p{
-    margin-top:14px;
-
-    color:#778397;
-
-    font-size:13px;
-}
-
-
-/* =========================
-   PRODUCT CARD
-========================= */
-
-.store-card{
-
-    position:relative;
-
-    margin-bottom:17px;
-
-    padding:20px;
-
-    border-radius:24px;
-
-    border:
-        1px solid rgba(255,255,255,.085);
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.055),
-            rgba(255,255,255,.018)
-        );
-
-    backdrop-filter:blur(20px);
-
-    box-shadow:
-        0 25px 70px rgba(0,0,0,.38),
-        inset 0 1px rgba(255,255,255,.045);
-
-    overflow:hidden;
-
-    transition:
-        transform .3s ease,
-        border-color .3s ease,
-        box-shadow .3s ease;
-}
-
-.store-card::before{
-    content:"";
-
-    position:absolute;
-
-    width:160px;
-    height:160px;
-
-    top:-90px;
-    right:-70px;
-
-    border-radius:50%;
-
-    background:#00cfff;
-
-    filter:blur(90px);
-
-    opacity:.055;
-
-    pointer-events:none;
-}
-
-.store-card:hover{
-
-    border-color:
-        rgba(0,205,255,.2);
-
-    box-shadow:
-        0 28px 75px rgba(0,0,0,.45),
-        0 0 35px rgba(0,180,255,.035);
-}
-
-
-/* =========================
-   CARD HEADER
-========================= */
-
-.card-header{
-
-    position:relative;
-    z-index:2;
-
-    width:100%;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    cursor:pointer;
-    user-select:none;
-}
-
-.product-info{
-    display:flex;
-    align-items:center;
-
-    gap:14px;
-
-    min-width:0;
-}
-
-.product-icon{
-
-    width:49px;
-    height:49px;
-
-    flex:0 0 49px;
-
-    display:grid;
-    place-items:center;
-
-    border-radius:15px;
-
-    border:
-        1px solid rgba(0,205,255,.18);
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(0,205,255,.14),
-            rgba(120,0,255,.1)
-        );
-
-    box-shadow:
-        inset 0 1px rgba(255,255,255,.05),
-        0 0 25px rgba(0,200,255,.05);
-
-    color:#71e6ff;
-
-    font-size:20px;
-}
-
-.product-text{
-    min-width:0;
-}
-
-.product-name{
-
-    font-size:16px;
-
-    font-weight:850;
-
-    white-space:nowrap;
-
-    overflow:hidden;
-
-    text-overflow:ellipsis;
-}
-
-.product-sub{
-
-    margin-top:5px;
-
-    color:#687489;
-
-    font-size:10px;
-
-    letter-spacing:.3px;
-}
-
-.arrow{
-
-    width:40px;
-    height:40px;
-
-    flex:0 0 40px;
-
-    display:grid;
-    place-items:center;
-
-    border-radius:13px;
-
-    border:
-        1px solid rgba(255,255,255,.09);
-
-    background:
-        rgba(255,255,255,.035);
-
-    color:#8b97aa;
-
-    font-size:20px;
-
-    transition:
-        transform .35s ease,
-        color .25s ease,
-        border-color .25s ease,
-        box-shadow .25s ease;
-}
-
-.store-card.open .arrow{
-
-    transform:rotate(180deg);
-
-    color:#00d8ff;
-
-    border-color:
-        rgba(0,215,255,.35);
-
-    box-shadow:
-        0 0 22px rgba(0,215,255,.1);
-}
-
-
-/* =========================
-   PLANS
-========================= */
-
-.plans{
-
-    position:relative;
-    z-index:2;
-
-    max-height:0;
-
-    overflow:hidden;
-
-    opacity:0;
-
-    margin-top:0;
-
-    transition:
-        max-height .5s ease,
-        opacity .35s ease,
-        margin-top .35s ease;
-}
-
-.store-card.open .plans{
-
-    max-height:650px;
-
-    opacity:1;
-
-    margin-top:19px;
-}
-
-.plan{
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    width:100%;
-
-    padding:14px 15px;
-
-    margin-top:8px;
-
-    border-radius:15px;
-
-    border:
-        1px solid rgba(255,255,255,.065);
-
-    background:
-        rgba(255,255,255,.022);
-
-    cursor:pointer;
-
-    transition:
-        transform .25s ease,
-        border-color .25s ease,
-        background .25s ease,
-        box-shadow .25s ease;
-}
-
-.plan:first-child{
-    margin-top:0;
-}
-
-.plan:hover{
-
-    transform:
-        translateX(4px);
-
-    border-color:
-        rgba(0,210,255,.32);
-
-    background:
-        rgba(0,190,255,.055);
-
-    box-shadow:
-        0 8px 25px rgba(0,0,0,.25);
-}
-
-.plan-left{
-    display:flex;
-    align-items:center;
-
-    gap:11px;
-}
-
-.plan-dot{
-
+.badge-dot{
     width:7px;
     height:7px;
 
     border-radius:50%;
 
-    background:#00d9ff;
-
-    box-shadow:
-        0 0 12px #00d9ff;
+    background:var(--orange);
+    box-shadow:0 0 12px rgba(255,75,0,.6);
 }
 
-.plan-name{
+.hero h1{
+    margin-top:15px;
 
-    color:#dce3ed;
+    font-size:clamp(32px,6vw,58px);
+    line-height:.98;
 
-    font-size:13px;
-
-    font-weight:700;
+    font-weight:950;
+    letter-spacing:-2px;
 }
 
-.plan-right{
+.hero h1 span{
+    color:var(--orange);
+}
 
+.hero p{
+    max-width:650px;
+
+    margin-top:15px;
+
+    color:var(--muted);
+
+    font-size:15px;
+    line-height:1.7;
+}
+
+.hero-actions{
     display:flex;
-    align-items:center;
-
-    gap:12px;
-}
-
-.price{
-
-    color:#ffffff;
-
-    font-size:14px;
-
-    font-weight:900;
-}
-
-.buy-arrow{
-
-    color:#596679;
-
-    font-size:16px;
-
-    transition:.2s;
-}
-
-.plan:hover .buy-arrow{
-
-    color:#00d8ff;
-
-    transform:
-        translateX(3px);
-}
-
-
-/* =========================
-   COMMUNITY
-========================= */
-
-.social-box{
-
-    margin-top:34px;
-
-    padding:22px;
-
-    border-radius:22px;
-
-    border:
-        1px solid rgba(255,255,255,.08);
-
-    background:
-        rgba(255,255,255,.025);
-
-    backdrop-filter:blur(18px);
-
-    box-shadow:
-        0 20px 55px rgba(0,0,0,.25);
-
-    text-align:center;
-}
-
-.social-title{
-
-    color:#7e899b;
-
-    font-size:10px;
-
-    font-weight:800;
-
-    letter-spacing:2px;
-
-    margin-bottom:17px;
-}
-
-.socials{
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
+    flex-wrap:wrap;
     gap:10px;
 
-    flex-wrap:wrap;
+    margin-top:22px;
 }
 
-.social{
-
-    min-width:145px;
-
-    display:flex;
-
+.primary-btn,
+.secondary-btn{
+    display:inline-flex;
     align-items:center;
     justify-content:center;
+    gap:8px;
 
-    gap:9px;
+    padding:13px 18px;
 
-    padding:12px 17px;
+    border-radius:13px;
+
+    text-decoration:none;
+
+    font-size:13px;
+    font-weight:900;
+
+    transition:.2s ease;
+}
+
+.primary-btn{
+    color:#fff;
+    background:linear-gradient(
+        135deg,
+        var(--orange),
+        var(--orange2)
+    );
+
+    box-shadow:
+        0 10px 25px rgba(255,75,0,.20);
+}
+
+.secondary-btn{
+    color:#17191d;
+    background:#fff;
+    border:1px solid rgba(0,0,0,.08);
+}
+
+.primary-btn:hover,
+.secondary-btn:hover{
+    transform:translateY(-2px);
+}
+
+
+/* =========================================
+   SECTION TITLE
+========================================= */
+
+.section-head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin:34px 0 15px;
+}
+
+.section-head h2{
+    font-size:25px;
+    font-weight:950;
+}
+
+.section-head p{
+    color:var(--muted);
+    font-size:12px;
+}
+
+
+/* =========================================
+   STORE
+========================================= */
+
+.store{
+    display:grid;
+    gap:14px;
+}
+
+.store-card{
+    overflow:hidden;
+
+    border-radius:21px;
+
+    background:rgba(255,255,255,.82);
+
+    border:1px solid rgba(0,0,0,.07);
+
+    box-shadow:
+        0 12px 35px rgba(20,25,40,.07);
+
+    transition:.22s ease;
+}
+
+.store-card:hover{
+    transform:translateY(-2px);
+    box-shadow:
+        0 17px 42px rgba(20,25,40,.10);
+}
+
+.store-head{
+    width:100%;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:21px;
+
+    background:transparent;
+
+    border:0;
+
+    color:var(--text);
+
+    text-align:left;
+
+    cursor:pointer;
+}
+
+.product-left{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.product-icon{
+    width:45px;
+    height:45px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
     border-radius:14px;
 
-    border:
-        1px solid rgba(255,255,255,.08);
+    color:#fff;
 
     background:
-        rgba(255,255,255,.035);
+        linear-gradient(
+            135deg,
+            #111,
+            #303030
+        );
+
+    font-size:20px;
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.13);
+}
+
+.product-name{
+    font-size:17px;
+    font-weight:950;
+}
+
+.product-sub{
+    margin-top:4px;
+
+    color:#858b96;
+
+    font-size:11px;
+}
+
+.arrow{
+    width:34px;
+    height:34px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:10px;
+
+    background:#f1f2f5;
+
+    font-size:17px;
+    font-weight:900;
+
+    transition:.25s ease;
+}
+
+.store-card.open .arrow{
+    transform:rotate(180deg);
+
+    color:#fff;
+    background:var(--orange);
+}
+
+.plans{
+    display:none;
+
+    padding:0 16px 16px;
+}
+
+.store-card.open .plans{
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(180px,1fr));
+
+    gap:10px;
+}
+
+.plan{
+    position:relative;
+
+    padding:17px;
+
+    border-radius:15px;
+
+    background:#f7f8fa;
+
+    border:1px solid rgba(0,0,0,.07);
+
+    transition:.2s ease;
+}
+
+.plan:hover{
+    background:#fff;
+
+    border-color:
+        rgba(255,75,0,.25);
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.07);
+}
+
+.plan-name{
+    color:#747b87;
+
+    font-size:11px;
+    font-weight:800;
+
+    text-transform:uppercase;
+    letter-spacing:.5px;
+}
+
+.plan-price{
+    margin-top:5px;
+
+    font-size:24px;
+    font-weight:950;
+}
+
+.buy-btn{
+    width:100%;
+
+    margin-top:12px;
+
+    padding:11px;
+
+    border:0;
+    border-radius:11px;
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #111,
+            #292929
+        );
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    transition:.2s ease;
+}
+
+.buy-btn:hover{
+    background:
+        linear-gradient(
+            135deg,
+            var(--orange),
+            var(--orange2)
+        );
+
+    transform:translateY(-1px);
+}
+
+
+/* =========================================
+   REQUESTS PANEL
+========================================= */
+
+.requests-panel{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:18px;
+
+    padding:22px;
+
+    margin-top:14px;
+
+    border-radius:21px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.92),
+            rgba(247,249,252,.82)
+        );
+
+    border:1px solid rgba(0,0,0,.07);
+
+    box-shadow:
+        0 12px 35px rgba(20,25,40,.06);
+}
+
+.requests-icon{
+    width:48px;
+    height:48px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    flex:none;
+
+    border-radius:15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #111,
+            #333
+        );
+
+    color:#fff;
+
+    font-size:21px;
+}
+
+.requests-info{
+    flex:1;
+}
+
+.requests-info h3{
+    font-size:16px;
+    font-weight:950;
+}
+
+.requests-info p{
+    margin-top:5px;
+
+    color:#7b828e;
+
+    font-size:12px;
+    line-height:1.5;
+}
+
+.requests-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:12px 16px;
+
+    border-radius:12px;
+
+    color:#fff;
+    background:var(--orange);
 
     text-decoration:none;
 
     font-size:12px;
+    font-weight:900;
 
-    font-weight:800;
+    white-space:nowrap;
 
-    transition:
-        transform .25s ease,
-        background .25s ease,
-        border-color .25s ease,
-        box-shadow .25s ease;
+    box-shadow:
+        0 8px 20px rgba(255,75,0,.17);
+}
+
+.requests-btn:hover{
+    background:#e94200;
+}
+
+
+/* =========================================
+   COMMUNITY
+========================================= */
+
+.community{
+    margin-top:34px;
+}
+
+.social-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:12px;
+}
+
+.social{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    padding:17px;
+
+    border-radius:17px;
+
+    color:#fff;
+
+    text-decoration:none;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.08);
+
+    transition:.22s ease;
+}
+
+.social:hover{
+    transform:translateY(-3px);
+    box-shadow:
+        0 15px 30px rgba(0,0,0,.13);
 }
 
 .social svg{
+    width:28px;
+    height:28px;
+    flex:none;
+}
 
-    width:19px;
-    height:19px;
+.social-text strong{
+    display:block;
+    font-size:14px;
+    font-weight:950;
+}
 
-    fill:currentColor;
+.social-text span{
+    display:block;
 
-    flex:0 0 19px;
+    margin-top:3px;
+
+    opacity:.75;
+
+    font-size:10px;
+}
+
+.telegram{
+    background:#2aabee;
+}
+
+.whatsapp{
+    background:#25d366;
+}
+
+.youtube{
+    background:#ff3b30;
 }
 
 
-/* TELEGRAM */
-
-.social.telegram{
-
-    color:#2AABEE;
-}
-
-.social.telegram:hover{
-
-    background:
-        rgba(42,171,238,.09);
-
-    border-color:
-        rgba(42,171,238,.45);
-
-    box-shadow:
-        0 0 25px rgba(42,171,238,.16);
-
-    transform:
-        translateY(-3px);
-}
-
-
-/* WHATSAPP */
-
-.social.whatsapp{
-
-    color:#25D366;
-}
-
-.social.whatsapp:hover{
-
-    background:
-        rgba(37,211,102,.09);
-
-    border-color:
-        rgba(37,211,102,.45);
-
-    box-shadow:
-        0 0 25px rgba(37,211,102,.16);
-
-    transform:
-        translateY(-3px);
-}
-
-
-/* YOUTUBE */
-
-.social.youtube{
-
-    color:#FF3B30;
-}
-
-.social.youtube:hover{
-
-    background:
-        rgba(255,59,48,.09);
-
-    border-color:
-        rgba(255,59,48,.45);
-
-    box-shadow:
-        0 0 25px rgba(255,59,48,.16);
-
-    transform:
-        translateY(-3px);
-}
-
-
-/* =========================
+/* =========================================
    FOOTER
-========================= */
+========================================= */
 
 footer{
+    margin-top:42px;
 
-    padding:
-        10px 20px
-        28px;
+    padding:24px 0 8px;
 
     text-align:center;
 
-    color:#4d5869;
+    color:#858b95;
 
-    font-size:10px;
+    font-size:11px;
+}
 
-    letter-spacing:.3px;
+.footer-brand{
+    color:#111;
+    font-weight:950;
 }
 
 
-/* =========================
-   MOBILE
-========================= */
+/* =========================================
+   RESPONSIVE
+========================================= */
 
-@media(max-width:600px){
+@media(max-width:720px){
 
     header{
-
-        padding:
-            14px 4%;
+        padding:13px 4%;
     }
 
     .logo{
-
-        font-size:18px;
+        font-size:21px;
     }
 
-    .header-btn{
+    .admin-label{
+        display:none;
+    }
 
-        min-height:36px;
+    .profile-btn{
+        font-size:0;
+        min-width:40px;
+    }
 
-        padding:
-            0 11px;
-
-        font-size:10px;
+    .profile-btn:before{
+        content:"👤";
+        font-size:16px;
     }
 
     .container{
-
-        width:92%;
-
-        padding-top:43px;
+        width:94%;
+        padding-top:20px;
     }
 
     .hero{
-
-        margin-bottom:30px;
+        padding:25px 20px;
+        border-radius:24px;
     }
 
     .hero h1{
-
-        font-size:
-            clamp(34px,12vw,50px);
+        letter-spacing:-1.2px;
     }
 
-    .hero p{
-
-        font-size:12px;
+    .hero-actions{
+        flex-direction:column;
     }
 
-    .store-card{
-
-        padding:16px;
-
-        border-radius:20px;
-    }
-
-    .product-icon{
-
-        width:44px;
-        height:44px;
-
-        flex-basis:44px;
-    }
-
-    .product-name{
-
-        font-size:14px;
-    }
-
-    .product-sub{
-
-        font-size:9px;
-    }
-
-    .arrow{
-
-        width:37px;
-        height:37px;
-
-        flex-basis:37px;
-    }
-
-    .plan{
-
-        padding:13px;
-    }
-
-    .plan-name{
-
-        font-size:12px;
-    }
-
-    .price{
-
-        font-size:13px;
-    }
-
-    .social{
-
+    .primary-btn,
+    .secondary-btn{
         width:100%;
+    }
+
+    .store-card.open .plans{
+        grid-template-columns:1fr;
+    }
+
+    .social-grid{
+        grid-template-columns:1fr;
+    }
+
+    .requests-panel{
+        align-items:flex-start;
+    }
+
+    .requests-btn{
+        align-self:center;
     }
 }
 
+@media(max-width:470px){
+
+    .requests-panel{
+        flex-direction:column;
+    }
+
+    .requests-btn{
+        width:100%;
+    }
+
+    .header-btn{
+        padding:0 10px;
+    }
+}
 </style>
-
 </head>
-
 
 <body>
 
 
-<!-- =========================
-     BACKGROUND
-========================= -->
-
-<div class="bg">
-
-    <div class="grid"></div>
-
-    <div class="orb orb-one"></div>
-
-    <div class="orb orb-two"></div>
-
-    <div class="orb orb-three"></div>
-
-</div>
-
-
-<!-- =========================
+<!-- =========================================
      HEADER
-========================= -->
+========================================= -->
 
 <header>
 
     <div class="logo">
-
-        <div class="logo-symbol">
-            ⚡
-        </div>
-
-        <div class="logo-name">
-            RECX
-        </div>
-
+        REC<span>X</span>
+        <span class="admin-label">MADS STORE</span>
     </div>
 
-
-    <div class="header-right">
+    <div class="header-actions">
 
         <a
             href="profile.html"
-            class="header-btn"
-        >
+            class="header-btn profile-btn">
             Profile
         </a>
 
         <button
-            type="button"
             class="header-btn"
-            onclick="logout()"
-        >
+            onclick="logout()">
             Logout
         </button>
 
@@ -1020,840 +881,555 @@ footer{
 </header>
 
 
-
-<!-- =========================
-     MAIN
-========================= -->
-
 <main class="container">
 
 
-    <!-- HERO -->
+<!-- =========================================
+     HERO
+========================================= -->
 
-    <section class="hero">
+<section class="hero">
+
+    <div class="hero-content">
 
         <div class="badge">
-            PREMIUM DIGITAL STORE
+            <span class="badge-dot"></span>
+            RECX STORE ONLINE
         </div>
 
         <h1>
             MADS
-            <span>STORE</span>
+            <span>STORE.</span>
         </h1>
 
         <p>
-            Select a product to explore available plans
+            Choose your product, select a plan and continue
+            securely to the payment page. After verification,
+            your request status and delivered key will be
+            available inside My Requests.
         </p>
 
-    </section>
-
-
-
-    <!-- =========================
-         MADS 1
-    ========================= -->
-
-    <div class="store-card">
-
-        <div
-            class="card-header"
-            onclick="toggleCard(this.parentElement)"
-        >
-
-            <div class="product-info">
-
-                <div class="product-icon">
-                    ⚡
-                </div>
-
-                <div class="product-text">
-
-                    <div class="product-name">
-                        RECXmonster MADS
-                    </div>
-
-                    <div class="product-sub">
-                        Premium access plans
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="arrow">
-                ⌄
-            </div>
-
-        </div>
-
-
-
-        <div class="plans">
-
-
-            <div
-                class="plan"
-                onclick="buy(
-                    'RECXmonster MADS',
-                    '1 Day',
-                    60
-                )"
-            >
-
-                <div class="plan-left">
-
-                    <div class="plan-dot"></div>
-
-                    <div class="plan-name">
-                        1 Day
-                    </div>
-
-                </div>
-
-                <div class="plan-right">
-
-                    <div class="price">
-                        ₹60
-                    </div>
-
-                    <div class="buy-arrow">
-                        →
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <div
-                class="plan"
-                onclick="buy(
-                    'RECXmonster MADS',
-                    '7 Days',
-                    100
-                )"
-            >
-
-                <div class="plan-left">
-
-                    <div class="plan-dot"></div>
-
-                    <div class="plan-name">
-                        7 Days
-                    </div>
-
-                </div>
-
-                <div class="plan-right">
-
-                    <div class="price">
-                        ₹100
-                    </div>
-
-                    <div class="buy-arrow">
-                        →
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <div
-                class="plan"
-                onclick="buy(
-                    'RECXmonster MADS',
-                    '30 Days',
-                    250
-                )"
-            >
-
-                <div class="plan-left">
-
-                    <div class="plan-dot"></div>
-
-                    <div class="plan-name">
-                        30 Days
-                    </div>
-
-                </div>
-
-                <div class="plan-right">
-
-                    <div class="price">
-                        ₹250
-                    </div>
-
-                    <div class="buy-arrow">
-                        →
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <div
-                class="plan"
-                onclick="buy(
-                    'RECXmonster MADS',
-                    '90 Days',
-                    500
-                )"
-            >
-
-                <div class="plan-left">
-
-                    <div class="plan-dot"></div>
-
-                    <div class="plan-name">
-                        90 Days
-                    </div>
-
-                </div>
-
-                <div class="plan-right">
-
-                    <div class="price">
-                        ₹500
-                    </div>
-
-                    <div class="buy-arrow">
-                        →
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <div
-                class="plan"
-                onclick="buy(
-                    'RECXmonster MADS',
-                    'Lifetime',
-                    1000
-                )"
-            >
-
-                <div class="plan-left">
-
-                    <div class="plan-dot"></div>
-
-                    <div class="plan-name">
-                        Lifetime
-                    </div>
-
-                </div>
-
-                <div class="plan-right">
-
-                    <div class="price">
-                        ₹1000
-                    </div>
-
-                    <div class="buy-arrow">
-                        →
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =========================
-         MADS 2
-    ========================= -->
-
-    <div class="store-card">
-
-        <div
-            class="card-header"
-            onclick="toggleCard(this.parentElement)"
-        >
-
-            <div class="product-info">
-
-                <div class="product-icon">
-                    ◈
-                </div>
-
-                <div class="product-text">
-
-                    <div class="product-name">
-                        RecxInstall and Play MADS
-                    </div>
-
-                    <div class="product-sub">
-                        Premium access plans
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="arrow">
-                ⌄
-            </div>
-
-        </div>
-
-
-
-        <div class="plans">
-
-
-            <div
-                class="plan"
-                onclick="buy(
-                    'RecxInstall and Play MADS',
-                    '7 Days',
-                    80
-                )"
-            >
-
-                <div class="plan-left">
-
-                    <div class="plan-dot"></div>
-
-                    <div class="plan-name">
-                        7 Days
-                    </div>
-
-                </div>
-
-                <div class="plan-right">
-
-                    <div class="price">
-                        ₹80
-                    </div>
-
-                    <div class="buy-arrow">
-                        →
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <div
-                class="plan"
-                onclick="buy(
-                    'RecxInstall and Play MADS',
-                    '30 Days',
-                    200
-                )"
-            >
-
-                <div class="plan-left">
-
-                    <div class="plan-dot"></div>
-
-                    <div class="plan-name">
-                        30 Days
-                    </div>
-
-                </div>
-
-                <div class="plan-right">
-
-                    <div class="price">
-                        ₹200
-                    </div>
-
-                    <div class="buy-arrow">
-                        →
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <div
-                class="plan"
-                onclick="buy(
-                    'RecxInstall and Play MADS',
-                    '90 Days',
-                    500
-                )"
-            >
-
-                <div class="plan-left">
-
-                    <div class="plan-dot"></div>
-
-                    <div class="plan-name">
-                        90 Days
-                    </div>
-
-                </div>
-
-                <div class="plan-right">
-
-                    <div class="price">
-                        ₹500
-                    </div>
-
-                    <div class="buy-arrow">
-                        →
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <div
-                class="plan"
-                onclick="buy(
-                    'RecxInstall and Play MADS',
-                    'Lifetime',
-                    1000
-                )"
-            >
-
-                <div class="plan-left">
-
-                    <div class="plan-dot"></div>
-
-                    <div class="plan-name">
-                        Lifetime
-                    </div>
-
-                </div>
-
-                <div class="plan-right">
-
-                    <div class="price">
-                        ₹1000
-                    </div>
-
-                    <div class="buy-arrow">
-                        →
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =========================
-         MADS 3
-    ========================= -->
-
-    <div class="store-card">
-
-        <div
-            class="card-header"
-            onclick="toggleCard(this.parentElement)"
-        >
-
-            <div class="product-info">
-
-                <div class="product-icon">
-                    ✦
-                </div>
-
-                <div class="product-text">
-
-                    <div class="product-name">
-                        RecxValimod Ultra MADS
-                    </div>
-
-                    <div class="product-sub">
-                        Premium access plans
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="arrow">
-                ⌄
-            </div>
-
-        </div>
-
-
-
-        <div class="plans">
-
-
-            <div
-                class="plan"
-                onclick="buy(
-                    'RecxValimod Ultra MADS',
-                    '1 Day',
-                    50
-                )"
-            >
-
-                <div class="plan-left">
-
-                    <div class="plan-dot"></div>
-
-                    <div class="plan-name">
-                        1 Day
-                    </div>
-
-                </div>
-
-                <div class="plan-right">
-
-                    <div class="price">
-                        ₹50
-                    </div>
-
-                    <div class="buy-arrow">
-                        →
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <div
-                class="plan"
-                onclick="buy(
-                    'RecxValimod Ultra MADS',
-                    '7 Days',
-                    125
-                )"
-            >
-
-                <div class="plan-left">
-
-                    <div class="plan-dot"></div>
-
-                    <div class="plan-name">
-                        7 Days
-                    </div>
-
-                </div>
-
-                <div class="plan-right">
-
-                    <div class="price">
-                        ₹125
-                    </div>
-
-                    <div class="buy-arrow">
-                        →
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <div
-                class="plan"
-                onclick="buy(
-                    'RecxValimod Ultra MADS',
-                    '30 Days',
-                    300
-                )"
-            >
-
-                <div class="plan-left">
-
-                    <div class="plan-dot"></div>
-
-                    <div class="plan-name">
-                        30 Days
-                    </div>
-
-                </div>
-
-                <div class="plan-right">
-
-                    <div class="price">
-                        ₹300
-                    </div>
-
-                    <div class="buy-arrow">
-                        →
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <div
-                class="plan"
-                onclick="buy(
-                    'RecxValimod Ultra MADS',
-                    '90 Days',
-                    600
-                )"
-            >
-
-                <div class="plan-left">
-
-                    <div class="plan-dot"></div>
-
-                    <div class="plan-name">
-                        90 Days
-                    </div>
-
-                </div>
-
-                <div class="plan-right">
-
-                    <div class="price">
-                        ₹600
-                    </div>
-
-                    <div class="buy-arrow">
-                        →
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <div
-                class="plan"
-                onclick="buy(
-                    'RecxValimod Ultra MADS',
-                    'Lifetime',
-                    1200
-                )"
-            >
-
-                <div class="plan-left">
-
-                    <div class="plan-dot"></div>
-
-                    <div class="plan-name">
-                        Lifetime
-                    </div>
-
-                </div>
-
-                <div class="plan-right">
-
-                    <div class="price">
-                        ₹1200
-                    </div>
-
-                    <div class="buy-arrow">
-                        →
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =========================
-         COMMUNITY
-    ========================= -->
-
-    <div class="social-box">
-
-        <div class="social-title">
-            JOIN RECX COMMUNITY
-        </div>
-
-
-        <div class="socials">
-
-
-            <!-- TELEGRAM -->
+        <div class="hero-actions">
 
             <a
-                class="social telegram"
-                href="https://t.me/panalstoreff"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-
-                <svg viewBox="0 0 24 24">
-
-                    <path d="
-                    M21.8 3.2
-                    18.6 20
-                    c-.24 1.2-.87 1.5-1.77.94
-                    l-4.86-3.58
-                    -2.35 2.26
-                    c-.26.26-.48.48-.98.48
-                    l.35-4.96
-                    9.03-8.16
-                    c.39-.35-.09-.55-.61-.2
-                    L6.25 13.94
-                    1.5 12.45
-                    c-1.03-.32-1.05-1.03.21-1.52
-                    L20.26 3.72
-                    c.86-.32 1.61.2 1.54-.52z
-                    "/>
-
-                </svg>
-
-                <span>
-                    Telegram
-                </span>
-
+                href="#store"
+                class="primary-btn">
+                ⚡ Explore Store
             </a>
 
-
-
-            <!-- WHATSAPP -->
-
             <a
-                class="social whatsapp"
-                href="https://whatsapp.com/channel/0029VbDyKyj0VycFxIRkAf2p"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-
-                <svg viewBox="0 0 24 24">
-
-                    <path d="
-                    M12 2.1
-                    a9.8 9.8 0 0 0-8.46 14.9
-                    L2 22
-                    l5.14-1.5
-                    A9.9 9.9 0 1 0 12 2.1
-                    zm0 17.9
-                    c-1.58 0-3.12-.42-4.48-1.22
-                    l-.32-.19-3.05.89.9-2.97
-                    -.21-.31
-                    A7.98 7.98 0 1 1 12 20
-                    zm4.37-5.98
-                    c-.24-.12-1.42-.7-1.64-.78
-                    -.22-.08-.38-.12-.54.12
-                    -.16.24-.62.78-.76.94
-                    -.14.16-.28.18-.52.06
-                    -.24-.12-1.02-.38-1.94-1.2
-                    -.72-.64-1.2-1.43-1.34-1.67
-                    -.14-.24-.01-.37.1-.49
-                    .11-.11.24-.28.36-.42
-                    .12-.14.16-.24.24-.4
-                    .08-.16.04-.3-.02-.42
-                    -.06-.12-.54-1.3-.74-1.78
-                    -.2-.47-.4-.4-.54-.41
-                    h-.46
-                    c-.16 0-.42.06-.64.3
-                    -.22.24-.84.82-.84 2
-                    s.86 2.32.98 2.48
-                    c.12.16 1.69 2.58 4.1 3.62
-                    .57.25 1.02.4 1.37.51
-                    .58.18 1.1.15 1.52.09
-                    .46-.07 1.42-.58 1.62-1.14
-                    .2-.56.2-1.04.14-1.14
-                    -.06-.1-.22-.16-.46-.28z
-                    "/>
-
-                </svg>
-
-                <span>
-                    WhatsApp
-                </span>
-
-            </a>
-
-
-
-            <!-- YOUTUBE -->
-
-            <a
-                class="social youtube"
-                href="https://youtube.com/@recxpanal-te6os?si=wEXVJ6vGkDRTCCRt"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-
-                <svg viewBox="0 0 24 24">
-
-                    <path d="
-                    M23.5 6.2
-                    a3 3 0 0 0-2.1-2.12
-                    C19.55 3.55 12 3.55 12 3.55
-                    s-7.55 0-9.4.53
-                    A3 3 0 0 0 .5 6.2
-                    31.2 31.2 0 0 0 0 12
-                    a31.2 31.2 0 0 0 .5 5.8
-                    3 3 0 0 0 2.1 2.12
-                    c1.85.53 9.4.53 9.4.53
-                    s7.55 0 9.4-.53
-                    a3 3 0 0 0 2.1-2.12
-                    A31.2 31.2 0 0 0 24 12
-                    a31.2 31.2 0 0 0-.5-5.8z
-
-                    M9.6 15.6
-                    V8.4
-                    l6.3 3.6
-                    -6.3 3.6z
-                    "/>
-
-                </svg>
-
-                <span>
-                    YouTube
-                </span>
-
+                href="my-requests.html"
+                class="secondary-btn">
+                📋 My Requests
             </a>
 
         </div>
 
     </div>
+
+</section>
+
+
+<!-- =========================================
+     STORE
+========================================= -->
+
+<div
+    class="section-head"
+    id="store">
+
+    <div>
+        <h2>Choose Your Product</h2>
+        <p>Tap a product to view available plans.</p>
+    </div>
+
+</div>
+
+
+<section class="store">
+
+
+<!-- PRODUCT A -->
+
+<article class="store-card">
+
+    <button
+        class="store-head"
+        onclick="toggleCard(this)">
+
+        <div class="product-left">
+
+            <div class="product-icon">
+                ⚡
+            </div>
+
+            <div>
+
+                <div class="product-name">
+                    RECXmonster MADS
+                </div>
+
+                <div class="product-sub">
+                    Select duration to continue
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="arrow">
+            ↓
+        </div>
+
+    </button>
+
+
+    <div class="plans">
+
+        <div class="plan">
+            <div class="plan-name">1 Day</div>
+            <div class="plan-price">₹60</div>
+
+            <button
+                class="buy-btn"
+                onclick="buy('RECXmonster MADS','1 Day',60)">
+                Continue
+            </button>
+        </div>
+
+
+        <div class="plan">
+            <div class="plan-name">7 Days</div>
+            <div class="plan-price">₹100</div>
+
+            <button
+                class="buy-btn"
+                onclick="buy('RECXmonster MADS','7 Days',100)">
+                Continue
+            </button>
+        </div>
+
+
+        <div class="plan">
+            <div class="plan-name">30 Days</div>
+            <div class="plan-price">₹250</div>
+
+            <button
+                class="buy-btn"
+                onclick="buy('RECXmonster MADS','30 Days',250)">
+                Continue
+            </button>
+        </div>
+
+
+        <div class="plan">
+            <div class="plan-name">90 Days</div>
+            <div class="plan-price">₹500</div>
+
+            <button
+                class="buy-btn"
+                onclick="buy('RECXmonster MADS','90 Days',500)">
+                Continue
+            </button>
+        </div>
+
+
+        <div class="plan">
+            <div class="plan-name">Lifetime</div>
+            <div class="plan-price">₹1000</div>
+
+            <button
+                class="buy-btn"
+                onclick="buy('RECXmonster MADS','Lifetime',1000)">
+                Continue
+            </button>
+        </div>
+
+    </div>
+
+</article>
+
+
+<!-- PRODUCT B -->
+
+<article class="store-card">
+
+    <button
+        class="store-head"
+        onclick="toggleCard(this)">
+
+        <div class="product-left">
+
+            <div class="product-icon">
+                ▶
+            </div>
+
+            <div>
+
+                <div class="product-name">
+                    RecxInstall and Play MADS
+                </div>
+
+                <div class="product-sub">
+                    Select duration to continue
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="arrow">
+            ↓
+        </div>
+
+    </button>
+
+
+    <div class="plans">
+
+        <div class="plan">
+            <div class="plan-name">7 Days</div>
+            <div class="plan-price">₹80</div>
+
+            <button
+                class="buy-btn"
+                onclick="buy('RecxInstall and Play MADS','7 Days',80)">
+                Continue
+            </button>
+        </div>
+
+
+        <div class="plan">
+            <div class="plan-name">30 Days</div>
+            <div class="plan-price">₹200</div>
+
+            <button
+                class="buy-btn"
+                onclick="buy('RecxInstall and Play MADS','30 Days',200)">
+                Continue
+            </button>
+        </div>
+
+
+        <div class="plan">
+            <div class="plan-name">90 Days</div>
+            <div class="plan-price">₹500</div>
+
+            <button
+                class="buy-btn"
+                onclick="buy('RecxInstall and Play MADS','90 Days',500)">
+                Continue
+            </button>
+        </div>
+
+
+        <div class="plan">
+            <div class="plan-name">Lifetime</div>
+            <div class="plan-price">₹1000</div>
+
+            <button
+                class="buy-btn"
+                onclick="buy('RecxInstall and Play MADS','Lifetime',1000)">
+                Continue
+            </button>
+        </div>
+
+    </div>
+
+</article>
+
+
+<!-- PRODUCT C -->
+
+<article class="store-card">
+
+    <button
+        class="store-head"
+        onclick="toggleCard(this)">
+
+        <div class="product-left">
+
+            <div class="product-icon">
+                ◆
+            </div>
+
+            <div>
+
+                <div class="product-name">
+                    RecxValimod Ultra MADS
+                </div>
+
+                <div class="product-sub">
+                    Select duration to continue
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="arrow">
+            ↓
+        </div>
+
+    </button>
+
+
+    <div class="plans">
+
+        <div class="plan">
+            <div class="plan-name">1 Day</div>
+            <div class="plan-price">₹50</div>
+
+            <button
+                class="buy-btn"
+                onclick="buy('RecxValimod Ultra MADS','1 Day',50)">
+                Continue
+            </button>
+        </div>
+
+
+        <div class="plan">
+            <div class="plan-name">7 Days</div>
+            <div class="plan-price">₹125</div>
+
+            <button
+                class="buy-btn"
+                onclick="buy('RecxValimod Ultra MADS','7 Days',125)">
+                Continue
+            </button>
+        </div>
+
+
+        <div class="plan">
+            <div class="plan-name">30 Days</div>
+            <div class="plan-price">₹300</div>
+
+            <button
+                class="buy-btn"
+                onclick="buy('RecxValimod Ultra MADS','30 Days',300)">
+                Continue
+            </button>
+        </div>
+
+
+        <div class="plan">
+            <div class="plan-name">90 Days</div>
+            <div class="plan-price">₹600</div>
+
+            <button
+                class="buy-btn"
+                onclick="buy('RecxValimod Ultra MADS','90 Days',600)">
+                Continue
+            </button>
+        </div>
+
+
+        <div class="plan">
+            <div class="plan-name">Lifetime</div>
+            <div class="plan-price">₹1200</div>
+
+            <button
+                class="buy-btn"
+                onclick="buy('RecxValimod Ultra MADS','Lifetime',1200)">
+                Continue
+            </button>
+        </div>
+
+    </div>
+
+</article>
+
+</section>
+
+
+<!-- =========================================
+     MY REQUESTS
+========================================= -->
+
+<div class="section-head">
+
+    <div>
+        <h2>Your Orders</h2>
+        <p>Track payment verification and delivered keys.</p>
+    </div>
+
+</div>
+
+
+<section class="requests-panel">
+
+    <div class="requests-icon">
+        📋
+    </div>
+
+    <div class="requests-info">
+
+        <h3>
+            My Payment Requests
+        </h3>
+
+        <p>
+            Check Pending, Approved or Rejected requests.
+            Your key will appear here after approval.
+        </p>
+
+    </div>
+
+    <a
+        href="my-requests.html"
+        class="requests-btn">
+        Open Requests →
+    </a>
+
+</section>
+
+
+<!-- =========================================
+     COMMUNITY
+========================================= -->
+
+<section class="community">
+
+    <div class="section-head">
+
+        <div>
+            <h2>Join Our Community</h2>
+
+            <p>
+                Follow RECX for updates and announcements.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="social-grid">
+
+
+        <!-- TELEGRAM -->
+
+        <a
+            href="https://t.me/panalstoreff"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social telegram">
+
+            <svg
+                viewBox="0 0 24 24"
+                fill="none">
+
+                <path
+                    d="M21.7 3.4 18.5 20c-.2 1.2-.9 1.5-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.2-8.3c.4-.4-.1-.6-.6-.2L6 13.6l-4.9-1.5c-1.1-.3-1.1-1.1.2-1.6L20.5 2c.9-.3 1.7.2 1.2 1.4Z"
+                    fill="currentColor"/>
+
+            </svg>
+
+            <div class="social-text">
+
+                <strong>Telegram</strong>
+
+                <span>
+                    Join Channel
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <!-- WHATSAPP -->
+
+        <a
+            href="https://whatsapp.com/channel/0029VbDyKyj0VycFxIRkAf2p"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social whatsapp">
+
+            <svg
+                viewBox="0 0 24 24"
+                fill="none">
+
+                <path
+                    d="M12 2a9.9 9.9 0 0 0-8.6 14.8L2 22l5.3-1.4A10 10 0 1 0 12 2Z"
+                    stroke="currentColor"
+                    stroke-width="1.7"/>
+
+                <path
+                    d="M8.5 7.5c.3-.3.7-.3 1-.1l1 1.7c.2.3.1.7-.1 1l-.6.5c.6 1.1 1.5 2 2.7 2.6l.5-.6c.2-.3.6-.4.9-.2l1.7 1c.3.2.4.6.2.9l-.5.8c-.3.5-.9.8-1.5.7-4.1-.7-7-3.6-7.7-7.7-.1-.6.2-1.2.7-1.5l.8-.5Z"
+                    fill="currentColor"/>
+
+            </svg>
+
+            <div class="social-text">
+
+                <strong>WhatsApp</strong>
+
+                <span>
+                    Join Channel
+                </span>
+
+            </div>
+
+        </a>
+
+
+        <!-- YOUTUBE -->
+
+        <a
+            href="https://youtube.com/@recxpanal-te6os?si=wEXVJ6vGkDRTCCRt"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social youtube">
+
+            <svg
+                viewBox="0 0 24 24"
+                fill="none">
+
+                <path
+                    d="M21.2 7.1a2.8 2.8 0 0 0-2-2C17.4 4.6 12 4.6 12 4.6s-5.4 0-7.2.5a2.8 2.8 0 0 0-2 2C2.3 8.9 2.3 12 2.3 12s0 3.1.5 4.9a2.8 2.8 0 0 0 2 2c1.8.5 7.2.5 7.2.5s5.4 0 7.2-.5a2.8 2.8 0 0 0 2-2c.5-1.8.5-4.9.5-4.9s0-3.1-.5-4.9Z"
+                    fill="currentColor"/>
+
+                <path
+                    d="m10 15.5 5-3.5-5-3.5v7Z"
+                    fill="#ff3b30"/>
+
+            </svg>
+
+            <div class="social-text">
+
+                <strong>YouTube</strong>
+
+                <span>
+                    Subscribe Channel
+                </span>
+
+            </div>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    <div class="footer-brand">
+        ⚡ RECX
+    </div>
+
+    <div>
+        © 2026 RECX • Secure Digital Store
+    </div>
+
+</footer>
 
 </main>
 
 
-
-<!-- =========================
-     FOOTER
-========================= -->
-
-<footer>
-
-    © 2026 RECX • Secure Digital Store
-
-</footer>
-
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-
-/* =========================
-   SUPABASE
-========================= */
 
 const SUPABASE_URL =
 "https://asdbxlnttlsuhhnqeywa.supabase.co";
@@ -1861,154 +1437,110 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 "sb_publishable_GIzm11dFWDJmu9cQGAJy_w_432UbSU5";
 
-const supabaseClient =
-window.supabase.createClient(
+const {createClient} =
+supabase;
+
+const db =
+createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
 
 
-/* =========================
-   LOGIN CHECK
-========================= */
+/* =========================================
+   AUTH CHECK
+========================================= */
 
-async function checkLogin(){
+async function checkSession(){
 
-    try{
+    const {
+        data:{session}
+    } =
+    await db.auth.getSession();
 
-        const {
-            data:{
-                session
-            }
-        } =
-        await supabaseClient
-        .auth
-        .getSession();
+    if(!session){
 
-
-        if(!session){
-
-            window.location.href =
+        window.location.href =
             "index.html";
 
-            return;
+        return false;
+    }
+
+    return true;
+}
+
+
+/* =========================================
+   TOGGLE PRODUCT
+========================================= */
+
+function toggleCard(button){
+
+    const current =
+        button.closest(".store-card");
+
+    const all =
+        document.querySelectorAll(".store-card");
+
+    all.forEach(card=>{
+
+        if(card !== current){
+
+            card.classList.remove("open");
+
         }
 
-    }catch(error){
+    });
 
-        console.error(
-            "Session error:",
-            error
-        );
-
-    }
-
+    current.classList.toggle("open");
 }
 
 
-/* =========================
-   LOGOUT
-========================= */
+/* =========================================
+   BUY
+========================================= */
 
-async function logout(){
-
-    try{
-
-        await supabaseClient
-        .auth
-        .signOut();
-
-    }catch(error){
-
-        console.error(
-            "Logout error:",
-            error
-        );
-
-    }
-
-    window.location.href =
-    "index.html";
-
-}
-
-
-/* =========================
-   CARD OPEN / CLOSE
-========================= */
-
-function toggleCard(card){
-
-    const alreadyOpen =
-        card.classList.contains("open");
-
-
-    /*
-       Close all cards
-    */
-
-    document
-        .querySelectorAll(".store-card")
-        .forEach(function(item){
-
-            item.classList.remove("open");
-
-        });
-
-
-    /*
-       Open clicked card
-    */
-
-    if(!alreadyOpen){
-
-        card.classList.add("open");
-
-    }
-
-}
-
-
-/* =========================
-   OPEN PAYMENT PAGE
-========================= */
-
-function buy(
-    product,
-    plan,
-    amount
-){
+function buy(product,plan,amount){
 
     const params =
         new URLSearchParams({
 
-            product:
-                product,
-
-            plan:
-                plan,
-
-            amount:
-                amount
+            product:product,
+            plan:plan,
+            amount:String(amount)
 
         });
-
 
     window.location.href =
         "payment.html?" +
         params.toString();
-
 }
 
 
-/* =========================
-   START
-========================= */
+/* =========================================
+   LOGOUT
+========================================= */
 
-checkLogin();
+async function logout(){
+
+    await db.auth.signOut();
+
+    sessionStorage.removeItem(
+        "rishi_x_admin_logged_in"
+    );
+
+    window.location.href =
+        "index.html";
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+checkSession();
 
 </script>
 
-
 </body>
-    </html>
+</html>
