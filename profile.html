@@ -1,967 +1,532 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>RECX • Profile</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-
 <style>
-
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
+:root{
+    --bg:#f4f7ff;
+    --card:rgba(255,255,255,.72);
+    --text:#111827;
+    --muted:#667085;
+    --primary:#5b5ff7;
+    --primary2:#8b5cf6;
+    --border:rgba(255,255,255,.8);
+    --shadow:0 25px 70px rgba(48,55,120,.16);
+}
 
 body{
-
-  min-height:100vh;
-
-  font-family:
-    Arial,
-    sans-serif;
-
-  color:#fff;
-
-  background:
-
-    radial-gradient(
-      circle at 15% 0%,
-      #24105a,
-      transparent 38%
-    ),
-
-    radial-gradient(
-      circle at 90% 100%,
-      #071f55,
-      transparent 40%
-    ),
-
-    #03040a;
-
+    min-height:100vh;
+    font-family:Inter,Arial,sans-serif;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 10% 10%,rgba(91,95,247,.20),transparent 28%),
+        radial-gradient(circle at 90% 20%,rgba(139,92,246,.18),transparent 30%),
+        radial-gradient(circle at 50% 100%,rgba(59,130,246,.14),transparent 35%),
+        var(--bg);
+    overflow-x:hidden;
 }
 
+/* background decoration */
 
-/* =================================
-   HEADER
-================================= */
+body::before{
+    content:"";
+    position:fixed;
+    width:420px;
+    height:420px;
+    border-radius:50%;
+    background:rgba(91,95,247,.10);
+    filter:blur(80px);
+    top:-180px;
+    right:-120px;
+    z-index:-1;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:360px;
+    height:360px;
+    border-radius:50%;
+    background:rgba(139,92,246,.10);
+    filter:blur(80px);
+    bottom:-160px;
+    left:-100px;
+    z-index:-1;
+}
+
+/* HEADER */
 
 header{
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
-
-  padding:18px 5%;
-
-  background:
-    rgba(5,6,15,.90);
-
-  border-bottom:1px solid
-    rgba(100,100,150,.25);
-
-  backdrop-filter:
-    blur(15px);
-
+    width:100%;
+    height:74px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 7%;
+    background:rgba(255,255,255,.58);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(255,255,255,.8);
+    position:sticky;
+    top:0;
+    z-index:10;
 }
-
 
 .logo{
-
-  font-size:25px;
-
-  font-weight:900;
-
-  letter-spacing:2px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #8b5cff,
-      #39a7ff
-    );
-
-  -webkit-background-clip:text;
-
-  background-clip:text;
-
-  color:transparent;
-
-  text-shadow:
-    0 0 20px
-    rgba(90,110,255,.35);
-
+    font-size:25px;
+    font-weight:900;
+    letter-spacing:2px;
+    background:linear-gradient(135deg,#4f46e5,#9333ea);
+    -webkit-background-clip:text;
+    color:transparent;
 }
 
-
-.logout{
-
-  padding:10px 17px;
-
-  border:1px solid
-    #303553;
-
-  border-radius:9px;
-
-  background:#0a0c18;
-
-  color:#fff;
-
-  cursor:pointer;
-
-  font-weight:bold;
-
-  transition:.25s;
-
+.header-line{
+    width:42px;
+    height:4px;
+    border-radius:20px;
+    background:linear-gradient(90deg,#4f46e5,#9333ea);
 }
 
+/* MAIN */
 
-.logout:hover{
-
-  background:#17152d;
-
-  border-color:#6d63ff;
-
-  transform:
-    translateY(-1px);
-
+.main{
+    width:min(1050px,92%);
+    margin:45px auto 30px;
 }
 
+/* HERO */
 
-/* =================================
-   MAIN
-================================= */
-
-main{
-
-  width:92%;
-
-  max-width:800px;
-
-  margin:40px auto;
-
+.profile-hero{
+    text-align:center;
+    margin-bottom:28px;
 }
 
-
-.title{
-
-  margin-bottom:25px;
-
+.profile-hero h1{
+    font-size:clamp(30px,6vw,52px);
+    font-weight:900;
+    letter-spacing:-1.5px;
 }
 
-
-.title h1{
-
-  font-size:32px;
-
+.profile-hero p{
+    margin-top:8px;
+    color:var(--muted);
+    font-size:14px;
 }
 
-
-.title p{
-
-  margin-top:8px;
-
-  color:#858aa4;
-
-}
-
-
-/* =================================
-   PROFILE CARD
-================================= */
+/* PROFILE CARD */
 
 .profile-card{
-
-  padding:30px;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(18,20,40,.96),
-      rgba(7,8,17,.96)
-    );
-
-  border:1px solid
-    rgba(100,100,170,.35);
-
-  border-radius:22px;
-
-  box-shadow:
-    0 0 35px
-    rgba(70,70,180,.12);
-
-  backdrop-filter:
-    blur(15px);
-
+    position:relative;
+    overflow:hidden;
+    background:var(--card);
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
+    border:1px solid var(--border);
+    border-radius:30px;
+    box-shadow:var(--shadow);
+    padding:35px;
 }
 
+.profile-card::before{
+    content:"";
+    position:absolute;
+    width:250px;
+    height:250px;
+    border-radius:50%;
+    background:rgba(91,95,247,.10);
+    filter:blur(50px);
+    top:-140px;
+    right:-80px;
+}
 
-/* =================================
-   AVATAR
-================================= */
+/* AVATAR */
+
+.avatar-area{
+    display:flex;
+    align-items:center;
+    gap:25px;
+    position:relative;
+    z-index:1;
+}
 
 .avatar{
-
-  width:90px;
-
-  height:90px;
-
-  margin:
-    0 auto 20px;
-
-  display:flex;
-
-  align-items:center;
-
-  justify-content:center;
-
-  border-radius:50%;
-
-  background:
-    linear-gradient(
-      135deg,
-      #704cff,
-      #258cff
-    );
-
-  font-size:40px;
-
-  font-weight:bold;
-
-  box-shadow:
-    0 0 30px
-    rgba(80,100,255,.40);
-
+    width:92px;
+    height:92px;
+    border-radius:28px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    font-weight:900;
+    color:white;
+    background:
+        linear-gradient(135deg,#4f46e5,#7c3aed 55%,#2563eb);
+    box-shadow:
+        0 15px 35px rgba(79,70,229,.30),
+        inset 0 1px 1px rgba(255,255,255,.5);
 }
 
-
-.profile-card h2{
-
-  text-align:center;
-
-  margin-bottom:25px;
-
+.identity h2{
+    font-size:25px;
+    font-weight:850;
 }
 
-
-/* =================================
-   INFORMATION
-================================= */
-
-.info{
-
-  padding:16px;
-
-  margin-top:12px;
-
-  background:#060711;
-
-  border:1px solid
-    #252941;
-
-  border-radius:12px;
-
+.identity span{
+    display:inline-block;
+    margin-top:6px;
+    color:#667085;
+    font-size:13px;
+    word-break:break-all;
 }
 
+/* INFO */
 
-.label{
-
-  color:#646a84;
-
-  font-size:11px;
-
-  letter-spacing:1px;
-
-  margin-bottom:7px;
-
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    margin-top:30px;
 }
 
-
-.value{
-
-  font-size:15px;
-
-  word-break:break-word;
-
-  color:#dce0f3;
-
+.info-box{
+    padding:20px;
+    border-radius:20px;
+    background:rgba(255,255,255,.65);
+    border:1px solid rgba(255,255,255,.9);
+    box-shadow:0 8px 25px rgba(30,40,100,.06);
 }
 
-
-/* =================================
-   STATS
-================================= */
-
-.stats{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(2,1fr);
-
-  gap:15px;
-
-  margin-top:25px;
-
+.info-label{
+    color:#7b8497;
+    font-size:11px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:1px;
 }
 
-
-.stat{
-
-  padding:22px;
-
-  text-align:center;
-
-  background:#080a15;
-
-  border:1px solid
-    #252941;
-
-  border-radius:14px;
-
+.info-value{
+    margin-top:7px;
+    font-size:15px;
+    font-weight:750;
+    word-break:break-word;
 }
 
-
-.stat-number{
-
-  color:#8c72ff;
-
-  font-size:30px;
-
-  font-weight:bold;
-
-}
-
-
-.stat-label{
-
-  margin-top:7px;
-
-  color:#858aa4;
-
-  font-size:13px;
-
-}
-
-
-/* =================================
-   BUTTONS
-================================= */
-
-.buttons{
-
-  display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap:12px;
-
-  margin-top:25px;
-
-}
-
-
-.buttons button{
-
-  padding:14px;
-
-  border:1px solid
-    #303553;
-
-  border-radius:11px;
-
-  background:#0a0c18;
-
-  color:#fff;
-
-  font-weight:bold;
-
-  cursor:pointer;
-
-  transition:.25s;
-
-}
-
-
-.buttons button:hover{
-
-  background:
-    linear-gradient(
-      90deg,
-      #704cff,
-      #258cff
-    );
-
-  border-color:transparent;
-
-  transform:
-    translateY(-2px);
-
-}
-
-
-/* =================================
-   STATUS
-================================= */
+/* STATUS */
 
 .status{
-
-  margin-top:20px;
-
-  text-align:center;
-
-  color:#63e69a;
-
-  font-size:13px;
-
+    margin-top:20px;
+    padding:17px 20px;
+    border-radius:18px;
+    background:linear-gradient(
+        135deg,
+        rgba(34,197,94,.10),
+        rgba(16,185,129,.05)
+    );
+    border:1px solid rgba(34,197,94,.18);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 }
 
-
-/* =================================
-   LOADING
-================================= */
-
-.loading{
-
-  text-align:center;
-
-  padding:40px;
-
-  color:#858aa4;
-
+.status-left{
+    display:flex;
+    align-items:center;
+    gap:12px;
 }
 
+.status-dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:#22c55e;
+    box-shadow:0 0 15px rgba(34,197,94,.7);
+}
 
-/* =================================
-   MOBILE
-================================= */
+.status-title{
+    font-size:13px;
+    font-weight:800;
+}
 
-@media(max-width:600px){
+.status-text{
+    font-size:12px;
+    color:#6b7280;
+    margin-top:3px;
+}
 
-  main{
+/* BUTTONS */
 
+.actions{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
     margin-top:25px;
-
-  }
-
-
-  .title h1{
-
-    font-size:27px;
-
-  }
-
-
-  .stats{
-
-    grid-template-columns:
-      1fr 1fr;
-
-  }
-
-
-  .buttons{
-
-    grid-template-columns:
-      1fr;
-
-  }
-
 }
 
+.btn{
+    height:55px;
+    border:none;
+    border-radius:17px;
+    font-size:14px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.25s ease;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+}
+
+.dashboard-btn{
+    color:white;
+    background:linear-gradient(135deg,#4f46e5,#7c3aed);
+    box-shadow:0 12px 28px rgba(79,70,229,.22);
+}
+
+.logout-btn{
+    color:#111827;
+    background:rgba(255,255,255,.8);
+    border:1px solid rgba(20,30,60,.08);
+}
+
+/* FOOTER */
+
+footer{
+    text-align:center;
+    padding:35px 15px 25px;
+    color:#8a93a5;
+    font-size:12px;
+}
+
+footer strong{
+    color:#5961a8;
+    font-weight:800;
+}
+
+/* MOBILE */
+
+@media(max-width:650px){
+
+    header{
+        padding:0 5%;
+    }
+
+    .main{
+        width:92%;
+        margin-top:30px;
+    }
+
+    .profile-card{
+        padding:23px;
+        border-radius:25px;
+    }
+
+    .avatar-area{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .identity span{
+        max-width:280px;
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .actions{
+        grid-template-columns:1fr;
+    }
+
+    .status{
+        align-items:flex-start;
+        gap:10px;
+    }
+}
 </style>
-
 </head>
-
 
 <body>
 
-
 <header>
-
-
-  <div class="logo">
-
-    ◈ RECX
-
-  </div>
-
-
-  <button
-    class="logout"
-    onclick="logout()"
-  >
-
-    Logout
-
-  </button>
-
-
+    <div class="logo">RECX</div>
+    <div class="header-line"></div>
 </header>
 
+<main class="main">
 
+    <section class="profile-hero">
+        <h1>Profile</h1>
+        <p>Your RECX account information</p>
+    </section>
 
-<main>
+    <section class="profile-card">
 
+        <div class="avatar-area">
 
-  <div class="title">
+            <div class="avatar" id="avatar">
+                R
+            </div>
 
-
-    <h1>
-
-      My Profile
-
-    </h1>
-
-
-    <p>
-
-      Manage your RECX account.
-
-    </p>
-
-
-  </div>
-
-
-
-  <div
-    id="loading"
-    class="loading"
-  >
-
-    Loading profile...
-
-  </div>
-
-
-
-  <section
-    id="profile"
-    class="profile-card"
-    style="display:none;"
-  >
-
-
-    <div class="avatar">
-
-      👤
-
-    </div>
-
-
-    <h2>
-
-      RECX User
-
-    </h2>
-
-
-
-    <div class="info">
-
-
-      <div class="label">
-
-        EMAIL ADDRESS
-
-      </div>
-
-
-      <div
-        class="value"
-        id="userEmail"
-      >
-
-        Loading...
-
-      </div>
-
-
-    </div>
-
-
-
-    <div class="info">
-
-
-      <div class="label">
-
-        USER ID
-
-      </div>
-
-
-      <div
-        class="value"
-        id="userId"
-      >
-
-        Loading...
-
-      </div>
-
-
-    </div>
-
-
-
-    <div class="info">
-
-
-      <div class="label">
-
-        ACCOUNT CREATED
-
-      </div>
-
-
-      <div
-        class="value"
-        id="createdAt"
-      >
-
-        Loading...
-
-      </div>
-
-
-    </div>
-
-
-
-    <div class="stats">
-
-
-      <div class="stat">
-
-
-        <div
-          class="stat-number"
-          id="fileCount"
-        >
-
-          0
+            <div class="identity">
+                <h2 id="userName">RECX USER</h2>
+                <span id="userEmail">Loading...</span>
+            </div>
 
         </div>
 
+        <div class="info-grid">
 
-        <div class="stat-label">
+            <div class="info-box">
+                <div class="info-label">Account</div>
+                <div class="info-value">Verified User</div>
+            </div>
 
-          My Files
+            <div class="info-box">
+                <div class="info-label">Files</div>
+                <div class="info-value" id="fileCount">Loading...</div>
+            </div>
 
-        </div>
+            <div class="info-box">
+                <div class="info-label">User ID</div>
+                <div class="info-value" id="userId">Loading...</div>
+            </div>
 
-
-      </div>
-
-
-
-      <div class="stat">
-
-
-        <div class="stat-number">
-
-          ✓
-
-        </div>
-
-
-        <div class="stat-label">
-
-          Account Active
+            <div class="info-box">
+                <div class="info-label">Joined</div>
+                <div class="info-value" id="createdAt">Loading...</div>
+            </div>
 
         </div>
 
+        <div class="status">
 
-      </div>
+            <div class="status-left">
 
+                <div class="status-dot"></div>
 
-    </div>
+                <div>
+                    <div class="status-title">
+                        Account Active
+                    </div>
 
+                    <div class="status-text">
+                        Your RECX account is currently active.
+                    </div>
+                </div>
 
+            </div>
 
-    <div class="buttons">
+        </div>
 
+        <div class="actions">
 
-      <button
-        onclick="goDashboard()"
-      >
+            <button
+                class="btn dashboard-btn"
+                onclick="location.href='dashboard-new.html'">
+                Back to Dashboard
+            </button>
 
-        🏠 DASHBOARD
+            <button
+                class="btn logout-btn"
+                onclick="logout()">
+                Logout
+            </button>
 
-      </button>
+        </div>
 
-
-      <button
-        onclick="logout()"
-      >
-
-        🚪 LOGOUT
-
-      </button>
-
-
-    </div>
-
-
-
-    <div
-      class="status"
-      id="status"
-    >
-
-      🔐 Your account is authenticated
-
-    </div>
-
-
-  </section>
-
+    </section>
 
 </main>
 
+<footer>
+    Powered by <strong>Rishi X</strong> &amp; <strong>Shiva</strong>
+</footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
-
-/* ================================
-   SUPABASE
-================================ */
-
 const SUPABASE_URL =
+"https://asdbxlnttlsuhhnqeywa.supabase.co";
 
-  "https://asdbxlnttlsuhhnqeywa.supabase.co";
+const SUPABASE_KEY =
+"sb_publishable_GIzm11dFWDJmu9cQGAJy_w_432UbSU5";
 
-
-const SUPABASE_PUBLISHABLE_KEY =
-
-  "sb_publishable_GIzm11dFWDmu9cQGAJy_w_432UbSU5";
-
-
-const BUCKET_NAME =
-
-  "user-files";
-
-
-const supabaseClient =
-
-  window.supabase.createClient(
-
+const db = window.supabase.createClient(
     SUPABASE_URL,
-
-    SUPABASE_PUBLISHABLE_KEY
-
-  );
-
-
-/* ================================
-   LOAD PROFILE
-================================ */
+    SUPABASE_KEY
+);
 
 async function loadProfile(){
 
-  const {
-    data,
-    error
-  } =
+    const {
+        data:{session},
+        error
+    } = await db.auth.getSession();
 
-    await supabaseClient
-      .auth
-      .getSession();
+    if(error || !session){
+        location.href="index.html";
+        return;
+    }
 
+    const user = session.user;
 
-  if(
-    error ||
-    !data.session
-  ){
+    const email = user.email || "RECX User";
 
-    window.location.href =
-      "index.html";
+    document.getElementById("userEmail").textContent = email;
 
-    return;
+    document.getElementById("userName").textContent =
+        email.split("@")[0].toUpperCase();
 
-  }
+    document.getElementById("avatar").textContent =
+        email.charAt(0).toUpperCase();
 
+    document.getElementById("userId").textContent =
+        user.id.slice(0,8) + "...";
 
-  const user =
-    data.session.user;
+    if(user.created_at){
 
+        const date = new Date(user.created_at);
 
-  document.getElementById(
-    "userEmail"
-  ).textContent =
+        document.getElementById("createdAt").textContent =
+            date.toLocaleDateString("en-IN",{
+                day:"2-digit",
+                month:"short",
+                year:"numeric"
+            });
 
-    user.email ||
-    "Not available";
+    }
 
+    const { count } = await db
+        .from("mads_requests")
+        .select("*",{count:"exact",head:true})
+        .eq("user_id",user.id);
 
-  document.getElementById(
-    "userId"
-  ).textContent =
-
-    user.id;
-
-
-  if(user.created_at){
-
-    document.getElementById(
-      "createdAt"
-    ).textContent =
-
-      new Date(
-        user.created_at
-      ).toLocaleString();
-
-  }
-
-
-  await loadFileCount(
-    user.id
-  );
-
-
-  document.getElementById(
-    "loading"
-  ).style.display =
-
-    "none";
-
-
-  document.getElementById(
-    "profile"
-  ).style.display =
-
-    "block";
-
+    document.getElementById("fileCount").textContent =
+        (count ?? 0) + " Requests";
 }
-
-
-/* ================================
-   FILE COUNT
-================================ */
-
-async function loadFileCount(
-  userId
-){
-
-  const {
-    data,
-    error
-  } =
-
-    await supabaseClient
-      .storage
-      .from(BUCKET_NAME)
-      .list(
-
-        userId,
-
-        {
-          limit:1000,
-          offset:0
-        }
-
-      );
-
-
-  if(error){
-
-    document.getElementById(
-      "fileCount"
-    ).textContent =
-
-      "—";
-
-    return;
-
-  }
-
-
-  document.getElementById(
-    "fileCount"
-  ).textContent =
-
-    data
-      ? data.length
-      : 0;
-
-}
-
-
-/* ================================
-   DASHBOARD
-================================ */
-
-function goDashboard(){
-
-  window.location.href =
-
-    "dashboard-new.html";
-
-}
-
-
-/* ================================
-   LOGOUT
-================================ */
 
 async function logout(){
 
-  const {
-    error
-  } =
+    await db.auth.signOut();
 
-    await supabaseClient
-      .auth
-      .signOut();
-
-
-  if(error){
-
-    document.getElementById(
-      "status"
-    ).textContent =
-
-      "Logout failed: " +
-      error.message;
-
-    return;
-
-  }
-
-
-  window.location.href =
-
-    "index.html";
-
+    location.href="index.html";
 }
 
-
-/* ================================
-   START
-================================ */
-
 loadProfile();
-
 
 </script>
 
 </body>
-
 </html>
